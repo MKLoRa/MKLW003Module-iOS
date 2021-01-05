@@ -21,6 +21,8 @@
 
 #import "MKLBDeviceInfoDataModel.h"
 
+#import "MKLBUpdateController.h"
+
 @interface MKLBDeviceInfoController ()<UITableViewDelegate,
 UITableViewDataSource,
 MKLBFirmwareCellDelegate>
@@ -35,18 +37,36 @@ MKLBFirmwareCellDelegate>
 
 @property (nonatomic, strong)MKLBDeviceInfoDataModel *dataModel;
 
+@property (nonatomic, assign)BOOL onlyBattery;
+
+/// 用户进入dfu页面开启升级模式，返回该页面，不需要读取任何的数据
+@property (nonatomic, assign)BOOL isDfuModel;
+
 @end
 
 @implementation MKLBDeviceInfoController
 
 - (void)dealloc {
     NSLog(@"MKLBDeviceInfoController销毁");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!self.isDfuModel) {
+        //用户进入dfu页面开启升级模式，返回该页面，不需要读取任何的数据
+        [self startReadDatas];
+    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
     [self loadSectionDatas];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deviceStartDFUProcess)
+                                                 name:@"mk_lb_startDfuProcessNotification"
+                                               object:nil];
 }
 
 #pragma mark - super method
@@ -96,7 +116,61 @@ MKLBFirmwareCellDelegate>
 
 #pragma mark - MKLBFirmwareCellDelegate
 - (void)mk_firmwareButtonMethod {
-    
+    MKLBUpdateController *vc = [[MKLBUpdateController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
+#pragma mark - note
+- (void)deviceStartDFUProcess {
+    self.isDfuModel = YES;
+}
+
+#pragma mark - interface
+- (void)startReadDatas {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startLoadSystemInformation:self.onlyBattery sucBlock:^{
+        [[MKHudManager share] hide];
+        if (!weakSelf.onlyBattery) {
+            weakSelf.onlyBattery = YES;
+        }
+        [weakSelf loadDatasFromDevice];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+- (void)loadDatasFromDevice {
+    if (ValidStr(self.dataModel.batteryPower)) {
+        MKNormalTextCellModel *soc = self.section0List[0];
+        soc.rightMsg = [NSString stringWithFormat:@"%@%@",self.dataModel.batteryPower,@"%"];
+    }
+    if (ValidStr(self.dataModel.macAddress)) {
+        MKNormalTextCellModel *mac = self.section0List[1];
+        mac.rightMsg = self.dataModel.macAddress;
+    }
+    if (ValidStr(self.dataModel.productMode)) {
+        MKNormalTextCellModel *produceModel = self.section0List[2];
+        produceModel.rightMsg = self.dataModel.productMode;
+    }
+    if (ValidStr(self.dataModel.software)) {
+        MKNormalTextCellModel *softwareModel = self.section0List[3];
+        softwareModel.rightMsg = self.dataModel.software;
+    }
+    if (ValidStr(self.dataModel.firmware)) {
+        MKLBFirmwareCellModel *firmwareModel = self.section1List[0];
+        firmwareModel.rightMsg = self.dataModel.firmware;
+    }
+    if (ValidStr(self.dataModel.hardware)) {
+        MKNormalTextCellModel *hardware = self.section2List[0];
+        hardware.rightMsg = self.dataModel.hardware;
+    }
+    if (ValidStr(self.dataModel.manu)) {
+        MKNormalTextCellModel *manuModel = self.section2List[1];
+        manuModel.rightMsg = self.dataModel.manu;
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark -
@@ -188,6 +262,13 @@ MKLBFirmwareCellDelegate>
         _section2List = [NSMutableArray array];
     }
     return _section2List;
+}
+
+- (MKLBDeviceInfoDataModel *)dataModel {
+    if (!_dataModel) {
+        _dataModel = [[MKLBDeviceInfoDataModel alloc] init];
+    }
+    return _dataModel;
 }
 
 @end

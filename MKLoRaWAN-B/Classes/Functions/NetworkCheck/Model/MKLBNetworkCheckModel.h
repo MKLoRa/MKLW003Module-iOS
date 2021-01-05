@@ -1,0 +1,27 @@
+//
+//  MKLBNetworkCheckModel.h
+//  MKLoRaWAN-B_Example
+//
+//  Created by aa on 2021/1/5.
+//  Copyright © 2021 aadyx2007@163.com. All rights reserved.
+//
+
+#import <Foundation/Foundation.h>
+
+NS_ASSUME_NONNULL_BEGIN
+
+@interface MKLBNetworkCheckModel : NSObject
+
+@property (nonatomic, assign)BOOL checkStatus;
+
+@property (nonatomic, copy)NSString *checkInterval;
+
+@property (nonatomic, assign)BOOL networkStatus;
+
+- (void)startReadDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
+
+- (void)startConfigDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
+
+@end
+
+NS_ASSUME_NONNULL_END

@@ -8,6 +8,20 @@
 
 #import "MKLBDeviceInfoDataModel.h"
 
+@interface MKLBDeviceInfoDataModel ()
+
+@property (nonatomic, strong)dispatch_queue_t configQueue;
+
+@property (nonatomic, strong)dispatch_semaphore_t semaphore;
+
+@end
+
 @implementation MKLBDeviceInfoDataModel
+
+- (void)startLoadSystemInformation:(BOOL)onlyBattery
+                          sucBlock:(void (^)(void))sucBlock
+                       failedBlock:(void (^)(NSError *error))failedBlock {
+    
+}
 
 @end

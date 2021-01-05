@@ -1,12 +1,12 @@
 //
-//  MKLBLoRaController.m
+//  MKLBNetworkCheckController.m
 //  MKLoRaWAN-B_Example
 //
-//  Created by aa on 2021/1/4.
+//  Created by aa on 2021/1/5.
 //  Copyright © 2021 aadyx2007@163.com. All rights reserved.
 //
 
-#import "MKLBLoRaController.h"
+#import "MKLBNetworkCheckController.h"
 
 #import "Masonry.h"
 
@@ -15,15 +15,16 @@
 #import "UIView+MKAdd.h"
 
 #import "MKHudManager.h"
-#import "MKNormalTextCell.h"
+#import "MKTextSwitchCell.h"
 #import "MKTextFieldCell.h"
 
-#import "MKLBLoRaDataModel.h"
+#import "MKLBNetworkStatusCell.h"
 
-#import "MKLBNetworkCheckController.h"
+#import "MKLBNetworkCheckModel.h"
 
-@interface MKLBLoRaController ()<UITableViewDelegate,
+@interface MKLBNetworkCheckController ()<UITableViewDelegate,
 UITableViewDataSource,
+mk_textSwitchCellDelegate,
 MKTextFieldCellDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
@@ -34,14 +35,14 @@ MKTextFieldCellDelegate>
 
 @property (nonatomic, strong)NSMutableArray *section2List;
 
-@property (nonatomic, strong)MKLBLoRaDataModel *dataModel;
+@property (nonatomic, strong)MKLBNetworkCheckModel *dataModel;
 
 @end
 
-@implementation MKLBLoRaController
+@implementation MKLBNetworkCheckController
 
 - (void)dealloc {
-    NSLog(@"MKLBLoRaController销毁");
+    NSLog(@"MKLBNetworkCheckController销毁");
 }
 
 - (void)viewDidLoad {
@@ -50,27 +51,12 @@ MKTextFieldCellDelegate>
     [self loadSectionDatas];
 }
 
-#pragma mark - super method
-- (void)leftButtonMethod {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"mk_lb_popToRootViewControllerNotification" object:nil];
-}
-
-- (void)rightButtonMethod {
-    
-}
-
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 44.f;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && indexPath.row == 1) {
-        //Network Check
-        MKLBNetworkCheckController *vc = [[MKLBNetworkCheckController alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-        return;
+    if (indexPath.section == 2) {
+        return 88.f;
     }
+    return 44.f;
 }
 
 #pragma mark - UITableViewDataSource
@@ -93,8 +79,9 @@ MKTextFieldCellDelegate>
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        MKNormalTextCell *cell = [MKNormalTextCell initCellWithTableView:tableView];
+        MKTextSwitchCell *cell = [MKTextSwitchCell initCellWithTableView:tableView];
         cell.dataModel = self.section0List[indexPath.row];
+        cell.delegate = self;
         return cell;
     }
     if (indexPath.section == 1) {
@@ -103,15 +90,24 @@ MKTextFieldCellDelegate>
         cell.delegate = self;
         return cell;
     }
-    MKNormalTextCell *cell = [MKNormalTextCell initCellWithTableView:tableView];
+    MKLBNetworkStatusCell *cell = [MKLBNetworkStatusCell initCellWithTableView:tableView];
     cell.dataModel = self.section2List[indexPath.row];
     return cell;
+}
+
+#pragma mark - mk_textSwitchCellDelegate
+- (void)mk_textSwitchCellStatusChanged:(BOOL)isOn index:(NSInteger)index {
+    if (index == 0) {
+        self.dataModel.checkStatus = isOn;
+        return;
+    }
 }
 
 #pragma mark - MKTextFieldCellDelegate
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
-        self.dataModel.syncInterval = value;
+        self.dataModel.checkInterval = value;
+        return;
     }
 }
 
@@ -125,20 +121,10 @@ MKTextFieldCellDelegate>
 
 - (void)loadSection0Datas {
     [self.section0List removeAllObjects];
-    MKNormalTextCellModel *loraSettingModel = [[MKNormalTextCellModel alloc] init];
-    loraSettingModel.leftMsg = @"LoRa Setting";
-    loraSettingModel.showRightIcon = YES;
-    [self.section0List addObject:loraSettingModel];
-    
-    MKNormalTextCellModel *connectModel = [[MKNormalTextCellModel alloc] init];
-    connectModel.leftMsg = @"Network Check";
-    connectModel.showRightIcon = YES;
-    [self.section0List addObject:connectModel];
-    
-    MKNormalTextCellModel *multicastModel = [[MKNormalTextCellModel alloc] init];
-    multicastModel.leftMsg = @"Multicast Setting";
-    multicastModel.showRightIcon = YES;
-    [self.section0List addObject:multicastModel];
+    MKTextSwitchCellModel *checkModel = [[MKTextSwitchCellModel alloc] init];
+    checkModel.msg = @"Networkcheck";
+    checkModel.index = 0;
+    [self.section0List addObject:checkModel];
 }
 
 - (void)loadSection1Datas {
@@ -146,10 +132,10 @@ MKTextFieldCellDelegate>
     
     MKTextFieldCellModel *intervalModel = [[MKTextFieldCellModel alloc] init];
     intervalModel.index = 0;
-    intervalModel.msg = @"Time sync Interval             ";
+    intervalModel.msg = @"Networkcheck Interval      ";
     intervalModel.unit = @"              H";
     intervalModel.cellType = mk_realNumberOnly;
-    intervalModel.textPlaceholder = @"0~240";
+    intervalModel.textPlaceholder = @"0~720";
     intervalModel.textFieldTextFont = MKFont(13.f);
     intervalModel.maxLength = 3;
     [self.section1List addObject:intervalModel];
@@ -157,22 +143,21 @@ MKTextFieldCellDelegate>
 
 - (void)loadSection2Datas {
     [self.section2List removeAllObjects];
-    MKNormalTextCellModel *payloadModel = [[MKNormalTextCellModel alloc] init];
-    payloadModel.leftMsg = @"Uplink Payload";
-    payloadModel.showRightIcon = YES;
-    [self.section2List addObject:payloadModel];
+    MKLBNetworkStatusCellModel *statusModel = [[MKLBNetworkStatusCellModel alloc] init];
+    statusModel.msg = @"Network Status";
+    [self.section2List addObject:statusModel];
 }
 
 #pragma mark - UI
 - (void)loadSubViews {
-    self.defaultTitle = @"LoRa";
-    [self.rightButton setImage:LOADICON(@"MKLoRaWAN-B", @"MKLBLoRaController", @"lb_slotSaveIcon.png") forState:UIControlStateNormal];
+    self.defaultTitle = @"Network Check";
+    [self.rightButton setImage:LOADICON(@"MKLoRaWAN-B", @"MKLBNetworkCheckController", @"lb_slotSaveIcon.png") forState:UIControlStateNormal];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
         make.top.mas_equalTo(defaultTopInset);
-        make.bottom.mas_equalTo(-VirtualHomeHeight - 49.f);
+        make.bottom.mas_equalTo(-VirtualHomeHeight);
     }];
 }
 
@@ -207,9 +192,9 @@ MKTextFieldCellDelegate>
     return _section2List;
 }
 
-- (MKLBLoRaDataModel *)dataModel {
+- (MKLBNetworkCheckModel *)dataModel {
     if (!_dataModel) {
-        _dataModel = [[MKLBLoRaDataModel alloc] init];
+        _dataModel = [[MKLBNetworkCheckModel alloc] init];
     }
     return _dataModel;
 }

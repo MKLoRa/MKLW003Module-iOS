@@ -10,4 +10,8 @@
 
 @implementation MKLBLoRaDataModel
 
+- (void)startReadWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
+    
+}
+
 @end

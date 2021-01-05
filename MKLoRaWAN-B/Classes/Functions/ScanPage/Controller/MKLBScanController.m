@@ -202,7 +202,8 @@ MKLBTabBarControllerDelegate>
 
 #pragma mark - MKLBScanPageCellDelegate
 - (void)lb_scanCellConnectButtonPressed:(NSInteger)index {
-    [self connectDeviceWithModel:self.dataList[index]];
+    [self pushTabBarPage];
+//    [self connectDeviceWithModel:self.dataList[index]];
 }
 
 #pragma mark - MKLBTabBarControllerDelegate
