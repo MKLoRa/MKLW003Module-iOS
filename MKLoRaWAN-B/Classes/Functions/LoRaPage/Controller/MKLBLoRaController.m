@@ -10,6 +10,8 @@
 
 #import "Masonry.h"
 
+#import "MLInputDodger.h"
+
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
@@ -20,7 +22,10 @@
 
 #import "MKLBLoRaDataModel.h"
 
+#import "MKLBLoRaSettingController.h"
 #import "MKLBNetworkCheckController.h"
+#import "MKLBMulticastGroupController.h"
+#import "MKLBUplinkPayloadController.h"
 
 @interface MKLBLoRaController ()<UITableViewDelegate,
 UITableViewDataSource,
@@ -44,6 +49,12 @@ MKTextFieldCellDelegate>
     NSLog(@"MKLBLoRaController销毁");
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.view.shiftHeightAsDodgeViewForMLInputDodger = 50.0f;
+    [self.view registerAsDodgeViewForMLInputDodgerWithOriginalY:self.view.frame.origin.y];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
@@ -65,9 +76,27 @@ MKTextFieldCellDelegate>
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        //LoRa Setting
+        MKLBLoRaSettingController *vc = [[MKLBLoRaSettingController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
     if (indexPath.section == 0 && indexPath.row == 1) {
         //Network Check
         MKLBNetworkCheckController *vc = [[MKLBNetworkCheckController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    if (indexPath.section == 0 && indexPath.row == 2) {
+        //Multicast Setting
+        MKLBMulticastGroupController *vc = [[MKLBMulticastGroupController alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    if (indexPath.section == 2 && indexPath.row == 0) {
+        //Uplink Payload
+        MKLBUplinkPayloadController *vc = [[MKLBUplinkPayloadController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }

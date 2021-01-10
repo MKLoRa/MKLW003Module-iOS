@@ -10,6 +10,8 @@
 
 #import "Masonry.h"
 
+#import "MLInputDodger.h"
+
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
@@ -17,8 +19,7 @@
 #import "MKHudManager.h"
 #import "MKTextSwitchCell.h"
 #import "MKTextFieldCell.h"
-
-#import "MKLBNetworkStatusCell.h"
+#import "MKNormalTextCell.h"
 
 #import "MKLBNetworkCheckModel.h"
 
@@ -45,6 +46,12 @@ MKTextFieldCellDelegate>
     NSLog(@"MKLBNetworkCheckController销毁");
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    self.view.shiftHeightAsDodgeViewForMLInputDodger = 50.0f;
+    [self.view registerAsDodgeViewForMLInputDodgerWithOriginalY:self.view.frame.origin.y];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
@@ -54,7 +61,8 @@ MKTextFieldCellDelegate>
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) {
-        return 88.f;
+        MKNormalTextCellModel *cellModel = self.section2List[indexPath.row];
+        return [cellModel cellHeightWithContentWidth:kViewWidth];
     }
     return 44.f;
 }
@@ -90,7 +98,7 @@ MKTextFieldCellDelegate>
         cell.delegate = self;
         return cell;
     }
-    MKLBNetworkStatusCell *cell = [MKLBNetworkStatusCell initCellWithTableView:tableView];
+    MKNormalTextCell *cell = [MKNormalTextCell initCellWithTableView:tableView];
     cell.dataModel = self.section2List[indexPath.row];
     return cell;
 }
@@ -143,8 +151,11 @@ MKTextFieldCellDelegate>
 
 - (void)loadSection2Datas {
     [self.section2List removeAllObjects];
-    MKLBNetworkStatusCellModel *statusModel = [[MKLBNetworkStatusCellModel alloc] init];
-    statusModel.msg = @"Network Status";
+    MKNormalTextCellModel *statusModel = [[MKNormalTextCellModel alloc] init];
+    statusModel.leftMsg = @"Network Status";
+    statusModel.noteMsg = @"*If Networkcheck function off, the Network status will only be valid on OTAA mode when the device in the process of join the network";
+    statusModel.noteMsgFont = MKFont(11.f);
+    statusModel.noteMsgColor = RGBCOLOR(102, 102, 102);
     [self.section2List addObject:statusModel];
 }
 

@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MKLBScannerDataModel : NSObject
 
+@property (nonatomic, assign)BOOL scanStatus;
+
+@property (nonatomic, assign)BOOL overLimitStatus;
+
 @end
 
 NS_ASSUME_NONNULL_END
