@@ -13,7 +13,6 @@
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
-#import "NSString+MKAdd.h"
 #import "UITableView+MKAdd.h"
 
 #import "MKHudManager.h"
@@ -251,7 +250,7 @@ mk_textSwitchCellDelegate>
 /// +号按钮点击事件
 - (void)mk_rawAdvDataOperation_addMethod {
     if (self.section3List.count > 5) {
-        [self.view showCentralToast:@"Max 5"];
+        [self.view showCentralToast:@"You can set up to 5 filters!"];
         return;
     }
     MKFilterRawAdvDataCellModel *cellModel = [[MKFilterRawAdvDataCellModel alloc] init];

@@ -15,7 +15,6 @@
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
-#import "NSString+MKAdd.h"
 
 #import "MKHudManager.h"
 #import "MKTextFieldCell.h"
@@ -296,7 +295,7 @@ MKLBOverLimitRssiCellDelegate>
         make.left.mas_equalTo(0);
         make.right.mas_equalTo(0);
         make.top.mas_equalTo(defaultTopInset);
-        make.bottom.mas_equalTo(-VirtualHomeHeight);
+        make.bottom.mas_equalTo(-VirtualHomeHeight - 49.f);
     }];
 }
 

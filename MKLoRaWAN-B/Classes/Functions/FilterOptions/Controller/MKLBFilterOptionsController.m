@@ -13,7 +13,6 @@
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
-#import "NSString+MKAdd.h"
 
 #import "MKHudManager.h"
 #import "MKNormalTextCell.h"

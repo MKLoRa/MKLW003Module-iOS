@@ -15,7 +15,6 @@
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
-#import "NSString+MKAdd.h"
 #import "UITableView+MKAdd.h"
 
 #import "MKHudManager.h"
