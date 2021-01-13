@@ -70,11 +70,8 @@ MKLoRaSettingCHCellDelegate>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.dataModel.needAdvanceSetting = YES;
-    self.dataModel.modem = 1;
-    self.dataModel.advancedStatus = YES;
     [self loadSubViews];
-    [self loadSectionDatas];
+    [self readDatasFromDevice];
 }
 
 #pragma mark - UITableViewDelegate
@@ -205,39 +202,68 @@ MKLoRaSettingCHCellDelegate>
     if (index == 0) {
         //modem
         self.dataModel.modem = (dataListIndex + 1);
+        MKTextButtonCellModel *modeModel = self.section0List[0];
+        modeModel.dataListIndex = dataListIndex;
         [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
     if (index == 1) {
         //region
         self.dataModel.region = index;
+        MKTextButtonCellModel *regionModel = self.section2List[0];
+        regionModel.dataListIndex = index;
+        //刷新了region，如果当前是存在高级设置的，需要同步更新所有的高级设置
+        if (self.dataModel.needAdvanceSetting) {
+            [self regionValueChanged];
+        }
         return;
     }
     if (index == 2) {
         //message type
         self.dataModel.messageType = index;
+        MKTextButtonCellModel *messageModel = self.section2List[1];
+        messageModel.dataListIndex = index;
         return;
     }
     if (index == 3) {
         //DR
+        self.dataModel.DR = index;
+        MKTextButtonCellModel *drModel = self.advSection3List[0];
+        drModel.dataListIndex = self.dataModel.DR;
         return;
     }
     if (index == 4) {
         //UplinkDellTime
+        self.dataModel.dellTime = index;
+        MKTextButtonCellModel *dellTimeModel = self.advSection3List[1];
+        dellTimeModel.dataListIndex = self.dataModel.dellTime;
         return;
     }
 }
 
 #pragma mark - MKTextFieldCellDelegate
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
+    if (index == 5) {
+        //AppKey
+        self.dataModel.appKey = value;
+        MKTextFieldCellModel *appKeyModel = self.otaaDataList[2];
+        appKeyModel.textFieldValue = self.dataModel.appKey;
+        return;
+    }
+    MKTextFieldCellModel *abpDataModel = self.abpDataList[index];
+    abpDataModel.textFieldValue = value;
     if (index == 0) {
         //DevEUI
         self.dataModel.devEUI = value;
+        MKTextFieldCellModel *devEUIModel2 = self.otaaDataList[0];
+        devEUIModel2.textFieldValue = self.dataModel.devEUI;
         return;
     }
     if (index == 1) {
         //AppEUI
         self.dataModel.appEUI = value;
+        MKTextFieldCellModel *appEUIModel2 = self.otaaDataList[1];
+        appEUIModel2.textFieldValue = self.dataModel.appEUI;
         return;
     }
     if (index == 2) {
@@ -255,21 +281,23 @@ MKLoRaSettingCHCellDelegate>
         self.dataModel.nwkSKey = value;
         return;
     }
-    if (index == 5) {
-        //AppKey
-        self.dataModel.appKey = value;
-        return;
-    }
+    
 }
 
 #pragma mark - mk_textSwitchCellDelegate
 - (void)mk_textSwitchCellStatusChanged:(BOOL)isOn index:(NSInteger)index {
     if (index == 0) {
         //Duty-cycle
+        self.dataModel.dutyIsOn = isOn;
+        MKTextSwitchCellModel *dutyModel = self.advSection2List[0];
+        dutyModel.isOn = self.dataModel.dutyIsOn;
         return;
     }
     if (index == 1) {
         //ADR
+        self.dataModel.adrIsOn = isOn;
+        MKTextSwitchCellModel *adrModel = self.advSection2List[1];
+        adrModel.isOn = self.dataModel.adrIsOn;
         return;
     }
 }
@@ -283,7 +311,9 @@ MKLoRaSettingCHCellDelegate>
 - (void)mk_loraSetting_chHighValueChanged:(NSString *)value
                               chHighIndex:(NSInteger)chHighIndex
                                 cellIndex:(NSInteger)index {
-    
+    self.dataModel.CHH = chHighIndex;
+    MKLoRaSettingCHCellModel *cellModel = self.advSection1List[0];
+    cellModel.chHighIndex = self.dataModel.CHH;
 }
 
 /// 选择了左侧高\低位的列表
@@ -293,7 +323,10 @@ MKLoRaSettingCHCellDelegate>
 - (void)mk_loraSetting_chLowValueChanged:(NSString *)value
                               chLowIndex:(NSInteger)chLowIndex
                                cellIndex:(NSInteger)index {
-    
+    self.dataModel.CHL = chLowIndex;
+    MKLoRaSettingCHCellModel *cellModel = self.advSection1List[0];
+    cellModel.chLowIndex = self.dataModel.CHL;
+    cellModel.chHighValueList = [self.dataModel CHHValueList];
 }
 
 #pragma mark - MKLoRaAdvancedSettingCellDelegate
@@ -301,6 +334,45 @@ MKLoRaSettingCHCellDelegate>
     self.dataModel.advancedStatus = isOn;
     MKLoRaAdvancedSettingCellModel *cellModel = self.advSection0List[0];
     cellModel.isOn = isOn;
+    [self.tableView reloadData];
+}
+
+#pragma mark - interface
+- (void)readDatasFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf loadSectionDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+#pragma mark - private method
+- (void)regionValueChanged {
+    [self.dataModel configAdvanceSettingDefaultParams];
+    //CH
+    MKLoRaSettingCHCellModel *cellModel = self.advSection1List[0];
+    cellModel.chLowValueList = [self.dataModel CHLValueList];
+    cellModel.chLowIndex = self.dataModel.CHL;
+    cellModel.chHighValueList = [self.dataModel CHHValueList];
+    cellModel.chHighIndex = self.dataModel.CHH;
+    //Duty-cycle
+    MKTextSwitchCellModel *dutyModel = self.advSection2List[0];
+    dutyModel.isOn = self.dataModel.dutyIsOn;
+    //ADR
+    MKTextSwitchCellModel *adrModel = self.advSection2List[1];
+    adrModel.isOn = self.dataModel.adrIsOn;
+    //DR
+    MKTextButtonCellModel *drModel = self.advSection3List[0];
+    drModel.dataList = [self.dataModel DRValueList];
+    drModel.dataListIndex = self.dataModel.DR;
+    //UplinkDellTime
+    MKTextButtonCellModel *dellTimeModel = self.advSection3List[1];
+    dellTimeModel.dataList = @[@"0",@"1"];
+    dellTimeModel.dataListIndex = self.dataModel.dellTime;
     [self.tableView reloadData];
 }
 
@@ -328,6 +400,7 @@ MKLoRaSettingCHCellDelegate>
     modeModel.index = 0;
     modeModel.msg = @"LoRaWAN Mode";
     modeModel.dataList = @[@"ABP",@"OTAA"];
+    modeModel.dataListIndex = (self.dataModel.modem - 1);
     modeModel.buttonLabelFont = MKFont(13.f);
     [self.section0List addObject:modeModel];
 }
@@ -340,6 +413,7 @@ MKLoRaSettingCHCellDelegate>
     devEUIModel.textFieldType = mk_hexCharOnly;
     devEUIModel.clearButtonMode = UITextFieldViewModeAlways;
     devEUIModel.maxLength = 16;
+    devEUIModel.textFieldValue = self.dataModel.devEUI;
     [self.abpDataList addObject:devEUIModel];
     
     MKTextFieldCellModel *appEUIModel = [[MKTextFieldCellModel alloc] init];
@@ -349,6 +423,7 @@ MKLoRaSettingCHCellDelegate>
     appEUIModel.textFieldType = mk_hexCharOnly;
     appEUIModel.clearButtonMode = UITextFieldViewModeAlways;
     appEUIModel.maxLength = 16;
+    appEUIModel.textFieldValue = self.dataModel.appEUI;
     [self.abpDataList addObject:appEUIModel];
     
     MKTextFieldCellModel *devAddrModel = [[MKTextFieldCellModel alloc] init];
@@ -358,6 +433,7 @@ MKLoRaSettingCHCellDelegate>
     devAddrModel.textFieldType = mk_hexCharOnly;
     devAddrModel.clearButtonMode = UITextFieldViewModeAlways;
     devAddrModel.maxLength = 8;
+    devAddrModel.textFieldValue = self.dataModel.devAddr;
     [self.abpDataList addObject:devAddrModel];
     
     MKTextFieldCellModel *appSkeyModel = [[MKTextFieldCellModel alloc] init];
@@ -367,6 +443,7 @@ MKLoRaSettingCHCellDelegate>
     appSkeyModel.textFieldType = mk_hexCharOnly;
     appSkeyModel.clearButtonMode = UITextFieldViewModeAlways;
     appSkeyModel.maxLength = 32;
+    appSkeyModel.textFieldValue = self.dataModel.appSKey;
     [self.abpDataList addObject:appSkeyModel];
     
     MKTextFieldCellModel *nwkSkeyModel = [[MKTextFieldCellModel alloc] init];
@@ -376,6 +453,7 @@ MKLoRaSettingCHCellDelegate>
     nwkSkeyModel.textFieldType = mk_hexCharOnly;
     nwkSkeyModel.clearButtonMode = UITextFieldViewModeAlways;
     nwkSkeyModel.maxLength = 32;
+    nwkSkeyModel.textFieldValue = self.dataModel.nwkSKey;
     [self.abpDataList addObject:nwkSkeyModel];
 }
 
@@ -387,6 +465,7 @@ MKLoRaSettingCHCellDelegate>
     devEUIModel.textFieldType = mk_hexCharOnly;
     devEUIModel.clearButtonMode = UITextFieldViewModeAlways;
     devEUIModel.maxLength = 16;
+    devEUIModel.textFieldValue = self.dataModel.devEUI;
     [self.otaaDataList addObject:devEUIModel];
     
     MKTextFieldCellModel *appEUIModel = [[MKTextFieldCellModel alloc] init];
@@ -396,6 +475,7 @@ MKLoRaSettingCHCellDelegate>
     appEUIModel.textFieldType = mk_hexCharOnly;
     appEUIModel.clearButtonMode = UITextFieldViewModeAlways;
     appEUIModel.maxLength = 16;
+    appEUIModel.textFieldValue = self.dataModel.appEUI;
     [self.otaaDataList addObject:appEUIModel];
     
     MKTextFieldCellModel *appKeyModel = [[MKTextFieldCellModel alloc] init];
@@ -405,6 +485,7 @@ MKLoRaSettingCHCellDelegate>
     appKeyModel.textFieldType = mk_hexCharOnly;
     appKeyModel.clearButtonMode = UITextFieldViewModeAlways;
     appKeyModel.maxLength = 32;
+    appKeyModel.textFieldValue = self.dataModel.appKey;
     [self.otaaDataList addObject:appKeyModel];
 }
 
@@ -412,8 +493,9 @@ MKLoRaSettingCHCellDelegate>
     MKTextButtonCellModel *regionModel = [[MKTextButtonCellModel alloc] init];
     regionModel.index = 1;
     regionModel.msg = @"Region/Subnet";
-    regionModel.dataList = @[@"AS923",@"AU915",@"CN470",@"CN778",@"EU433",@"EU868",@"KR920",@"IN865",@"US915",@"RU864"];
+    regionModel.dataList = @[@"AS923",@"AU915",@"CN470",@"CN779",@"EU433",@"EU868",@"KR920",@"IN865",@"US915",@"RU864"];
     regionModel.buttonLabelFont = MKFont(13.f);
+    regionModel.dataListIndex = self.dataModel.region;
     [self.section2List addObject:regionModel];
     
     MKTextButtonCellModel *messageModel = [[MKTextButtonCellModel alloc] init];
@@ -421,12 +503,14 @@ MKLoRaSettingCHCellDelegate>
     messageModel.msg = @"Message Type";
     messageModel.dataList = @[@"Unconfirmed",@"Confirmed"];
     messageModel.buttonLabelFont = MKFont(13.f);
+    messageModel.dataListIndex = self.dataModel.messageType;
     [self.section2List addObject:messageModel];
 }
 
 #pragma mark - 加载底部列表
 - (void)loadAdvSection0List {
     MKLoRaAdvancedSettingCellModel *cellModel = [[MKLoRaAdvancedSettingCellModel alloc] init];
+    cellModel.isOn = self.dataModel.advancedStatus;
     [self.advSection0List addObject:cellModel];
 }
 
@@ -435,29 +519,34 @@ MKLoRaSettingCHCellDelegate>
     cellModel.msg = @"CH";
     cellModel.noteMsg = @"*It is only used for US915,AU915,CN470";
     cellModel.noteMsgColor = RGBCOLOR(102, 102, 102);
-    cellModel.chLowValueList = @[@"0",@"1",@"2"];
-    cellModel.chHighValueList = @[@"3",@"4",@"5"];
+    cellModel.chLowValueList = [self.dataModel CHLValueList];
+    cellModel.chLowIndex = self.dataModel.CHL;
+    cellModel.chHighValueList = [self.dataModel CHHValueList];
+    cellModel.chHighIndex = self.dataModel.CHH;
     [self.advSection1List addObject:cellModel];
 }
 
 - (void)loadAdvSection2List {
     MKTextSwitchCellModel *dutyModel = [[MKTextSwitchCellModel alloc] init];
+    dutyModel.index = 0;
     dutyModel.msg = @"Duty-cycle";
     dutyModel.noteMsg = @"*It is only used for EU868,CN779, EU433,AS923,KR920,IN865,and RU864. Off: The uplink report interval will not be limit by region freqency. On:The uplink report interval will be limit by region freqency.";
     dutyModel.noteMsgColor = RGBCOLOR(102, 102, 102);
-    dutyModel.index = 0;
+    dutyModel.isOn = self.dataModel.dutyIsOn;
     [self.advSection2List addObject:dutyModel];
     
     MKTextSwitchCellModel *adrModel = [[MKTextSwitchCellModel alloc] init];
-    adrModel.msg = @"ADR";
     adrModel.index = 1;
+    adrModel.msg = @"ADR";
+    adrModel.isOn = self.dataModel.adrIsOn;
     [self.advSection2List addObject:adrModel];
 }
 
 - (void)loadAdvSection3List {
     MKTextButtonCellModel *drModel = [[MKTextButtonCellModel alloc] init];
     drModel.msg = @"DR";
-    drModel.dataList = @[@"0",@"1",@"2",@"3",@"4",@"5"];
+    drModel.dataList = [self.dataModel DRValueList];
+    drModel.dataListIndex = self.dataModel.DR;
     drModel.index = 3;
     drModel.noteMsg = @"*DR only can be changed after the ADR off.";
     drModel.noteMsgColor = RGBCOLOR(102, 102, 102);
@@ -466,6 +555,7 @@ MKLoRaSettingCHCellDelegate>
     MKTextButtonCellModel *dellTimeModel = [[MKTextButtonCellModel alloc] init];
     dellTimeModel.msg = @"UplinkDellTime";
     dellTimeModel.dataList = @[@"0",@"1"];
+    dellTimeModel.dataListIndex = self.dataModel.dellTime;
     dellTimeModel.index = 4;
     dellTimeModel.noteMsg = @"*It is only used for AS923 and AU915.0: Dell Time no limit,1:Dell Time 400ms.";
     dellTimeModel.noteMsgColor = RGBCOLOR(102, 102, 102);

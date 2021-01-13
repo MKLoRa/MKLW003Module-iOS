@@ -38,6 +38,7 @@
 #import "MKLBScannerDataModel.h"
 #import "MKLBOverLimitRssiCell.h"
 #import "MKLBScanController.h"
+#import "MKLBConnectModel.h"
 #import "MKLBScanPageModel.h"
 #import "MKLBScanPageCell.h"
 #import "MKLBSettingController.h"

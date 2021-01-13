@@ -184,6 +184,7 @@ static CGFloat const humidityIconHeight = 22.f;
     self.batteryLabel.text = [NSString stringWithFormat:@"%ld%@",(long)[dataModel.batteryPercentage integerValue],@"%"];
     self.temperatureLabel.text = [[NSString stringWithFormat:@"%ld",(long)[dataModel.temperature integerValue]] stringByAppendingString:@"°C"];
     self.humidityLabel.text = [[NSString stringWithFormat:@"%ld",(long)[dataModel.humidity integerValue]] stringByAppendingString:@"%RH"];
+    self.connectButton.hidden = !_dataModel.connectable;
 }
 
 #pragma mark - getter

@@ -128,7 +128,7 @@ static dispatch_once_t onceToken;
         NSLog(@"+++++++++++++++++接收数据出错");
         return;
     }
-    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA00"]]) {
+    if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA01"]]) {
         //引起设备断开连接的类型
         NSString *content = [MKBLEBaseSDKAdopter hexStringFromData:characteristic.value];
         [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_deviceDisconnectTypeNotification
@@ -262,21 +262,27 @@ static dispatch_once_t onceToken;
     self.failedBlock = failedBlock;
     MKLBPeripheral *trackerPeripheral = [[MKLBPeripheral alloc] initWithPeripheral:peripheral];
     [[MKBLEBaseCentralManager shared] connectDevice:trackerPeripheral sucBlock:^(CBPeripheral * _Nonnull peripheral) {
-        [self sendPasswordToDevice];
+//        [self sendPasswordToDevice];
+        self.connectStatus = mk_lb_bleCentralConnectStatusConnected;
+        [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
+        if (self.sucBlock) {
+            self.sucBlock([MKBLEBaseCentralManager shared].peripheral);
+        }
     } failedBlock:failedBlock];
 }
 
 - (void)sendPasswordToDevice {
-    NSString *commandData = @"";
+    NSString *commandData = @"ed010108";
     for (NSInteger i = 0; i < self.password.length; i ++) {
         int asciiCode = [self.password characterAtIndex:i];
         commandData = [commandData stringByAppendingString:[NSString stringWithFormat:@"%1lx",(unsigned long)asciiCode]];
     }
-    MKLBOperation *operation = [[MKLBOperation alloc] initOperationWithID:mk_lb_taskConfigPasswordOperation resetNum:NO commandBlock:^{
+    
+    MKLBOperation *operation = [[MKLBOperation alloc] initOperationWithID:mk_lb_connectPasswordOperation resetNum:NO commandBlock:^{
         [[MKBLEBaseCentralManager shared] sendDataToPeripheral:commandData characteristic:[MKBLEBaseCentralManager shared].peripheral.lb_password type:CBCharacteristicWriteWithResponse];
     } completeBlock:^(NSError * _Nonnull error, mk_lb_taskOperationID operationID, id  _Nonnull returnData) {
         NSDictionary *dataDic = ((NSArray *)returnData[mk_lb_dataInformation])[0];
-        if ([dataDic[@"state"] isEqualToString:@"01"]) {
+        if (![dataDic[@"state"] isEqualToString:@"01"]) {
             //密码错误
             [self operationFailedBlockWithMsg:@"Password Error" failedBlock:self.failedBlock];
             return ;
@@ -436,7 +442,7 @@ static dispatch_once_t onceToken;
     }
     NSString *header = [[MKBLEBaseSDKAdopter hexStringFromData:manufacturerData] substringWithRange:NSMakeRange(0, 4)];
     NSLog(@"接收到的数据头:%@",header);
-    if (![[header uppercaseString] isEqualToString:@"AA00"]) {
+    if (![[header uppercaseString] isEqualToString:@"00AA"]) {
         return nil;
     }
     NSString *content = [[MKBLEBaseSDKAdopter hexStringFromData:manufacturerData] substringFromIndex:4];
@@ -462,6 +468,7 @@ static dispatch_once_t onceToken;
         @"batteryPercentage":batteryPercentage,
         @"temperature":temperature,
         @"humidity":humidity,
+        @"connectable":advDic[CBAdvertisementDataIsConnectable],
     };
 }
 

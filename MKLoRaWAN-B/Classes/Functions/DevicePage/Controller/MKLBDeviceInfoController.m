@@ -182,8 +182,6 @@ MKLBFirmwareCellDelegate>
 }
 
 - (void)loadSection0Datas {
-    [self.section0List removeAllObjects];
-    
     MKNormalTextCellModel *batteryModel = [[MKNormalTextCellModel alloc] init];
     batteryModel.leftMsg = @"Battery Level";
     [self.section0List addObject:batteryModel];
@@ -202,16 +200,12 @@ MKLBFirmwareCellDelegate>
 }
 
 - (void)loadSection1Datas {
-    [self.section1List removeAllObjects];
-    
     MKLBFirmwareCellModel *cellModel = [[MKLBFirmwareCellModel alloc] init];
     cellModel.msg = @"Firmware Version";
     [self.section1List addObject:cellModel];
 }
 
 - (void)loadSection2Datas {
-    [self.section2List removeAllObjects];
-    
     MKNormalTextCellModel *hardModel = [[MKNormalTextCellModel alloc] init];
     hardModel.leftMsg = @"Hardware Version";
     [self.section2List addObject:hardModel];

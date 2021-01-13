@@ -122,24 +122,12 @@ MKLBTabBarControllerDelegate>
 #pragma mark - super method
 
 - (void)rightButtonMethod {
-    /*
     MKLBAboutPageModel *model = [[MKLBAboutPageModel alloc] init];
     model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_aboutIcon.png");
     model.appName = @"MokoTracker+";
     model.appVersion = @"1.0.0";
     MKTrackerAboutController *vc = [[MKTrackerAboutController alloc] initWithProtocol:model];
     [self.navigationController pushViewController:vc animated:YES];
-     */
-    NSDictionary *dic = @{
-        @"rssi":@(-77),
-//        @"peripheral":peripheral,
-        @"deviceName":@"LW003-BV2",
-        @"macAddress":@"11:22:33:44:55:66",
-        @"batteryPercentage":@"95",
-        @"temperature":@(-100),
-        @"humidity":@(120),
-    };
-    [self mk_lb_receiveDevice:dic];
 }
 
 #pragma mark - UITableViewDataSource
@@ -202,8 +190,7 @@ MKLBTabBarControllerDelegate>
 
 #pragma mark - MKLBScanPageCellDelegate
 - (void)lb_scanCellConnectButtonPressed:(NSInteger)index {
-    [self pushTabBarPage];
-//    [self connectDeviceWithModel:self.dataList[index]];
+    [self connectDeviceWithModel:self.dataList[index]];
 }
 
 #pragma mark - MKLBTabBarControllerDelegate
@@ -441,6 +428,7 @@ MKLBTabBarControllerDelegate>
 //            [MKLBDatabaseManager initStepDataBase];
         [self performSelector:@selector(pushTabBarPage) withObject:nil afterDelay:0.6f];
     } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
         [self.view showCentralToast:error.userInfo[@"errorInfo"]];
         [self connectFailed];
     }];

@@ -53,6 +53,7 @@ MKTextFieldCellDelegate>
     [super viewDidAppear:animated];
     self.view.shiftHeightAsDodgeViewForMLInputDodger = 50.0f;
     [self.view registerAsDodgeViewForMLInputDodgerWithOriginalY:self.view.frame.origin.y];
+    [self readDataFromDevice];
 }
 
 - (void)viewDidLoad {
@@ -142,6 +143,32 @@ MKTextFieldCellDelegate>
     if (index == 0) {
         self.dataModel.syncInterval = value;
     }
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startReadWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf updateCellState];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+- (void)updateCellState {
+    MKNormalTextCellModel *loraSettingModel = self.section0List[0];
+    loraSettingModel.rightMsg = [NSString stringWithFormat:@"%@/%@/%@",self.dataModel.modem,self.dataModel.region,self.dataModel.classType];
+    MKNormalTextCellModel *connectModel = self.section0List[1];
+    connectModel.rightMsg = self.dataModel.networkStatus;
+    MKNormalTextCellModel *multicastModel = self.section0List[2];
+    multicastModel.rightMsg = (self.dataModel.multicastStatus ? @"ON" : @"OFF");
+    
+    MKTextFieldCellModel *intervalModel = self.section1List[0];
+    intervalModel.textFieldValue = self.dataModel.syncInterval;
+    [self.tableView reloadData];
 }
 
 #pragma mark - loadSectionDatas

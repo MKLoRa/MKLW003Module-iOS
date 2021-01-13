@@ -16,12 +16,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *region;
 
-@property (nonatomic, copy)NSString *deviceType;
+@property (nonatomic, copy)NSString *classType;
 
 /// 网络连接状态
-@property (nonatomic, assign)BOOL connected;
+@property (nonatomic, copy)NSString *networkStatus;
 
-@property (nonatomic, assign)BOOL multicastSettingStatus;
+@property (nonatomic, assign)BOOL multicastStatus;
 
 @property (nonatomic, copy)NSString *syncInterval;
 

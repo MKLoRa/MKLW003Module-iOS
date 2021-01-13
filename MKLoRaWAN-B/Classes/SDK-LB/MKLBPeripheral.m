@@ -30,7 +30,7 @@
 - (void)discoverServices {
     NSArray *services = @[[CBUUID UUIDWithString:@"180F"],  //电池电量
                           [CBUUID UUIDWithString:@"180A"],  //厂商信息
-                          [CBUUID UUIDWithString:@"FF00"]]; //自定义
+                          [CBUUID UUIDWithString:@"AA00"]]; //自定义
     [self.peripheral discoverServices:services];
 }
 

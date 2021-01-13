@@ -42,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign)NSInteger index;
 
+/// 设备可连接状态
+@property (nonatomic, assign)BOOL connectable;
+
 @end
 
 NS_ASSUME_NONNULL_END
