@@ -111,6 +111,12 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
             @"interval":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadBeaconReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"09"]) {
+        //读取重复数据过滤类型
+        resultDic = @{
+            @"type":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadFilterRepeatingDataTypeOperation;
     }else if ([cmd isEqualToString:@"0a"]) {
         //读取上报的iBeacon数据类型
         NSString *state = [MKBLEBaseSDKAdopter binaryByhex:content];
@@ -363,6 +369,9 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"07"]) {
         //设置iBeacon数据上报间隔
         operationID = mk_lb_taskConfigBeaconReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"09"]) {
+        //配置重复数据过滤规则
+        operationID = mk_lb_taskConfigFilterRepeatingDataTypeOperation;
     }else if ([cmd isEqualToString:@"0a"]) {
         //设置iBeacon数据上报类型
         operationID = mk_lb_taskConfigBeaconReportDataTypeOperation;

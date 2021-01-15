@@ -43,6 +43,13 @@ typedef NS_ENUM(NSInteger, mk_lb_iBeaconReportDataMaxLength) {
     mk_lb_iBeaconReportDataMax115Byte,
 };
 
+typedef NS_ENUM(NSInteger, mk_lb_filterRepeatingDataType) {
+    mk_lb_filterRepeatingDataTypeNo,
+    mk_lb_filterRepeatingDataTypeMac,
+    mk_lb_filterRepeatingDataTypeMacAndDataType,
+    mk_lb_filterRepeatingDataTypeMacRawData,
+};
+
 @interface MKLBInterface (MKLBConfig)
 
 #pragma mark ****************************************设备系统应用信息设置************************************************
@@ -84,6 +91,14 @@ typedef NS_ENUM(NSInteger, mk_lb_iBeaconReportDataMaxLength) {
 + (void)lb_configBeaconReportInterval:(NSInteger)interval
                              sucBlock:(void (^)(void))sucBlock
                           failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure duplicate data filter type.
+/// @param dataType dataType
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configFilterRepeatingDataType:(mk_lb_filterRepeatingDataType)dataType
+                                sucBlock:(void (^)(void))sucBlock
+                             failedBlock:(void (^)(NSError *error))failedBlock;
 
 /// Configure the reported iBeacon data type.
 /// @param unknownIsOn Whether unknown data is reported.
@@ -360,6 +375,8 @@ typedef NS_ENUM(NSInteger, mk_lb_iBeaconReportDataMaxLength) {
                    scanWindow:(NSInteger)scanWindow
                      sucBlock:(void (^)(void))sucBlock
                   failedBlock:(void (^)(NSError *error))failedBlock;
+
+#pragma mark ****************************************蓝牙过滤规则************************************************
 
 @end
 

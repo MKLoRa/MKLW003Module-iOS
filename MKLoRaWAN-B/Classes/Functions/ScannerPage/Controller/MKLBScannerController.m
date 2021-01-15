@@ -61,6 +61,7 @@ MKLBOverLimitRssiCellDelegate>
     [super viewDidAppear:animated];
     self.view.shiftHeightAsDodgeViewForMLInputDodger = 50.0f;
     [self.view registerAsDodgeViewForMLInputDodgerWithOriginalY:self.view.frame.origin.y];
+    [self readDataFromDevice];
 }
 
 - (void)viewDidLoad {
@@ -72,6 +73,18 @@ MKLBOverLimitRssiCellDelegate>
 #pragma mark - super method
 - (void)leftButtonMethod {
     [[NSNotificationCenter defaultCenter] postNotificationName:@"mk_lb_popToRootViewControllerNotification" object:nil];
+}
+
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel configWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -185,25 +198,67 @@ MKLBOverLimitRssiCellDelegate>
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
         //scan interval
+        self.dataModel.scanInterval = value;
         return;
     }
     if (index == 1) {
         //scan window
+        self.dataModel.scanWindow = value;
         return;
     }
     if (index == 2) {
         //Over-limit MAC Quantities
+        self.dataModel.quantities = value;
         return;
     }
     if (index == 3) {
         //Duration
+        self.dataModel.duration = value;
         return;
     }
 }
 
 #pragma mark - MKLBOverLimitRssiCellDelegate
 - (void)mk_overLimitRssiValueChanged:(NSInteger)sliderValue {
+    self.dataModel.rssi = sliderValue;
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf updateCellState];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+- (void)updateCellState {
+    MKTextSwitchCellModel *scanSwitchModel = self.section0List[0];
+    scanSwitchModel.isOn = self.dataModel.scanStatus;
     
+    MKTextFieldCellModel *scanIntervalModel = self.section1List[0];
+    scanIntervalModel.textFieldValue = self.dataModel.scanInterval;
+    
+    MKTextFieldCellModel *scanWindowModel = self.section1List[1];
+    scanWindowModel.textFieldValue = self.dataModel.scanWindow;
+    
+    MKTextSwitchCellModel *overLimitStatusModel = self.section2List[0];
+    overLimitStatusModel.isOn = self.dataModel.overLimitStatus;
+    
+    MKLBOverLimitRssiCellModel *rssiModel = self.section3List[0];
+    rssiModel.sliderValue = self.dataModel.rssi;
+    
+    MKTextFieldCellModel *quanModel = self.section4List[0];
+    quanModel.textFieldValue = self.dataModel.quantities;
+    
+    MKTextFieldCellModel *durationModel = self.section4List[1];
+    durationModel.textFieldValue = self.dataModel.duration;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - loadSectionDatas

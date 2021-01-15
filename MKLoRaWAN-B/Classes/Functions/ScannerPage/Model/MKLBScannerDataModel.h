@@ -20,11 +20,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)BOOL overLimitStatus;
 
+/// 扫描MAC超限触发RSSI
 @property (nonatomic, assign)NSInteger rssi;
 
+/// 扫描MAC超限数量
 @property (nonatomic, copy)NSString *quantities;
 
+/// 扫描MAC超限间隔
 @property (nonatomic, copy)NSString *duration;
+
+- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
+
+- (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
 

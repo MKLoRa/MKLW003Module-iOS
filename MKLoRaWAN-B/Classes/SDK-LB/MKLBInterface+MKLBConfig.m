@@ -104,6 +104,20 @@
                    failedBlock:failedBlock];
 }
 
++ (void)lb_configFilterRepeatingDataType:(mk_lb_filterRepeatingDataType)dataType
+                                sucBlock:(void (^)(void))sucBlock
+                             failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *type = [NSString stringWithFormat:@"%ld",(long)dataType];
+    if (type.length == 1) {
+        type = [@"0" stringByAppendingString:type];
+    }
+    NSString *commandString = [@"ed010901" stringByAppendingString:type];
+    [self configDataWithTaskID:mk_lb_taskConfigFilterRepeatingDataTypeOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
 + (void)lb_configBeaconReportDataType:(BOOL)unknownIsOn
                           iBeaconIsOn:(BOOL)iBeaconIsOn
                         eddystoneIsOn:(BOOL)eddystoneIsOn

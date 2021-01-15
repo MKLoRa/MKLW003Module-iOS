@@ -17,6 +17,7 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
 #pragma mark - 设备系统应用信息读取
     mk_lb_taskReadDeviceInfoReportIntervalOperation,    //读取设备信息上报间隔
     mk_lb_taskReadBeaconReportIntervalOperation,        //读取iBeacon数据上报间隔
+    mk_lb_taskReadFilterRepeatingDataTypeOperation,     //读取重复数据过滤类型
     mk_lb_taskReadBeaconReportDataTypeOperation,        //读取上报的iBeacon数据类型
     mk_lb_taskReadBeaconReportDataMaxLengthOperation,   //读取iBeacon最大上报数据长度
     mk_lb_taskReadMacAddressOperation,          //读取设备mac地址
@@ -56,6 +57,12 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskReadScanStatusOperation,              //读取蓝牙扫描开关状态
     mk_lb_taskReadScanParamsOperation,              //读取蓝牙扫描参数
     
+#pragma mark - 蓝牙过滤规则
+    mk_lb_taskReadBLELogicalRelationshipOperation,  //读取两种蓝牙过滤规则关系
+    mk_lb_taskReadBLEFilterAStatusOperation,        //读取蓝牙过滤规则1的开关状态
+    
+    mk_lb_taskReadBLEFilterBStatusOperation,        //读取蓝牙过滤规则2的开关状态
+    
     
 #pragma mark - 设备系统应用信息配置
     mk_lb_taskConfigConnectNetworkOperation,            //配置设备入网/重启
@@ -64,6 +71,7 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     
     mk_lb_taskConfigPasswordOperation,          //设置密码
     mk_lb_taskConfigBeaconReportIntervalOperation,      //配置iBeacon数据上报间隔
+    mk_lb_taskConfigFilterRepeatingDataTypeOperation,   //配置重复数据过滤规则
     mk_lb_taskConfigBeaconReportDataTypeOperation,      //配置iBeacon数据上报类型
     mk_lb_taskConfigBeaconReportDataMaxLenOperation,    //配置iBeacon数据最大上报长度
     mk_lb_taskConfigBeaconReportDataContentOperation,   //配置iBeacon上报数据内容选择
