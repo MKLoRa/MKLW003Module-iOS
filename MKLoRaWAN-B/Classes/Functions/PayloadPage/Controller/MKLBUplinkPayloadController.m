@@ -43,6 +43,8 @@ MKTextButtonCellDelegate>
 
 @property (nonatomic, strong)NSMutableArray *section3List;
 
+@property (nonatomic, strong)MKLBUplinkPayloadModel *dataModel;
+
 @end
 
 @implementation MKLBUplinkPayloadController
@@ -60,7 +62,20 @@ MKTextButtonCellDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadSectionDatas];
+    [self readDataFromDevice];
+}
+
+#pragma mark - super method
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel configDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -165,10 +180,12 @@ MKTextButtonCellDelegate>
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
         //devie info payload里面的输入框
+        self.dataModel.deviceInfoInterval = value;
         return;
     }
     if (index == 1) {
         //Beacon Payload里面的输入框
+        self.dataModel.beaconReportInterval = value;
         return;
     }
 }
@@ -185,14 +202,17 @@ MKTextButtonCellDelegate>
         //Report Data Type
         if (buttonIndex == 0) {
             //iBeacon
+            self.dataModel.iBeaconIsOn = selected;
             return;
         }
         if (buttonIndex == 1) {
             //eddystone
+            self.dataModel.eddystoneIsOn = selected;
             return;
         }
         if (buttonIndex == 2) {
             //unknown
+            self.dataModel.unknownIsOn = selected;
             return;
         }
         return;
@@ -201,22 +221,27 @@ MKTextButtonCellDelegate>
         //Report Data Content
         if (buttonIndex == 0) {
             //Timestamp
+            self.dataModel.timestampIsOn = selected;
             return;
         }
         if (buttonIndex == 1) {
             //MAC
+            self.dataModel.macIsOn = selected;
             return;
         }
         if (buttonIndex == 2) {
             //RSSI
+            self.dataModel.rssiIsOn = selected;
             return;
         }
         if (buttonIndex == 3) {
             //Broadcast Raw Data
+            self.dataModel.broadcastIsOn = selected;
             return;
         }
         if (buttonIndex == 4) {
             //Response Raw Data
+            self.dataModel.responseIsOn = selected;
             return;
         }
         return;
@@ -232,7 +257,24 @@ MKTextButtonCellDelegate>
 - (void)mk_loraTextButtonCellSelected:(NSInteger)index
                         dataListIndex:(NSInteger)dataListIndex
                                 value:(NSString *)value {
-    
+    if (index == 0) {
+        //Report Data Max Length
+        self.dataModel.maxLenType = dataListIndex;
+        return;
+    }
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf loadSectionDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - loadSectionDatas
@@ -251,6 +293,7 @@ MKTextButtonCellDelegate>
     cellModel.textPlaceholder = @"1~14400";
     cellModel.textFieldType = mk_realNumberOnly;
     cellModel.textFieldTextFont = MKFont(13.f);
+    cellModel.textFieldValue = self.dataModel.deviceInfoInterval;
     cellModel.maxLength = 5;
     cellModel.unit = @"Min";
     cellModel.unitFont = MKFont(13.f);
@@ -277,6 +320,7 @@ MKTextButtonCellDelegate>
     cellModel.msg = @"Report Data Max Length";
     cellModel.index = 0;
     cellModel.dataList = @[@"1",@"2"];
+    cellModel.dataListIndex = self.dataModel.maxLenType;
     cellModel.noteMsg = @"*Max length for one report data packet. 1: max 242 bytes; 2: max 115 bytes";
     [self.section2List addObject:cellModel];
 }
@@ -288,6 +332,7 @@ MKTextButtonCellDelegate>
     cellModel.textPlaceholder = @"10-65535";
     cellModel.textFieldType = mk_realNumberOnly;
     cellModel.textFieldTextFont = MKFont(13.f);
+    cellModel.textFieldValue = self.dataModel.beaconReportInterval;
     cellModel.maxLength = 5;
     cellModel.unit = @"S";
     cellModel.unitFont = MKFont(13.f);
@@ -299,14 +344,17 @@ MKTextButtonCellDelegate>
     MKMixedChoiceCellButtonModel *iBeaconModel = [[MKMixedChoiceCellButtonModel alloc] init];
     iBeaconModel.buttonIndex = 0;
     iBeaconModel.buttonMsg = @"iBeacon";
+    iBeaconModel.selected = self.dataModel.iBeaconIsOn;
     
     MKMixedChoiceCellButtonModel *eddModel = [[MKMixedChoiceCellButtonModel alloc] init];
     eddModel.buttonIndex = 1;
     eddModel.buttonMsg = @"eddystone";
+    eddModel.selected = self.dataModel.eddystoneIsOn;
     
     MKMixedChoiceCellButtonModel *unknownModel = [[MKMixedChoiceCellButtonModel alloc] init];
     unknownModel.buttonIndex = 2;
     unknownModel.buttonMsg = @"unknown";
+    unknownModel.selected = self.dataModel.unknownIsOn;
     
     return @[iBeaconModel,eddModel,unknownModel];
 }
@@ -315,22 +363,27 @@ MKTextButtonCellDelegate>
     MKMixedChoiceCellButtonModel *stampModel = [[MKMixedChoiceCellButtonModel alloc] init];
     stampModel.buttonIndex = 0;
     stampModel.buttonMsg = @"Timestamp";
+    stampModel.selected = self.dataModel.timestampIsOn;
     
     MKMixedChoiceCellButtonModel *macModel = [[MKMixedChoiceCellButtonModel alloc] init];
     macModel.buttonIndex = 1;
     macModel.buttonMsg = @"MAC";
+    macModel.selected = self.dataModel.macIsOn;
     
     MKMixedChoiceCellButtonModel *rssiModel = [[MKMixedChoiceCellButtonModel alloc] init];
     rssiModel.buttonIndex = 2;
     rssiModel.buttonMsg = @"RSSI";
+    rssiModel.selected = self.dataModel.rssiIsOn;
     
     MKMixedChoiceCellButtonModel *rawDataModel = [[MKMixedChoiceCellButtonModel alloc] init];
     rawDataModel.buttonIndex = 3;
     rawDataModel.buttonMsg = @"Broadcast Raw Data";
+    rawDataModel.selected = self.dataModel.broadcastIsOn;
     
     MKMixedChoiceCellButtonModel *responseModel = [[MKMixedChoiceCellButtonModel alloc] init];
     responseModel.buttonIndex = 4;
     responseModel.buttonMsg = @"Response Raw Data";
+    responseModel.selected = self.dataModel.responseIsOn;
     
     return @[stampModel,macModel,rssiModel,rawDataModel,responseModel];
 }
@@ -384,6 +437,13 @@ MKTextButtonCellDelegate>
         _section3List = [NSMutableArray array];
     }
     return _section3List;
+}
+
+- (MKLBUplinkPayloadModel *)dataModel {
+    if (!_dataModel) {
+        _dataModel = [[MKLBUplinkPayloadModel alloc] init];
+    }
+    return _dataModel;
 }
 
 @end

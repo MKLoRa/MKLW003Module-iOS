@@ -52,7 +52,20 @@ mk_textSwitchCellDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadSectionDatas];
+    [self readDataFromDevice];
+}
+
+#pragma mark - super method
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startConfigWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -113,6 +126,19 @@ mk_textSwitchCellDelegate>
     }
 }
 
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startReadWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf loadSectionDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 #pragma mark - loadSectionDatas
 - (void)loadSectionDatas {
     [self loadSection0Datas];
@@ -127,6 +153,7 @@ mk_textSwitchCellDelegate>
     groupModel.msgFont = MKFont(18.f);
     groupModel.msgColor = UIColorFromRGB(0x2F84D0);
     groupModel.index = 0;
+    groupModel.isOn = self.dataModel.isOn;
     [self.section0List addObject:groupModel];
 }
 
@@ -139,6 +166,7 @@ mk_textSwitchCellDelegate>
     mcAddrModel.textFieldType = mk_hexCharOnly;
     mcAddrModel.textFieldTextFont = MKFont(13.f);
     mcAddrModel.maxLength = 8;
+    mcAddrModel.textFieldValue = self.dataModel.mcAddr;
     [self.section1List addObject:mcAddrModel];
     
     MKTextFieldCellModel *mcAppSkeyModel = [[MKTextFieldCellModel alloc] init];
@@ -147,6 +175,7 @@ mk_textSwitchCellDelegate>
     mcAppSkeyModel.textFieldType = mk_hexCharOnly;
     mcAppSkeyModel.textFieldTextFont = MKFont(13.f);
     mcAppSkeyModel.maxLength = 32;
+    mcAppSkeyModel.textFieldValue = self.dataModel.mcAppSkey;
     [self.section1List addObject:mcAppSkeyModel];
     
     MKTextFieldCellModel *mcNwkSkeyModel = [[MKTextFieldCellModel alloc] init];
@@ -155,6 +184,7 @@ mk_textSwitchCellDelegate>
     mcNwkSkeyModel.textFieldType = mk_hexCharOnly;
     mcNwkSkeyModel.textFieldTextFont = MKFont(13.f);
     mcNwkSkeyModel.maxLength = 32;
+    mcNwkSkeyModel.textFieldValue = self.dataModel.mcNwkSkey;
     [self.section1List addObject:mcNwkSkeyModel];
 }
 

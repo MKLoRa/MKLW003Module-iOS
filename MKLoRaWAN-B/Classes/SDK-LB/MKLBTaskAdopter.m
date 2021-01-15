@@ -99,13 +99,57 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
 + (NSDictionary *)parseCustomReadData:(NSString *)content cmd:(NSString *)cmd {
     mk_lb_taskOperationID operationID = mk_lb_defaultTaskOperationID;
     NSDictionary *resultDic = @{};
-    if ([cmd isEqualToString:@"01"]) {
-        
+    if ([cmd isEqualToString:@"02"]) {
+        //读取设备信息上报间隔
+        resultDic = @{
+            @"interval":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadDeviceInfoReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"07"]) {
+        //读取iBeacon数据上报间隔
+        resultDic = @{
+            @"interval":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadBeaconReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"0a"]) {
+        //读取上报的iBeacon数据类型
+        NSString *state = [MKBLEBaseSDKAdopter binaryByhex:content];
+        BOOL unknown = [[state substringWithRange:NSMakeRange(7, 1)] isEqualToString:@"1"];
+        BOOL iBeacon = [[state substringWithRange:NSMakeRange(6, 1)] isEqualToString:@"1"];
+        BOOL eddystone = [[state substringWithRange:NSMakeRange(5, 1)] isEqualToString:@"1"];
+        resultDic = @{
+            @"unknown":@(unknown),
+            @"iBeacon":@(iBeacon),
+            @"eddystone":@(eddystone),
+        };
+        operationID = mk_lb_taskReadBeaconReportDataTypeOperation;
+    }else if ([cmd isEqualToString:@"0b"]) {
+        //读取上报的iBeacon最大数据长度
+        resultDic = @{
+            @"type":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+        };
+        operationID = mk_lb_taskReadBeaconReportDataMaxLengthOperation;
     }else if ([cmd isEqualToString:@"0d"]) {
         //读取mac地址
         NSString *macAddress = [NSString stringWithFormat:@"%@:%@:%@:%@:%@:%@",[content substringWithRange:NSMakeRange(0, 2)],[content substringWithRange:NSMakeRange(2, 2)],[content substringWithRange:NSMakeRange(4, 2)],[content substringWithRange:NSMakeRange(6, 2)],[content substringWithRange:NSMakeRange(8, 2)],[content substringWithRange:NSMakeRange(10, 2)]];
         operationID = mk_lb_taskReadMacAddressOperation;
         resultDic = @{@"macAddress":[macAddress uppercaseString]};
+    }else if ([cmd isEqualToString:@"0e"]) {
+        //读取iBeacon上报数据内容选择
+        NSString *state = [MKBLEBaseSDKAdopter binaryByhex:content];
+        BOOL response = [[state substringWithRange:NSMakeRange(7, 1)] isEqualToString:@"1"];
+        BOOL broadcast = [[state substringWithRange:NSMakeRange(6, 1)] isEqualToString:@"1"];
+        BOOL rssi = [[state substringWithRange:NSMakeRange(5, 1)] isEqualToString:@"1"];
+        BOOL mac = [[state substringWithRange:NSMakeRange(4, 1)] isEqualToString:@"1"];
+        BOOL timestamp = [[state substringWithRange:NSMakeRange(3, 1)] isEqualToString:@"1"];
+        resultDic = @{
+            @"response":@(response),
+            @"broadcast":@(broadcast),
+            @"rssi":@(rssi),
+            @"mac":@(mac),
+            @"timestamp":@(timestamp),
+        };
+        operationID = mk_lb_taskReadBeaconReportDataContentOperation;
     }else if ([cmd isEqualToString:@"21"]) {
         //读取LoRaWAN频段
         resultDic = @{
@@ -247,7 +291,97 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
 }
 
 + (NSDictionary *)parseCustomConfigData:(NSString *)content cmd:(NSString *)cmd {
-    return @{};
+    mk_lb_taskOperationID operationID = mk_lb_defaultTaskOperationID;
+    BOOL success = [content isEqualToString:@"00"];
+    if ([cmd isEqualToString:@"01"]) {
+        //入网/重启
+        operationID = mk_lb_taskConfigConnectNetworkOperation;
+    }else if ([cmd isEqualToString:@"02"]) {
+        //设置设备信息上报间隔
+        operationID = mk_lb_taskConfigDeviceInfoReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"03"]) {
+        //设置时间同步
+        operationID = mk_lb_taskConfigDeviceTimeOperation;
+    }else if ([cmd isEqualToString:@"04"]) {
+        //设置连接密码
+        operationID = mk_lb_taskConfigPasswordOperation;
+    }else if ([cmd isEqualToString:@"07"]) {
+        //设置iBeacon数据上报间隔
+        operationID = mk_lb_taskConfigBeaconReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"0a"]) {
+        //设置iBeacon数据上报类型
+        operationID = mk_lb_taskConfigBeaconReportDataTypeOperation;
+    }else if ([cmd isEqualToString:@"0b"]) {
+        //设置iBeacon数据上报最大长度
+        operationID = mk_lb_taskConfigBeaconReportDataMaxLenOperation;
+    }else if ([cmd isEqualToString:@"0e"]) {
+        //配置iBeacon上报数据内容选择
+        operationID = mk_lb_taskConfigBeaconReportDataContentOperation;
+    }else if ([cmd isEqualToString:@"21"]) {
+        //region
+        operationID = mk_lb_taskConfigRegionOperation;
+    }else if ([cmd isEqualToString:@"22"]) {
+        //modem
+        operationID = mk_lb_taskConfigModemOperation;
+    }else if ([cmd isEqualToString:@"23"]) {
+        //class type
+        operationID = mk_lb_taskConfigClassTypeOperation;
+    }else if ([cmd isEqualToString:@"25"]) {
+        //devEUI
+        operationID = mk_lb_taskConfigDEVEUIOperation;
+    }else if ([cmd isEqualToString:@"26"]) {
+        //appEUI
+        operationID = mk_lb_taskConfigAPPEUIOperation;
+    }else if ([cmd isEqualToString:@"27"]) {
+        //appKey
+        operationID = mk_lb_taskConfigAPPKEYOperation;
+    }else if ([cmd isEqualToString:@"28"]) {
+        //devAddr
+        operationID = mk_lb_taskConfigDEVADDROperation;
+    }else if ([cmd isEqualToString:@"29"]) {
+        //appSkey
+        operationID = mk_lb_taskConfigAPPSKEYOperation;
+    }else if ([cmd isEqualToString:@"2a"]) {
+        //nwkSkey
+        operationID = mk_lb_taskConfigNWKSKEYOperation;
+    }else if ([cmd isEqualToString:@"2b"]) {
+        //message type
+        operationID = mk_lb_taskConfigMessageTypeOperation;
+    }else if ([cmd isEqualToString:@"2c"]) {
+        //CH
+        operationID = mk_lb_taskConfigCHValueOperation;
+    }else if ([cmd isEqualToString:@"2d"]) {
+        //DR
+        operationID = mk_lb_taskConfigDRValueOperation;
+    }else if ([cmd isEqualToString:@"2e"]) {
+        //ADR
+        operationID = mk_lb_taskConfigADRStatusOperation;
+    }else if ([cmd isEqualToString:@"2f"]) {
+        //组播开关
+        operationID = mk_lb_taskConfigMulticastStatusOperation;
+    }else if ([cmd isEqualToString:@"30"]) {
+        //组播地址
+        operationID = mk_lb_taskConfigMulticastAddressOperation;
+    }else if ([cmd isEqualToString:@"31"]) {
+        //组播appSkey
+        operationID = mk_lb_taskConfigMulticastAPPSKEYOperation;
+    }else if ([cmd isEqualToString:@"32"]) {
+        //组播nwkSkey
+        operationID = mk_lb_taskConfigMulticastNWKSKEYOperation;
+    }else if ([cmd isEqualToString:@"33"]) {
+        //link check 检测间隔
+        operationID = mk_lb_taskConfigLinkCheckIntervalOperation;
+    }else if ([cmd isEqualToString:@"34"]) {
+        //un link dell time
+        operationID = mk_lb_taskConfigUpLinkeDellTimeOperation;
+    }else if ([cmd isEqualToString:@"35"]) {
+        //duty cycle
+        operationID = mk_lb_taskConfigDutyCycleStatusOperation;
+    }else if ([cmd isEqualToString:@"36"]) {
+        //sync time interval
+        operationID = mk_lb_taskConfigTimeSyncIntervalOperation;
+    }
+    return [self dataParserGetDataSuccess:@{@"success":@(success)} operationID:operationID];
 }
 
 #pragma mark -

@@ -68,7 +68,19 @@ MKTextFieldCellDelegate>
 }
 
 - (void)rightButtonMethod {
-    
+    if ([self.dataModel.syncInterval integerValue] > 240) {
+        [self.view showCentralToast:@"Params error"];
+        return;
+    }
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startConfigWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate

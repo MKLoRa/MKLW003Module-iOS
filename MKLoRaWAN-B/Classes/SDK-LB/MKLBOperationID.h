@@ -15,8 +15,12 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_connectPasswordOperation,             //连接设备时候发送密码
     
 #pragma mark - 设备系统应用信息读取
-    
+    mk_lb_taskReadDeviceInfoReportIntervalOperation,    //读取设备信息上报间隔
+    mk_lb_taskReadBeaconReportIntervalOperation,        //读取iBeacon数据上报间隔
+    mk_lb_taskReadBeaconReportDataTypeOperation,        //读取上报的iBeacon数据类型
+    mk_lb_taskReadBeaconReportDataMaxLengthOperation,   //读取iBeacon最大上报数据长度
     mk_lb_taskReadMacAddressOperation,          //读取设备mac地址
+    mk_lb_taskReadBeaconReportDataContentOperation, //读取iBeacon上报数据内容选择
     
 #pragma mark - 设备LoRa参数读取
     mk_lb_taskReadLorawanRegionOperation,       //读取LoRaWAN频段
@@ -42,6 +46,39 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskReadLorawanDutyCycleStatusOperation,      //读取dutycyle
     mk_lb_taskReadLorawanDevTimeSyncIntervalOperation,  //读取devtime指令同步间隔
     
-    mk_lb_taskConfigPasswordOperation,          //设置密码
     
+    
+#pragma mark - 设备系统应用信息配置
+    mk_lb_taskConfigConnectNetworkOperation,            //配置设备入网/重启
+    mk_lb_taskConfigDeviceInfoReportIntervalOperation,  //配置设备信息上报间隔
+    mk_lb_taskConfigDeviceTimeOperation,                //同步设备时间
+    
+    mk_lb_taskConfigPasswordOperation,          //设置密码
+    mk_lb_taskConfigBeaconReportIntervalOperation,      //配置iBeacon数据上报间隔
+    mk_lb_taskConfigBeaconReportDataTypeOperation,      //配置iBeacon数据上报类型
+    mk_lb_taskConfigBeaconReportDataMaxLenOperation,    //配置iBeacon数据最大上报长度
+    mk_lb_taskConfigBeaconReportDataContentOperation,   //配置iBeacon上报数据内容选择
+    
+#pragma mark - 设备LoRa参数配置
+    mk_lb_taskConfigRegionOperation,                    //配置LoRaWAN的region
+    mk_lb_taskConfigModemOperation,                     //配置LoRaWAN的入网类型
+    mk_lb_taskConfigClassTypeOperation,                 //配置LoRaWAN的class类型
+    mk_lb_taskConfigDEVEUIOperation,                    //配置LoRaWAN的devEUI
+    mk_lb_taskConfigAPPEUIOperation,                    //配置LoRaWAN的appEUI
+    mk_lb_taskConfigAPPKEYOperation,                    //配置LoRaWAN的appKey
+    mk_lb_taskConfigDEVADDROperation,                   //配置LoRaWAN的DevAddr
+    mk_lb_taskConfigAPPSKEYOperation,                   //配置LoRaWAN的APPSKEY
+    mk_lb_taskConfigNWKSKEYOperation,                   //配置LoRaWAN的NwkSKey
+    mk_lb_taskConfigMessageTypeOperation,               //配置LoRaWAN的message type
+    mk_lb_taskConfigCHValueOperation,                   //配置LoRaWAN的CH值
+    mk_lb_taskConfigDRValueOperation,                   //配置LoRaWAN的DR值
+    mk_lb_taskConfigADRStatusOperation,                 //配置LoRaWAN的ADR状态
+    mk_lb_taskConfigMulticastStatusOperation,           //配置LoRaWAN的组播开关状态
+    mk_lb_taskConfigMulticastAddressOperation,          //配置LoRaWAN的组播地址
+    mk_lb_taskConfigMulticastAPPSKEYOperation,          //配置LoRaWAN组播的APPSKEY
+    mk_lb_taskConfigMulticastNWKSKEYOperation,          //配置LoRaWAN的组播NWKSKEY
+    mk_lb_taskConfigLinkCheckIntervalOperation,         //配置LoRaWAN的link check检测间隔
+    mk_lb_taskConfigUpLinkeDellTimeOperation,           //配置LoRaWAN的UpLinkeDellTime
+    mk_lb_taskConfigDutyCycleStatusOperation,           //配置LoRaWAN的duty cycle
+    mk_lb_taskConfigTimeSyncIntervalOperation,          //配置LoRaWAN的同步指令间隔
 };

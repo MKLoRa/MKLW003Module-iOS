@@ -11,6 +11,7 @@
 #import "MKMacroDefines.h"
 
 #import "MKLBInterface.h"
+#import "MKLBInterface+MKLBConfig.h"
 
 @interface MKLBLoRaDataModel ()
 
@@ -46,6 +47,20 @@
         }
         if (![self readDevTimeSyncInterval]) {
             [self operationFailedBlockWithMsg:@"Read Time Sync Interval Error" block:failedBlock];
+            return;
+        }
+        moko_dispatch_main_safe(^{
+            if (sucBlock) {
+                sucBlock();
+            }
+        });
+    });
+}
+
+- (void)startConfigWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+    dispatch_async(self.readQueue, ^{
+        if (![self configDevTimeSyncInterval]) {
+            [self operationFailedBlockWithMsg:@"Config DevTime Sync Interval Error" block:failedBlock];
             return;
         }
         moko_dispatch_main_safe(^{
@@ -139,9 +154,21 @@
 
 - (BOOL)readDevTimeSyncInterval {
     __block BOOL success = NO;
-    [MKLBInterface lb_readLorawanDevTimeSyncIntervalWithSucBlock:^(id  _Nonnull returnData) {
+    [MKLBInterface lb_readLorawanTimeSyncIntervalWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.syncInterval = returnData[@"result"][@"interval"];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configDevTimeSyncInterval {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configTimeSyncInterval:[self.syncInterval integerValue] sucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);

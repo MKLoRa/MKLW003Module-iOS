@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *checkInterval;
 
-@property (nonatomic, assign)BOOL networkStatus;
+@property (nonatomic, copy)NSString *networkStatus;
 
 - (void)startReadDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
 

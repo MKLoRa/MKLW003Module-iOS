@@ -52,11 +52,41 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark ****************************************设备系统应用信息读取************************************************
 
+/// Reading device information reporting interval.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readDeviceInfoReportIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                        failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read iBeacon data reporting interval.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readBeaconReportIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                    failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read the reported iBeacon data type.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readBeaconReportDataTypeWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                    failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read iBeacon Report Data Max Length.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readBeaconReportDataMaxLengthWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                         failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
 /// Reading mac address
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
 + (void)lb_readMacAddressWithSucBlock:(nonnull void (^)(id returnData))sucBlock
                           failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read iBeacon Report Data Content.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readBeaconReportDataContentWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                       failedBlock:(void (^)(NSError * _Nonnull))failedBlock;
 
 #pragma mark ****************************************设备LoRa参数读取************************************************
 
@@ -215,11 +245,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)lb_readLinkcheckIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
                                  failedBlock:(nonnull void (^)(NSError *error))failedBlock;
 
-/// Read lorawan Uplinkdwelltime.
+/// Read lorawan Up link dell time.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
-+ (void)lb_readUplinkdwelltimeWithSucBlock:(nonnull void (^)(id returnData))sucBlock
-                               failedBlock:(nonnull void (^)(NSError *error))failedBlock;
++ (void)lb_readUplinkDellTimeWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                              failedBlock:(nonnull void (^)(NSError *error))failedBlock;
 
 /// Read lorawan duty cycle status.
 /// @param sucBlock Success callback
@@ -230,8 +260,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// Read lorawan devtime command synchronization interval.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
-+ (void)lb_readLorawanDevTimeSyncIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
-                                          failedBlock:(nonnull void (^)(NSError *error))failedBlock;
++ (void)lb_readLorawanTimeSyncIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                       failedBlock:(nonnull void (^)(NSError *error))failedBlock;
 
 @end
 

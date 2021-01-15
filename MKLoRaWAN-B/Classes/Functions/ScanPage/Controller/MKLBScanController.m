@@ -155,7 +155,7 @@ MKLBTabBarControllerDelegate>
 - (void)mk_scanSearchButtonMethod {
     [MKSearchConditionsView showSearchKey:self.buttonModel.searchKey
                                      rssi:self.buttonModel.searchRssi
-                                  minRssi:-100 searchBlock:^(NSString * _Nonnull searchKey, NSInteger searchRssi) {
+                                  minRssi:-127 searchBlock:^(NSString * _Nonnull searchKey, NSInteger searchRssi) {
         self.buttonModel.searchRssi = searchRssi;
         self.buttonModel.searchKey = searchKey;
         self.searchButton.dataModel = self.buttonModel;
@@ -167,7 +167,7 @@ MKLBTabBarControllerDelegate>
 }
 
 - (void)mk_scanSearchButtonClearMethod {
-    self.buttonModel.searchRssi = -100;
+    self.buttonModel.searchRssi = -127;
     self.buttonModel.searchKey = @"";
     self.refreshButton.selected = NO;
     self.currentScanStatus = NO;
@@ -551,8 +551,8 @@ MKLBTabBarControllerDelegate>
     if (!_buttonModel) {
         _buttonModel = [[MKSearchButtonDataModel alloc] init];
         _buttonModel.placeholder = @"Edit Filter";
-        _buttonModel.minSearchRssi = -100;
-        _buttonModel.searchRssi = -100;
+        _buttonModel.minSearchRssi = -127;
+        _buttonModel.searchRssi = -127;
     }
     return _buttonModel;
 }

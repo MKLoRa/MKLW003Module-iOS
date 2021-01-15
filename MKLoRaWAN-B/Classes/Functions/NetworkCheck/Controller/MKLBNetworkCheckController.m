@@ -15,6 +15,7 @@
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
+#import "UITableView+MKAdd.h"
 
 #import "MKHudManager.h"
 #import "MKTextSwitchCell.h"
@@ -55,7 +56,21 @@ MKTextFieldCellDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadSectionDatas];
+    [self readDataFromDevice];
+}
+
+#pragma mark - super method
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startConfigDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+        [weakSelf.tableView mk_reloadSection:1 withRowAnimation:UITableViewRowAnimationNone];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -77,7 +92,7 @@ MKTextFieldCellDelegate>
         return self.section0List.count;
     }
     if (section == 1) {
-        return self.section1List.count;
+        return (self.dataModel.checkStatus ? self.section1List.count : 0);
     }
     if (section == 2) {
         return self.section2List.count;
@@ -107,6 +122,7 @@ MKTextFieldCellDelegate>
 - (void)mk_textSwitchCellStatusChanged:(BOOL)isOn index:(NSInteger)index {
     if (index == 0) {
         self.dataModel.checkStatus = isOn;
+        [self.tableView mk_reloadSection:1 withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
 }
@@ -117,6 +133,19 @@ MKTextFieldCellDelegate>
         self.dataModel.checkInterval = value;
         return;
     }
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel startReadDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf loadSectionDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - loadSectionDatas
@@ -132,6 +161,7 @@ MKTextFieldCellDelegate>
     MKTextSwitchCellModel *checkModel = [[MKTextSwitchCellModel alloc] init];
     checkModel.msg = @"Networkcheck";
     checkModel.index = 0;
+    checkModel.isOn = self.dataModel.checkStatus;
     [self.section0List addObject:checkModel];
 }
 
@@ -146,6 +176,7 @@ MKTextFieldCellDelegate>
     intervalModel.textPlaceholder = @"0~720";
     intervalModel.textFieldTextFont = MKFont(13.f);
     intervalModel.maxLength = 3;
+    intervalModel.textFieldValue = self.dataModel.checkInterval;
     [self.section1List addObject:intervalModel];
 }
 
@@ -156,6 +187,7 @@ MKTextFieldCellDelegate>
     statusModel.noteMsg = @"*If Networkcheck function off, the Network status will only be valid on OTAA mode when the device in the process of join the network";
     statusModel.noteMsgFont = MKFont(11.f);
     statusModel.noteMsgColor = RGBCOLOR(102, 102, 102);
+    statusModel.rightMsg = self.dataModel.networkStatus;
     [self.section2List addObject:statusModel];
 }
 

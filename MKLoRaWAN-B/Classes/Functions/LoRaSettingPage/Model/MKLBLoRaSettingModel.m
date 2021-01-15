@@ -11,6 +11,7 @@
 #import "MKMacroDefines.h"
 
 #import "MKLBInterface.h"
+#import "MKLBInterface+MKLBConfig.h"
 
 @interface MKLBLoRaSettingModel ()
 
@@ -103,7 +104,85 @@
 }
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
-    
+    dispatch_async(self.readQueue, ^{
+        if (![self configModem]) {
+            [self operationFailedBlockWithMsg:@"Config Modem Error" block:failedBlock];
+            return;
+        }
+        if (![self configRegion]) {
+            [self operationFailedBlockWithMsg:@"Config Region Error" block:failedBlock];
+            return;
+        }
+        if (![self configDevEUI]) {
+            [self operationFailedBlockWithMsg:@"Config DevEUI Error" block:failedBlock];
+            return;
+        }
+        if (![self configAppEUI]) {
+            [self operationFailedBlockWithMsg:@"Config AppEUI Error" block:failedBlock];
+            return;
+        }
+        if (![self configAppKey]) {
+            [self operationFailedBlockWithMsg:@"Config AppKey Error" block:failedBlock];
+            return;
+        }
+        if (![self configDevAddr]) {
+            [self operationFailedBlockWithMsg:@"Config Region Error" block:failedBlock];
+            return;
+        }
+        if (![self configAppSkey]) {
+            [self operationFailedBlockWithMsg:@"Config AppSKEY Error" block:failedBlock];
+            return;
+        }
+        if (![self configNwkSkey]) {
+            [self operationFailedBlockWithMsg:@"Config NWKSKEY Error" block:failedBlock];
+            return;
+        }
+        if (![self configMessageType]) {
+            [self operationFailedBlockWithMsg:@"Config Message Type Error" block:failedBlock];
+            return;
+        }
+        if (!self.needAdvanceSetting) {
+            if (![self connectCommand]) {
+                [self operationFailedBlockWithMsg:@"Connect network error" block:failedBlock];
+                return;
+            }
+            moko_dispatch_main_safe(^{
+                if (sucBlock) {
+                    sucBlock();
+                }
+            });
+            return;
+        }
+        if (![self configCHValue]) {
+            [self operationFailedBlockWithMsg:@"Config CH Error" block:failedBlock];
+            return;
+        }
+        if (![self configDutyStatus]) {
+            [self operationFailedBlockWithMsg:@"Config Duty Cycle Error" block:failedBlock];
+            return;
+        }
+        if (![self configADRStatus]) {
+            [self operationFailedBlockWithMsg:@"Config ADR Error" block:failedBlock];
+            return;
+        }
+        if (![self configDRValue]) {
+            [self operationFailedBlockWithMsg:@"Config DR Error" block:failedBlock];
+            return;
+        }
+        if (![self configDellTime]) {
+            [self operationFailedBlockWithMsg:@"Config Uplink Dell Time Error" block:failedBlock];
+            return;
+        }
+        if (![self connectCommand]) {
+            [self operationFailedBlockWithMsg:@"Connect network error" block:failedBlock];
+            return;
+        }
+        moko_dispatch_main_safe(^{
+            if (sucBlock) {
+                sucBlock();
+            }
+        });
+    });
 }
 
 - (void)configAdvanceSettingDefaultParams {
@@ -180,11 +259,35 @@
     return success;
 }
 
+- (BOOL)configModem {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configModem:(self.modem - 1) sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readRegion {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanRegionWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.region = [returnData[@"result"][@"region"] integerValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configRegion {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configRegion:self.region sucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -206,11 +309,35 @@
     return success;
 }
 
+- (BOOL)configDevEUI {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configDEVEUI:self.devEUI sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readAppEUI {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanAPPEUIWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.appEUI = returnData[@"result"][@"appEUI"];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configAppEUI {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configAPPEUI:self.appEUI sucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -232,11 +359,35 @@
     return success;
 }
 
+- (BOOL)configAppKey {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configAPPKEY:self.appKey sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readDevAddr {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanDEVADDRWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.devAddr = returnData[@"result"][@"devAddr"];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configDevAddr {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configDEVADDR:self.devAddr sucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -258,6 +409,18 @@
     return success;
 }
 
+- (BOOL)configAppSkey {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configAPPSKEY:self.appSKey sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readMessageType {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanMessageTypeWithSucBlock:^(id  _Nonnull returnData) {
@@ -271,11 +434,35 @@
     return success;
 }
 
+- (BOOL)configMessageType {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configMessageType:self.messageType sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readNwkSkey {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanNWKSKEYWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.nwkSKey = returnData[@"result"][@"nwkSkey"];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configNwkSkey {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configNWKSKEY:self.nwkSKey sucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -298,11 +485,35 @@
     return success;
 }
 
+- (BOOL)configCHValue {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configCHL:self.CHL CHH:self.CHH sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readDutyStatus {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanDutyCycleStatusWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.dutyIsOn = [returnData[@"result"][@"isOn"] boolValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configDutyStatus {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configDutyCycleStatus:self.dutyIsOn sucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -324,6 +535,18 @@
     return success;
 }
 
+- (BOOL)configADRStatus {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configADRStatus:self.adrIsOn sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readDRValue {
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanDRWithSucBlock:^(id  _Nonnull returnData) {
@@ -337,11 +560,47 @@
     return success;
 }
 
+- (BOOL)configDRValue {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configDR:self.DR sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
 - (BOOL)readDellTime {
     __block BOOL success = NO;
-    [MKLBInterface lb_readUplinkdwelltimeWithSucBlock:^(id  _Nonnull returnData) {
+    [MKLBInterface lb_readUplinkDellTimeWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.dellTime = [returnData[@"result"][@"time"] integerValue];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configDellTime {
+    __block BOOL success = NO;
+    [MKLBInterface lb_configUpLinkeDellTime:self.dellTime sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)connectCommand {
+    __block BOOL success = NO;
+    [MKLBInterface lb_connectNetworkWithSucBlock:^{
+        success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);

@@ -68,10 +68,50 @@
 }
 
 #pragma mark ****************************************设备系统应用信息读取************************************************
++ (void)lb_readDeviceInfoReportIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                        failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadDeviceInfoReportIntervalOperation
+                     cmdFlag:@"02"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readBeaconReportIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                    failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadBeaconReportIntervalOperation
+                     cmdFlag:@"07"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readBeaconReportDataTypeWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                    failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadBeaconReportDataTypeOperation
+                     cmdFlag:@"0a"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readBeaconReportDataMaxLengthWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                         failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadBeaconReportDataMaxLengthOperation
+                     cmdFlag:@"0b"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
 + (void)lb_readMacAddressWithSucBlock:(nonnull void (^)(id returnData))sucBlock
                           failedBlock:(nonnull void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_lb_taskReadMacAddressOperation
                      cmdFlag:@"0d"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readBeaconReportDataContentWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                       failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadBeaconReportDataContentOperation
+                     cmdFlag:@"0e"
                     sucBlock:sucBlock
                  failedBlock:failedBlock];
 }
@@ -230,8 +270,8 @@
                  failedBlock:failedBlock];
 }
 
-+ (void)lb_readUplinkdwelltimeWithSucBlock:(nonnull void (^)(id returnData))sucBlock
-                               failedBlock:(nonnull void (^)(NSError *error))failedBlock {
++ (void)lb_readUplinkDellTimeWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                              failedBlock:(nonnull void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_lb_taskReadLorawanUplinkdwelltimeOperation
                      cmdFlag:@"34"
                     sucBlock:sucBlock
@@ -246,8 +286,8 @@
                  failedBlock:failedBlock];
 }
 
-+ (void)lb_readLorawanDevTimeSyncIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
-                                          failedBlock:(nonnull void (^)(NSError *error))failedBlock {
++ (void)lb_readLorawanTimeSyncIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                       failedBlock:(nonnull void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_lb_taskReadLorawanDevTimeSyncIntervalOperation
                      cmdFlag:@"36"
                     sucBlock:sucBlock

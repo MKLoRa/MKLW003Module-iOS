@@ -74,6 +74,19 @@ MKLoRaSettingCHCellDelegate>
     [self readDatasFromDevice];
 }
 
+#pragma mark - super method
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel configDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 #pragma mark - UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0 || indexPath.section == 1 || indexPath.section == 2) {
