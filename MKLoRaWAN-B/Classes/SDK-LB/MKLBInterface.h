@@ -88,6 +88,30 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)lb_readBeaconReportDataContentWithSucBlock:(void (^)(id _Nonnull))sucBlock
                                        failedBlock:(void (^)(NSError * _Nonnull))failedBlock;
 
+/// Over-limit Indication.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readMacOverLimitScanStatusWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                      failedBlock:(void (^)(NSError * _Nonnull))failedBlock;
+
+/// The duration for trigger MAC and RSSI.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readMacOverLimitDurationWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                    failedBlock:(void (^)(NSError * _Nonnull))failedBlock;
+
+/// Over-limit MAC Quantities.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readMacOverLimitQuantitiesWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                      failedBlock:(void (^)(NSError * _Nonnull))failedBlock;
+
+/// Over-limit RSSI.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readMacOverLimitRSSIWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                failedBlock:(void (^)(NSError * _Nonnull))failedBlock;
+
 #pragma mark ****************************************设备LoRa参数读取************************************************
 
 /// Read the region information of LoRaWAN.
@@ -262,6 +286,32 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param failedBlock Failure callback
 + (void)lb_readLorawanTimeSyncIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
                                        failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+#pragma mark ****************************************蓝牙广播参数************************************************
+
+/// Read Bluetooth broadcast device name.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readDeviceNameWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                          failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read Bluetooth broadcast interval.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readDeviceBroadcastIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                       failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read device scan switch status.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readDeviceScanStatusWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                failedBlock:(nonnull void (^)(NSError *error))failedBlock;
+
+/// Read device scan parameters, including scan interval and scan window duration.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readDeviceScanParamsWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                failedBlock:(nonnull void (^)(NSError *error))failedBlock;
 
 @end
 

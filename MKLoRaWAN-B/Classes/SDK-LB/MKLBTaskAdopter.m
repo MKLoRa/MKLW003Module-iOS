@@ -88,7 +88,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     NSString *content = [readString substringWithRange:NSMakeRange(8, dataLen * 2)];
     if ([flag isEqualToString:@"00"]) {
         //读取
-        return [self parseCustomReadData:content cmd:cmd];
+        return [self parseCustomReadData:content cmd:cmd data:readData];
     }
     if ([flag isEqualToString:@"01"]) {
         return [self parseCustomConfigData:content cmd:cmd];
@@ -96,7 +96,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     return @{};
 }
 
-+ (NSDictionary *)parseCustomReadData:(NSString *)content cmd:(NSString *)cmd {
++ (NSDictionary *)parseCustomReadData:(NSString *)content cmd:(NSString *)cmd data:(NSData *)data{
     mk_lb_taskOperationID operationID = mk_lb_defaultTaskOperationID;
     NSDictionary *resultDic = @{};
     if ([cmd isEqualToString:@"02"]) {
@@ -126,7 +126,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"0b"]) {
         //读取上报的iBeacon最大数据长度
         resultDic = @{
-            @"type":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"type":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadBeaconReportDataMaxLengthOperation;
     }else if ([cmd isEqualToString:@"0d"]) {
@@ -150,28 +150,53 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
             @"timestamp":@(timestamp),
         };
         operationID = mk_lb_taskReadBeaconReportDataContentOperation;
+    }else if ([cmd isEqualToString:@"0f"]) {
+        //读取扫描MAC超限开关
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        resultDic = @{
+            @"isOn":@(isOn)
+        };
+        operationID = mk_lb_taskReadMacOverLimitScanStatusOperation;
+    }else if ([cmd isEqualToString:@"10"]) {
+        //读取扫描MAC超限间隔
+        resultDic = @{
+            @"duration":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadMacOverLimitDurationOperation;
+    }else if ([cmd isEqualToString:@"11"]) {
+        //读取扫描MAC超限数量
+        resultDic = @{
+            @"quantities":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadMacOverLimitQuantitiesOperation;
+    }else if ([cmd isEqualToString:@"12"]) {
+        //读取扫描MAC超限RSSI
+        resultDic = @{
+            @"rssi":[MKBLEBaseSDKAdopter signedHexTurnString:content],
+        };
+        operationID = mk_lb_taskReadMacOverLimitRSSIOperation;
     }else if ([cmd isEqualToString:@"21"]) {
         //读取LoRaWAN频段
         resultDic = @{
-            @"region":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"region":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanRegionOperation;
     }else if ([cmd isEqualToString:@"22"]) {
         //读取LoRaWAN入网类型
         resultDic = @{
-            @"modem":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"modem":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanModemOperation;
     }else if ([cmd isEqualToString:@"23"]) {
         //读取LoRaWAN class类型
         resultDic = @{
-            @"classType":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"classType":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanClassTypeOperation;
     }else if ([cmd isEqualToString:@"24"]) {
         //读取LoRaWAN网络状态
         resultDic = @{
-            @"status":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"status":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanNetworkStatusOperation;
     }else if ([cmd isEqualToString:@"25"]) {
@@ -213,7 +238,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"2b"]) {
         //读取LoRaWAN 上行数据类型
         resultDic = @{
-            @"messageType":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"messageType":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanMessageTypeOperation;
     }else if ([cmd isEqualToString:@"2c"]) {
@@ -226,19 +251,19 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"2d"]) {
         //读取LoRaWAN DR
         resultDic = @{
-            @"DR":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)],
+            @"DR":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanDROperation;
     }else if ([cmd isEqualToString:@"2e"]) {
         //读取LoRaWAN ADR
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, 2)] == 1);
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
         resultDic = @{
             @"isOn":@(isOn)
         };
         operationID = mk_lb_taskReadLorawanADROperation;
     }else if ([cmd isEqualToString:@"2f"]) {
         //读取LoRaWAN 组播开关
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, 2)] == 1);
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -275,7 +300,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadLorawanUplinkdwelltimeOperation;
     }else if ([cmd isEqualToString:@"35"]) {
         //读取LoRaWAN duty cycle
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, 2)] == 1);
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -286,6 +311,36 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
             @"interval":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadLorawanDevTimeSyncIntervalOperation;
+    }else if ([cmd isEqualToString:@"50"]) {
+        //读取蓝牙名称
+        NSData *nameData = [data subdataWithRange:NSMakeRange(4, data.length - 4)];
+        NSString *deviceName = [[NSString alloc] initWithData:nameData encoding:NSUTF8StringEncoding];
+        resultDic = @{
+            @"deviceName":(MKValidStr(deviceName) ? deviceName : @""),
+        };
+        operationID = mk_lb_taskReadDeviceNameOperation;
+    }else if ([cmd isEqualToString:@"51"]) {
+        //读取蓝牙广播间隔
+        resultDic = @{
+            @"interval":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadBroadcastIntervalOperation;
+    }else if ([cmd isEqualToString:@"52"]) {
+        //读取蓝牙扫描开关状态
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        resultDic = @{
+            @"isOn":@(isOn)
+        };
+        operationID = mk_lb_taskReadScanStatusOperation;
+    }else if ([cmd isEqualToString:@"53"]) {
+        //读取扫描参数
+        NSString *scanInterval = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *scanWindow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 2)];
+        resultDic = @{
+            @"scanInterval":scanInterval,
+            @"scanWindow":scanWindow,
+        };
+        operationID = mk_lb_taskReadScanParamsOperation;
     }
     return [self dataParserGetDataSuccess:resultDic operationID:operationID];
 }
@@ -317,6 +372,18 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"0e"]) {
         //配置iBeacon上报数据内容选择
         operationID = mk_lb_taskConfigBeaconReportDataContentOperation;
+    }else if ([cmd isEqualToString:@"0f"]) {
+        //配置扫描MAC超限开关
+        operationID = mk_lb_taskConfigMacOverLimitScanStatusOperation;
+    }else if ([cmd isEqualToString:@"10"]) {
+        //配置扫描MAC超限间隔
+        operationID = mk_lb_taskConfigMacOverLimitDurationOperation;
+    }else if ([cmd isEqualToString:@"11"]) {
+        //配置扫描MAC超限数量
+        operationID = mk_lb_taskConfigMacOverLimitQuantitiesOperation;
+    }else if ([cmd isEqualToString:@"12"]) {
+        //配置扫描MAC超限RSSI
+        operationID = mk_lb_taskConfigMacOverLimitRssiOperation;
     }else if ([cmd isEqualToString:@"21"]) {
         //region
         operationID = mk_lb_taskConfigRegionOperation;
@@ -380,6 +447,18 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"36"]) {
         //sync time interval
         operationID = mk_lb_taskConfigTimeSyncIntervalOperation;
+    }else if ([cmd isEqualToString:@"50"]) {
+        //配置广播名称
+        operationID = mk_lb_taskConfigDeviceNameOperation;
+    }else if ([cmd isEqualToString:@"51"]) {
+        //配置广播间隔
+        operationID = mk_lb_taskConfigDeviceBroadcastIntervalOperation;
+    }else if ([cmd isEqualToString:@"52"]) {
+        //配置扫描开关
+        operationID = mk_lb_taskConfigScanStatusOperation;
+    }else if ([cmd isEqualToString:@"53"]) {
+        //配置扫描参数
+        operationID = mk_lb_taskConfigScanParamsOperation;
     }
     return [self dataParserGetDataSuccess:@{@"success":@(success)} operationID:operationID];
 }

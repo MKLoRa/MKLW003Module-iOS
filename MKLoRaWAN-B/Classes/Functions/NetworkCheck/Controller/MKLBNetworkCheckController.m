@@ -63,7 +63,7 @@ MKTextFieldCellDelegate>
 - (void)rightButtonMethod {
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     WS(weakSelf);
-    [self.dataModel startConfigDataWithSucBlock:^{
+    [self.dataModel configDataWithSucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:@"Success!"];
         [weakSelf.tableView mk_reloadSection:1 withRowAnimation:UITableViewRowAnimationNone];
@@ -139,7 +139,7 @@ MKTextFieldCellDelegate>
 - (void)readDataFromDevice {
     [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
     WS(weakSelf);
-    [self.dataModel startReadDataWithSucBlock:^{
+    [self.dataModel readDataWithSucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf loadSectionDatas];
     } failedBlock:^(NSError * _Nonnull error) {

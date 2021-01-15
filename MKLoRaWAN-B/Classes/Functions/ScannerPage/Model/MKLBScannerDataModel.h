@@ -14,7 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)BOOL scanStatus;
 
+@property (nonatomic, copy)NSString *scanInterval;
+
+@property (nonatomic, copy)NSString *scanWindow;
+
 @property (nonatomic, assign)BOOL overLimitStatus;
+
+@property (nonatomic, assign)NSInteger rssi;
+
+@property (nonatomic, copy)NSString *quantities;
+
+@property (nonatomic, copy)NSString *duration;
 
 @end
 

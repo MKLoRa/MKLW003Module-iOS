@@ -121,6 +121,38 @@ typedef NS_ENUM(NSInteger, mk_lb_iBeaconReportDataMaxLength) {
                                 sucBlock:(void (^)(void))sucBlock
                              failedBlock:(void (^)(NSError *error))failedBlock;
 
+/// Over-limit Indication.
+/// @param isOn isOn
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configMacOverLimitScanStatus:(BOOL)isOn
+                               sucBlock:(void (^)(void))sucBlock
+                            failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// The duration for trigger MAC and RSSI.
+/// @param duration 1s~600s
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configMacOverLimitDuration:(NSInteger)duration
+                             sucBlock:(void (^)(void))sucBlock
+                          failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Over-limit MAC Quantities.
+/// @param quantities 1 ~ 255
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configMacOverLimitQuantities:(NSInteger)quantities
+                               sucBlock:(void (^)(void))sucBlock
+                            failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Over-limit RSSI.
+/// @param rssi -127~0
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configMacOverLimitRssi:(NSInteger)rssi
+                         sucBlock:(void (^)(void))sucBlock
+                      failedBlock:(void (^)(NSError *error))failedBlock;
+
 #pragma mark ****************************************设备lorawan信息设置************************************************
 
 /// Configure the region information of LoRaWAN.
@@ -292,6 +324,42 @@ typedef NS_ENUM(NSInteger, mk_lb_iBeaconReportDataMaxLength) {
 + (void)lb_configTimeSyncInterval:(NSInteger)interval
                          sucBlock:(void (^)(void))sucBlock
                       failedBlock:(void (^)(NSError *error))failedBlock;
+
+#pragma mark ****************************************蓝牙广播参数************************************************
+
+/// Configure Bluetooth broadcast device name.
+/// @param deviceName 1~15 ascii characters
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configDeviceName:(NSString *)deviceName
+                   sucBlock:(void (^)(void))sucBlock
+                failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure Bluetooth broadcast interval.
+/// @param interval 1 ~ 100,unit:100ms
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configDeviceBroadcastInterval:(NSInteger)interval
+                                sucBlock:(void (^)(void))sucBlock
+                             failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure device scan switch status.
+/// @param isOn isOn
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configScanStatus:(BOOL)isOn
+                   sucBlock:(void (^)(void))sucBlock
+                failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure device scan parameters.
+/// @param scanInterval 1 ~ 20,unit:5ms.
+/// @param scanWindow 1 ~ 20,unit:5ms. scanWindow <= scanInterval
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configScanInterval:(NSInteger)scanInterval
+                   scanWindow:(NSInteger)scanWindow
+                     sucBlock:(void (^)(void))sucBlock
+                  failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
 

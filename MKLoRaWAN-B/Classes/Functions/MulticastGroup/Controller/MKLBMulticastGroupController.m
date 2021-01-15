@@ -59,7 +59,7 @@ mk_textSwitchCellDelegate>
 - (void)rightButtonMethod {
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     WS(weakSelf);
-    [self.dataModel startConfigWithSucBlock:^{
+    [self.dataModel configWithSucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:@"Success!"];
     } failedBlock:^(NSError * _Nonnull error) {
@@ -130,7 +130,7 @@ mk_textSwitchCellDelegate>
 - (void)readDataFromDevice {
     [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
     WS(weakSelf);
-    [self.dataModel startReadWithSucBlock:^{
+    [self.dataModel readWithSucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf loadSectionDatas];
     } failedBlock:^(NSError * _Nonnull error) {

@@ -150,6 +150,71 @@
                    failedBlock:failedBlock];
 }
 
++ (void)lb_configMacOverLimitScanStatus:(BOOL)isOn
+                               sucBlock:(void (^)(void))sucBlock
+                            failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *commandString = (isOn ? @"ed010f0101" : @"ed010f0100");
+    [self configDataWithTaskID:mk_lb_taskConfigMacOverLimitScanStatusOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configMacOverLimitDuration:(NSInteger)duration
+                             sucBlock:(void (^)(void))sucBlock
+                          failedBlock:(void (^)(NSError *error))failedBlock {
+    if (duration < 1 || duration > 600) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)duration];
+    if (value.length == 1) {
+        value = [@"000" stringByAppendingString:value];
+    }else if (value.length == 2) {
+        value = [@"00" stringByAppendingString:value];
+    }else if (value.length == 3) {
+        value = [@"0" stringByAppendingString:value];
+    }
+    NSString *commandString = [@"ed011002" stringByAppendingString:value];
+    [self configDataWithTaskID:mk_lb_taskConfigMacOverLimitDurationOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configMacOverLimitQuantities:(NSInteger)quantities
+                               sucBlock:(void (^)(void))sucBlock
+                            failedBlock:(void (^)(NSError *error))failedBlock {
+    if (quantities < 1 || quantities > 255) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)quantities];
+    if (value.length == 1) {
+        value = [@"0" stringByAppendingString:value];
+    }
+    NSString *commandString = [@"ed011101" stringByAppendingString:value];
+    [self configDataWithTaskID:mk_lb_taskConfigMacOverLimitQuantitiesOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configMacOverLimitRssi:(NSInteger)rssi
+                         sucBlock:(void (^)(void))sucBlock
+                      failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rssi < -127 || rssi > 0) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *rssiValue = [MKBLEBaseSDKAdopter hexStringFromSignedNumber:rssi];
+    NSString *commandString = [@"ed011201" stringByAppendingString:rssiValue];
+    [self configDataWithTaskID:mk_lb_taskConfigMacOverLimitRssiOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
 #pragma mark ****************************************设备lorawan信息设置************************************************
 
 + (void)lb_configRegion:(mk_lb_loraWanRegion)region
@@ -438,6 +503,92 @@
     }
     NSString *commandString = [@"ed013601" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigTimeSyncIntervalOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+#pragma mark ****************************************蓝牙广播参数************************************************
+
++ (void)lb_configDeviceName:(NSString *)deviceName
+                   sucBlock:(void (^)(void))sucBlock
+                failedBlock:(void (^)(NSError *error))failedBlock {
+    if (!MKValidStr(deviceName) || deviceName.length < 1 || deviceName.length > 15
+        || ![MKBLEBaseSDKAdopter asciiString:deviceName]) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *tempString = @"";
+    for (NSInteger i = 0; i < deviceName.length; i ++) {
+        int asciiCode = [deviceName characterAtIndex:i];
+        tempString = [tempString stringByAppendingString:[NSString stringWithFormat:@"%1lx",(unsigned long)asciiCode]];
+    }
+    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)deviceName.length];
+    if (lenString.length == 1) {
+        lenString = [@"0" stringByAppendingString:lenString];
+    }
+    NSString *commandString = [NSString stringWithFormat:@"ed0150%@%@",lenString,tempString];
+    [self configDataWithTaskID:mk_lb_taskConfigDeviceNameOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+/// Configure Bluetooth broadcast interval.
+/// @param interval 1 ~ 100,unit:100ms
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configDeviceBroadcastInterval:(NSInteger)interval
+                                sucBlock:(void (^)(void))sucBlock
+                             failedBlock:(void (^)(NSError *error))failedBlock {
+    if (interval < 1 || interval > 100) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)interval];
+    if (value.length == 1) {
+        value = [@"0" stringByAppendingString:value];
+    }
+    NSString *commandString = [@"ed015101" stringByAppendingString:value];
+    [self configDataWithTaskID:mk_lb_taskConfigDeviceBroadcastIntervalOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configScanStatus:(BOOL)isOn
+                   sucBlock:(void (^)(void))sucBlock
+                failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *commandString = (isOn ? @"ed01520101" : @"ed01520100");
+    [self configDataWithTaskID:mk_lb_taskConfigScanStatusOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+/// Configure device scan parameters.
+/// @param scanInterval 1 ~ 20,unit:5ms.
+/// @param scanWindow 1 ~ 20,unit:5ms. scanWindow <= scanInterval
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configScanInterval:(NSInteger)scanInterval
+                   scanWindow:(NSInteger)scanWindow
+                     sucBlock:(void (^)(void))sucBlock
+                  failedBlock:(void (^)(NSError *error))failedBlock {
+    if (scanWindow < 1 || scanWindow > 20 || scanInterval < scanWindow || scanInterval > 20) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *interValvalue = [NSString stringWithFormat:@"%1lx",(unsigned long)scanInterval];
+    if (interValvalue.length == 1) {
+        interValvalue = [@"0" stringByAppendingString:interValvalue];
+    }
+    NSString *windowValue = [NSString stringWithFormat:@"%1lx",(unsigned long)scanWindow];
+    if (windowValue.length == 1) {
+        windowValue = [@"0" stringByAppendingString:windowValue];
+    }
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ed015302",interValvalue,windowValue];
+    [self configDataWithTaskID:mk_lb_taskConfigScanParamsOperation
                           data:commandString
                       sucBlock:sucBlock
                    failedBlock:failedBlock];

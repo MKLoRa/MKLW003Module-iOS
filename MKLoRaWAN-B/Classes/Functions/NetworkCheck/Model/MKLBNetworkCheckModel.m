@@ -23,7 +23,7 @@
 
 @implementation MKLBNetworkCheckModel
 
-- (void)startReadDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)readDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self readNetworkCheckInterval]) {
             [self operationFailedBlockWithMsg:@"Read network check interval error" block:failedBlock];
@@ -41,7 +41,7 @@
     });
 }
 
-- (void)startConfigDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self configNetworkCheckInterval]) {
             [self operationFailedBlockWithMsg:@"Config network check interval error" block:failedBlock];

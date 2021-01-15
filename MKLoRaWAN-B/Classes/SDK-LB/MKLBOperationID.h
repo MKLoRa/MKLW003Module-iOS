@@ -21,6 +21,10 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskReadBeaconReportDataMaxLengthOperation,   //读取iBeacon最大上报数据长度
     mk_lb_taskReadMacAddressOperation,          //读取设备mac地址
     mk_lb_taskReadBeaconReportDataContentOperation, //读取iBeacon上报数据内容选择
+    mk_lb_taskReadMacOverLimitScanStatusOperation,  //读取MAC超限开关状态
+    mk_lb_taskReadMacOverLimitDurationOperation,    //读取MAC超限间隔
+    mk_lb_taskReadMacOverLimitQuantitiesOperation,  //读取MAC超限数量
+    mk_lb_taskReadMacOverLimitRSSIOperation,        //读取MAC超限触发RSSI
     
 #pragma mark - 设备LoRa参数读取
     mk_lb_taskReadLorawanRegionOperation,       //读取LoRaWAN频段
@@ -46,6 +50,11 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskReadLorawanDutyCycleStatusOperation,      //读取dutycyle
     mk_lb_taskReadLorawanDevTimeSyncIntervalOperation,  //读取devtime指令同步间隔
     
+#pragma mark - 蓝牙广播扫描参数
+    mk_lb_taskReadDeviceNameOperation,              //读取蓝牙广播名称
+    mk_lb_taskReadBroadcastIntervalOperation,       //读取蓝牙广播间隔
+    mk_lb_taskReadScanStatusOperation,              //读取蓝牙扫描开关状态
+    mk_lb_taskReadScanParamsOperation,              //读取蓝牙扫描参数
     
     
 #pragma mark - 设备系统应用信息配置
@@ -58,6 +67,10 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskConfigBeaconReportDataTypeOperation,      //配置iBeacon数据上报类型
     mk_lb_taskConfigBeaconReportDataMaxLenOperation,    //配置iBeacon数据最大上报长度
     mk_lb_taskConfigBeaconReportDataContentOperation,   //配置iBeacon上报数据内容选择
+    mk_lb_taskConfigMacOverLimitScanStatusOperation,    //配置扫描MAC超限开关状态
+    mk_lb_taskConfigMacOverLimitDurationOperation,      //配置扫描MAC超限间隔
+    mk_lb_taskConfigMacOverLimitQuantitiesOperation,    //配置扫描MAC超限数量
+    mk_lb_taskConfigMacOverLimitRssiOperation,          //配置扫描MAC超限触发RSSI
     
 #pragma mark - 设备LoRa参数配置
     mk_lb_taskConfigRegionOperation,                    //配置LoRaWAN的region
@@ -81,4 +94,10 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskConfigUpLinkeDellTimeOperation,           //配置LoRaWAN的UpLinkeDellTime
     mk_lb_taskConfigDutyCycleStatusOperation,           //配置LoRaWAN的duty cycle
     mk_lb_taskConfigTimeSyncIntervalOperation,          //配置LoRaWAN的同步指令间隔
+    
+#pragma mark - 蓝牙广播扫描参数
+    mk_lb_taskConfigDeviceNameOperation,                //配置设备广播名称
+    mk_lb_taskConfigDeviceBroadcastIntervalOperation,   //配置广播间隔
+    mk_lb_taskConfigScanStatusOperation,                //配置扫描开关
+    mk_lb_taskConfigScanParamsOperation,                //配置扫描参数
 };

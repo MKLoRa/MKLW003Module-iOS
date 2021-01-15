@@ -116,6 +116,38 @@
                  failedBlock:failedBlock];
 }
 
++ (void)lb_readMacOverLimitScanStatusWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                      failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadMacOverLimitScanStatusOperation
+                     cmdFlag:@"0f"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readMacOverLimitDurationWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                    failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadMacOverLimitDurationOperation
+                     cmdFlag:@"10"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readMacOverLimitQuantitiesWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                      failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadMacOverLimitQuantitiesOperation
+                     cmdFlag:@"11"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readMacOverLimitRSSIWithSucBlock:(void (^)(id _Nonnull))sucBlock
+                                failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadMacOverLimitRSSIOperation
+                     cmdFlag:@"12"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
 #pragma mark ****************************************设备LoRa参数读取************************************************
 
 + (void)lb_readLorawanRegionWithSucBlock:(nonnull void (^)(id returnData))sucBlock
@@ -290,6 +322,40 @@
                                        failedBlock:(nonnull void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_lb_taskReadLorawanDevTimeSyncIntervalOperation
                      cmdFlag:@"36"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
+#pragma mark ****************************************蓝牙广播参数************************************************
+
++ (void)lb_readDeviceNameWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                          failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadDeviceNameOperation
+                     cmdFlag:@"50"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readDeviceBroadcastIntervalWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                       failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadBroadcastIntervalOperation
+                     cmdFlag:@"51"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readDeviceScanStatusWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadScanStatusOperation
+                     cmdFlag:@"52"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
++ (void)lb_readDeviceScanParamsWithSucBlock:(nonnull void (^)(id returnData))sucBlock
+                                failedBlock:(nonnull void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadScanParamsOperation
+                     cmdFlag:@"53"
                     sucBlock:sucBlock
                  failedBlock:failedBlock];
 }

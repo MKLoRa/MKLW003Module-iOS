@@ -23,7 +23,7 @@
 
 @implementation MKLBLoRaDataModel
 
-- (void)startReadWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
+- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self readModem]) {
             [self operationFailedBlockWithMsg:@"Read Modem Error" block:failedBlock];
@@ -57,7 +57,7 @@
     });
 }
 
-- (void)startConfigWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self configDevTimeSyncInterval]) {
             [self operationFailedBlockWithMsg:@"Config DevTime Sync Interval Error" block:failedBlock];
