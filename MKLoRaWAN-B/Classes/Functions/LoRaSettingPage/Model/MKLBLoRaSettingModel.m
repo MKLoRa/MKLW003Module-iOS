@@ -29,7 +29,7 @@
     return self;
 }
 
-- (void)readDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)readDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self readModem]) {
             [self operationFailedBlockWithMsg:@"Read Modem Error" block:failedBlock];
@@ -103,7 +103,7 @@
     });
 }
 
-- (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self configModem]) {
             [self operationFailedBlockWithMsg:@"Config Modem Error" block:failedBlock];

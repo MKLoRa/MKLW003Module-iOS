@@ -49,6 +49,7 @@ MKTextButtonCellDelegate>
     [super viewDidAppear:animated];
     self.view.shiftHeightAsDodgeViewForMLInputDodger = 50.0f;
     [self.view registerAsDodgeViewForMLInputDodgerWithOriginalY:self.view.frame.origin.y];
+    [self readDataFromDevice];
 }
 
 - (void)viewDidLoad {
@@ -126,6 +127,38 @@ MKTextButtonCellDelegate>
     
 }
 
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf updateCellState];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+- (void)updateCellState {
+    MKNormalTextCellModel *nameModel = self.section0List[0];
+    nameModel.rightMsg = self.dataModel.deviceName;
+    
+    NSInteger buttonIndex = 0;
+    if (self.dataModel.powerStatus == 0) {
+        buttonIndex = 1;
+    }else if (self.dataModel.powerStatus == 1) {
+        buttonIndex = 0;
+    }else {
+        buttonIndex = 2;
+    }
+    
+    MKTextButtonCellModel *cellModel = self.section1List[0];
+    cellModel.dataListIndex = buttonIndex;
+    
+    [self.tableView reloadData];
+}
+
 #pragma mark - loadSectionDatas
 - (void)loadSectionDatas {
     [self loadSection0Datas];
@@ -167,7 +200,6 @@ MKTextButtonCellDelegate>
 #pragma mark - UI
 - (void)loadSubViews {
     self.defaultTitle = @"SETTINGS";
-    [self.rightButton setImage:LOADICON(@"MKLoRaWAN-B", @"MKLBSettingController", @"lb_slotSaveIcon.png") forState:UIControlStateNormal];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);

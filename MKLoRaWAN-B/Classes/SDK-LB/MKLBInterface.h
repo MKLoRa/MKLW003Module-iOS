@@ -63,6 +63,15 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRulesType) {
 + (void)lb_readDeviceInfoReportIntervalWithSucBlock:(void (^)(id returnData))sucBlock
                                         failedBlock:(void (^)(NSError *error))failedBlock;
 
+/// Read the power-on status of the device.
+/// 0:Switch off.
+/// 1:Switch on.
+/// 2:Revert to last status.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readDefaultPowerStatusWithSucBlock:(void (^)(id returnData))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock;
+
 /// Read iBeacon data reporting interval.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback

@@ -57,7 +57,7 @@
     });
 }
 
-- (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self configDevTimeSyncInterval]) {
             [self operationFailedBlockWithMsg:@"Config DevTime Sync Interval Error" block:failedBlock];

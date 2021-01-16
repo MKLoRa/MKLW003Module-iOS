@@ -16,6 +16,7 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     
 #pragma mark - 设备系统应用信息读取
     mk_lb_taskReadDeviceInfoReportIntervalOperation,    //读取设备信息上报间隔
+    mk_lb_taskReadDefaultPowerStatusOperation,          //读取设备上电状态
     mk_lb_taskReadBeaconReportIntervalOperation,        //读取iBeacon数据上报间隔
     mk_lb_taskReadFilterRepeatingDataTypeOperation,     //读取重复数据过滤类型
     mk_lb_taskReadBeaconReportDataTypeOperation,        //读取上报的iBeacon数据类型
@@ -83,7 +84,8 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskConfigDeviceInfoReportIntervalOperation,  //配置设备信息上报间隔
     mk_lb_taskConfigDeviceTimeOperation,                //同步设备时间
     
-    mk_lb_taskConfigPasswordOperation,          //设置密码
+    mk_lb_taskConfigPasswordOperation,                  //设置密码
+    mk_lb_taskConfigDefaultPowerStatusOperation,        //配置设备默认上电状态
     mk_lb_taskConfigBeaconReportIntervalOperation,      //配置iBeacon数据上报间隔
     mk_lb_taskConfigFilterRepeatingDataTypeOperation,   //配置重复数据过滤规则
     mk_lb_taskConfigBeaconReportDataTypeOperation,      //配置iBeacon数据上报类型

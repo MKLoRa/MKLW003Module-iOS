@@ -213,7 +213,6 @@ MKLBFilterConditionCellDelegate>
 #pragma mark - UI
 - (void)loadSubViews {
     self.defaultTitle = @"Filter Options";
-    [self.rightButton setImage:LOADICON(@"MKLoRaWAN-B", @"MKLBFilterOptionsController", @"lb_slotSaveIcon.png") forState:UIControlStateNormal];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.mas_equalTo(0);

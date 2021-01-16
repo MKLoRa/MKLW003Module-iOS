@@ -105,6 +105,12 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
             @"interval":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadDeviceInfoReportIntervalOperation;
+    }else if ([cmd isEqualToString:@"05"]) {
+        //读取设备上电状态
+        resultDic = @{
+            @"state":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadDefaultPowerStatusOperation;
     }else if ([cmd isEqualToString:@"07"]) {
         //读取iBeacon数据上报间隔
         resultDic = @{
@@ -598,6 +604,9 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"04"]) {
         //设置连接密码
         operationID = mk_lb_taskConfigPasswordOperation;
+    }else if ([cmd isEqualToString:@"05"]) {
+        //设置设备默认上电状态
+        operationID = mk_lb_taskConfigDefaultPowerStatusOperation;
     }else if ([cmd isEqualToString:@"07"]) {
         //设置iBeacon数据上报间隔
         operationID = mk_lb_taskConfigBeaconReportIntervalOperation;

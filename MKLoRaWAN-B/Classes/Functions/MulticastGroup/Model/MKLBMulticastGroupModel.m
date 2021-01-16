@@ -23,7 +23,7 @@
 
 @implementation MKLBMulticastGroupModel
 
-- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self readMulticastStatus]) {
             [self operationFailedBlockWithMsg:@"Read Multicast Status Error" block:failedBlock];
@@ -49,7 +49,7 @@
     });
 }
 
-- (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self configMulticastStatus]) {
             [self operationFailedBlockWithMsg:@"Config Multicast Status Error" block:failedBlock];

@@ -22,7 +22,7 @@
 
 @implementation MKLBFilterOptionsModel
 
-- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
         if (![self readConditionAStatus]) {
             [self operationFailedBlockWithMsg:@"Read Filter Condition A Error" block:failedBlock];

@@ -178,7 +178,7 @@ static dispatch_once_t onceToken;
 - (void)connectPeripheral:(CBPeripheral *)peripheral
                  password:(NSString *)password
                  sucBlock:(void (^)(CBPeripheral * _Nonnull))sucBlock
-              failedBlock:(void (^)(NSError * _Nonnull))failedBlock {
+              failedBlock:(void (^)(NSError * error))failedBlock {
     if (!peripheral) {
         [MKBLEBaseSDKAdopter operationConnectFailedBlock:failedBlock];
         return;

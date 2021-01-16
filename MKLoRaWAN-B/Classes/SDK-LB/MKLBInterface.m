@@ -76,6 +76,14 @@
                  failedBlock:failedBlock];
 }
 
++ (void)lb_readDefaultPowerStatusWithSucBlock:(void (^)(id returnData))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadDefaultPowerStatusOperation
+                     cmdFlag:@"05"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
 + (void)lb_readBeaconReportIntervalWithSucBlock:(void (^)(id returnData))sucBlock
                                     failedBlock:(void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_lb_taskReadBeaconReportIntervalOperation

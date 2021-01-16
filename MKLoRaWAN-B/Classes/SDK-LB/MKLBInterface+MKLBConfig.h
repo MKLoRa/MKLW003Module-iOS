@@ -61,6 +61,12 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRules) {
     mk_lb_filterRules_reverse,          //Filter data in reverse
 };
 
+typedef NS_ENUM(NSInteger, mk_lb_defaultPowerStatus) {
+    mk_lb_defaultPowerStatusSwitchOff,
+    mk_lb_defaultPowerStatusSwitchOn,
+    mk_lb_defaultPowerStatusSwitchRevertToLastStatus,
+};
+
 @protocol mk_lb_BLEFilterRawDataProtocol <NSObject>
 
 /// The currently filtered data type, refer to the definition of different Bluetooth data types by the International Bluetooth Organization, 1 byte of hexadecimal data
@@ -110,6 +116,14 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRules) {
 + (void)lb_configPassword:(NSString *)password
                  sucBlock:(void (^)(void))sucBlock
               failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure the power-on status of the device.
+/// @param status status
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configDefaultPowerStatus:(mk_lb_defaultPowerStatus)status
+                           sucBlock:(void (^)(void))sucBlock
+                        failedBlock:(void (^)(NSError *error))failedBlock;
 
 /// Configure iBeacon data reporting interval.
 /// @param interval 10s ~ 65535s

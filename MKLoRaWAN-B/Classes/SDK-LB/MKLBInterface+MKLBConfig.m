@@ -82,6 +82,22 @@
                    failedBlock:failedBlock];
 }
 
++ (void)lb_configDefaultPowerStatus:(mk_lb_defaultPowerStatus)status
+                           sucBlock:(void (^)(void))sucBlock
+                        failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *stateString = @"00";
+    if (status == mk_lb_defaultPowerStatusSwitchOn) {
+        stateString = @"01";
+    }else if (status == mk_lb_defaultPowerStatusSwitchRevertToLastStatus) {
+        stateString = @"02";
+    }
+    NSString *commandString = [@"ed010501" stringByAppendingString:stateString];
+    [self configDataWithTaskID:mk_lb_taskConfigDefaultPowerStatusOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
 + (void)lb_configBeaconReportInterval:(NSInteger)interval
                              sucBlock:(void (^)(void))sucBlock
                           failedBlock:(void (^)(NSError *error))failedBlock {
