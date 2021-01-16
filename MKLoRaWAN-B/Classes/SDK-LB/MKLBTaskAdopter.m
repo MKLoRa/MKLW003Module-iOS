@@ -347,6 +347,238 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
             @"scanWindow":scanWindow,
         };
         operationID = mk_lb_taskReadScanParamsOperation;
+    }else if ([cmd isEqualToString:@"60"]) {
+        //读取蓝牙过滤规则开关与或逻辑
+        resultDic = @{
+            @"type":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
+        };
+        operationID = mk_lb_taskReadBLELogicalRelationshipOperation;
+    }else if ([cmd isEqualToString:@"61"]) {
+        //读取蓝牙过滤规则1开关
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        resultDic = @{
+            @"isOn":@(isOn)
+        };
+        operationID = mk_lb_taskReadBLEFilterAStatusOperation;
+    }else if ([cmd isEqualToString:@"62"]) {
+        //读取蓝牙过滤规则1的过滤广播名称
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *deviceName = @"";
+        if ([rule integerValue] > 0 && content.length > 2) {
+            deviceName = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(5, data.length - 5)] encoding:NSUTF8StringEncoding];
+        }
+        if (!MKValidStr(deviceName)) {
+            deviceName = @"";
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"deviceName":deviceName,
+        };
+        operationID = mk_lb_taskReadBLEFilterADeviceNameOperation;
+    }else if ([cmd isEqualToString:@"63"]) {
+        //读取蓝牙过滤规则1过滤的mac地址
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *macAddress = @"";
+        if ([rule integerValue] > 0 && content.length > 2) {
+            macAddress = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"macAddress":macAddress
+        };
+        operationID = mk_lb_taskReadBLEFilterADeviceMacOperation;
+    }else if ([cmd isEqualToString:@"64"]) {
+        //读取蓝牙过滤规则1过滤的major范围
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *majorLow = @"";
+        NSString *majorHigh = @"";
+        if ([rule integerValue] > 0 && content.length == 10) {
+            majorLow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 4)];
+            majorHigh = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(6, 4)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"majorLow":majorLow,
+            @"majorHigh":majorHigh,
+        };
+        operationID = mk_lb_taskReadBLEFilterAMajorOperation;
+    }else if ([cmd isEqualToString:@"65"]) {
+        //读取蓝牙过滤规则1过滤的minor范围
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *minorLow = @"";
+        NSString *minorHigh = @"";
+        if ([rule integerValue] > 0 && content.length == 10) {
+            minorLow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 4)];
+            minorHigh = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(6, 4)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"minorLow":minorLow,
+            @"minorHigh":minorHigh,
+        };
+        operationID = mk_lb_taskReadBLEFilterAMinorOperation;
+    }else if ([cmd isEqualToString:@"66"]) {
+        //读取蓝牙过滤规则1过滤的原始数据
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSMutableArray *filterList = [NSMutableArray array];
+        if ([rule integerValue] > 0) {
+            NSInteger subIndex = 2;
+            //最多五条过滤数据
+            for (NSInteger i = 0; i < 5; i ++) {
+                NSInteger index0Len = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(subIndex, 2)];
+                NSString *index0Data = [content substringWithRange:NSMakeRange(subIndex + 2, index0Len * 2)];
+                
+                NSDictionary *index0Dic = @{
+                    @"dataType":[index0Data substringWithRange:NSMakeRange(0, 2)],
+                    @"minIndex":[MKBLEBaseSDKAdopter getDecimalStringWithHex:index0Data range:NSMakeRange(2, 2)],
+                    @"maxIndex":[MKBLEBaseSDKAdopter getDecimalStringWithHex:index0Data range:NSMakeRange(4, 2)],
+                    @"rawData":[index0Data substringFromIndex:6],
+                    @"index":@(i),
+                };
+                [filterList addObject:index0Dic];
+                subIndex += (index0Data.length + 2);
+                if (subIndex >= content.length) {
+                    break;
+                }
+            }
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"filterList":filterList,
+        };
+        operationID = mk_lb_taskReadBLEFilterARawDataOperation;
+    }else if ([cmd isEqualToString:@"67"]) {
+        //读取蓝牙过滤规则1过滤的UUID
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *uuid = @"";
+        if ([rule integerValue] > 0 && content.length > 2) {
+            uuid = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"uuid":uuid
+        };
+        operationID = mk_lb_taskReadBLEFilterAUUIDOperation;
+    }else if ([cmd isEqualToString:@"68"]) {
+        //读取蓝牙过滤规则1过滤的RSSI
+        NSNumber *rssi = [MKBLEBaseSDKAdopter signedHexTurnString:content];
+        resultDic = @{
+            @"rssi":rssi,
+        };
+        operationID = mk_lb_taskReadBLEFilterARssiOperation;
+    }else if ([cmd isEqualToString:@"69"]) {
+        //读取蓝牙过滤规则2开关
+        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        resultDic = @{
+            @"isOn":@(isOn)
+        };
+        operationID = mk_lb_taskReadBLEFilterBStatusOperation;
+    }else if ([cmd isEqualToString:@"6a"]) {
+        //读取蓝牙过滤规则2的过滤广播名称
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *deviceName = @"";
+        if ([rule integerValue] > 0 && content.length > 2) {
+            deviceName = [[NSString alloc] initWithData:[data subdataWithRange:NSMakeRange(5, data.length - 5)] encoding:NSUTF8StringEncoding];
+        }
+        if (!MKValidStr(deviceName)) {
+            deviceName = @"";
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"deviceName":deviceName,
+        };
+        operationID = mk_lb_taskReadBLEFilterBDeviceNameOperation;
+    }else if ([cmd isEqualToString:@"6b"]) {
+        //读取蓝牙过滤规则2过滤的mac地址
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *macAddress = @"";
+        if ([rule integerValue] > 0 && content.length > 2) {
+            macAddress = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"macAddress":macAddress
+        };
+        operationID = mk_lb_taskReadBLEFilterBDeviceMacOperation;
+    }else if ([cmd isEqualToString:@"6c"]) {
+        //读取蓝牙过滤规则2过滤的major范围
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *majorLow = @"";
+        NSString *majorHigh = @"";
+        if ([rule integerValue] > 0 && content.length == 10) {
+            majorLow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 4)];
+            majorHigh = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(6, 4)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"majorLow":majorLow,
+            @"majorHigh":majorHigh,
+        };
+        operationID = mk_lb_taskReadBLEFilterBMajorOperation;
+    }else if ([cmd isEqualToString:@"6d"]) {
+        //读取蓝牙过滤规则2过滤的minor范围
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *minorLow = @"";
+        NSString *minorHigh = @"";
+        if ([rule integerValue] > 0 && content.length == 10) {
+            minorLow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 4)];
+            minorHigh = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(6, 4)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"minorLow":minorLow,
+            @"minorHigh":minorHigh,
+        };
+        operationID = mk_lb_taskReadBLEFilterBMinorOperation;
+    }else if ([cmd isEqualToString:@"6e"]) {
+        //读取蓝牙过滤规则2过滤的原始数据
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSMutableArray *filterList = [NSMutableArray array];
+        if ([rule integerValue] > 0) {
+            NSInteger subIndex = 2;
+            //最多五条过滤数据
+            for (NSInteger i = 0; i < 5; i ++) {
+                NSInteger index0Len = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(subIndex, 2)];
+                NSString *index0Data = [content substringWithRange:NSMakeRange(subIndex + 2, index0Len * 2)];
+                
+                NSDictionary *index0Dic = @{
+                    @"dataType":[index0Data substringWithRange:NSMakeRange(0, 2)],
+                    @"minIndex":[MKBLEBaseSDKAdopter getDecimalStringWithHex:index0Data range:NSMakeRange(2, 2)],
+                    @"maxIndex":[MKBLEBaseSDKAdopter getDecimalStringWithHex:index0Data range:NSMakeRange(4, 2)],
+                    @"rawData":[index0Data substringFromIndex:6],
+                    @"index":@(i),
+                };
+                [filterList addObject:index0Dic];
+                subIndex += (index0Data.length + 2);
+                if (subIndex >= content.length) {
+                    break;
+                }
+            }
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"filterList":filterList,
+        };
+        operationID = mk_lb_taskReadBLEFilterBRawDataOperation;
+    }else if ([cmd isEqualToString:@"6f"]) {
+        //读取蓝牙过滤规则2过滤的UUID
+        NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
+        NSString *uuid = @"";
+        if ([rule integerValue] > 0 && content.length > 2) {
+            uuid = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+        }
+        resultDic = @{
+            @"rule":rule,
+            @"uuid":uuid
+        };
+        operationID = mk_lb_taskReadBLEFilterBUUIDOperation;
+    }else if ([cmd isEqualToString:@"70"]) {
+        //读取蓝牙过滤规则2过滤的RSSI
+        NSNumber *rssi = [MKBLEBaseSDKAdopter signedHexTurnString:content];
+        resultDic = @{
+            @"rssi":rssi,
+        };
+        operationID = mk_lb_taskReadBLEFilterBRssiOperation;
     }
     return [self dataParserGetDataSuccess:resultDic operationID:operationID];
 }
@@ -468,6 +700,57 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"53"]) {
         //配置扫描参数
         operationID = mk_lb_taskConfigScanParamsOperation;
+    }else if ([cmd isEqualToString:@"60"]) {
+        //配置蓝牙过滤规则开关逻辑
+        operationID = mk_lb_taskConfigBLELogicalRelationshipOperation;
+    }else if ([cmd isEqualToString:@"61"]) {
+        //配置过滤规则1的开关状态
+        operationID = mk_lb_taskConfigBLEFilterAStatusOperation;
+    }else if ([cmd isEqualToString:@"62"]) {
+        //配置过滤规则1的广播名称
+        operationID = mk_lb_taskConfigBLEFilterADeviceNameOperation;
+    }else if ([cmd isEqualToString:@"63"]) {
+        //配置过滤规则1的MAC地址
+        operationID = mk_lb_taskConfigBLEFilterAMacOperation;
+    }else if ([cmd isEqualToString:@"64"]) {
+        //配置过滤规则1的MAJOR范围
+        operationID = mk_lb_taskConfigBLEFilterAMajorOperation;
+    }else if ([cmd isEqualToString:@"65"]) {
+        //配置过滤规则1的MINOR范围
+        operationID = mk_lb_taskConfigBLEFilterAMinorOperation;
+    }else if ([cmd isEqualToString:@"66"]) {
+        //配置过滤规则1的raw data
+        operationID = mk_lb_taskConfigBLEFilterARawDataOperation;
+    }else if ([cmd isEqualToString:@"67"]) {
+        //配置过滤规则1的UUID
+        operationID = mk_lb_taskConfigBLEFilterAUUIDOperation;
+    }else if ([cmd isEqualToString:@"68"]) {
+        //配置过滤规则1的RSSI
+        operationID = mk_lb_taskConfigBLEFilterARSSIOperation;
+    }else if ([cmd isEqualToString:@"69"]) {
+        //配置过滤规则2的开关状态
+        operationID = mk_lb_taskConfigBLEFilterBStatusOperation;
+    }else if ([cmd isEqualToString:@"6a"]) {
+        //配置过滤规则2的广播名称
+        operationID = mk_lb_taskConfigBLEFilterBDeviceNameOperation;
+    }else if ([cmd isEqualToString:@"6b"]) {
+        //配置过滤规则2的MAC地址
+        operationID = mk_lb_taskConfigBLEFilterBMacOperation;
+    }else if ([cmd isEqualToString:@"6c"]) {
+        //配置过滤规则2的MAJOR范围
+        operationID = mk_lb_taskConfigBLEFilterBMajorOperation;
+    }else if ([cmd isEqualToString:@"6d"]) {
+        //配置过滤规则2的MINOR范围
+        operationID = mk_lb_taskConfigBLEFilterBMinorOperation;
+    }else if ([cmd isEqualToString:@"6e"]) {
+        //配置过滤规则2的raw data
+        operationID = mk_lb_taskConfigBLEFilterBRawDataOperation;
+    }else if ([cmd isEqualToString:@"6f"]) {
+        //配置过滤规则2的UUID
+        operationID = mk_lb_taskConfigBLEFilterBUUIDOperation;
+    }else if ([cmd isEqualToString:@"70"]) {
+        //配置过滤规则2的RSSI
+        operationID = mk_lb_taskConfigBLEFilterBRSSIOperation;
     }
     return [self dataParserGetDataSuccess:@{@"success":@(success)} operationID:operationID];
 }

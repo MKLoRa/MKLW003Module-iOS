@@ -396,43 +396,106 @@
 + (void)lb_readBLEFilterDeviceNameWithType:(mk_lb_filterRulesType)type
                                   sucBlock:(void (^)(id returnData))sucBlock
                                failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"62";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterADeviceNameOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"6a";
+        taskID = mk_lb_taskReadBLEFilterBDeviceNameOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 + (void)lb_readBLEFilterDeviceMacWithType:(mk_lb_filterRulesType)type
                                  sucBlock:(void (^)(id returnData))sucBlock
                               failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"63";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterADeviceMacOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"6b";
+        taskID = mk_lb_taskReadBLEFilterBDeviceMacOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 + (void)lb_readBLEFilterDeviceMajorWithType:(mk_lb_filterRulesType)type
                                    sucBlock:(void (^)(id returnData))sucBlock
                                 failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"64";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterAMajorOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"6c";
+        taskID = mk_lb_taskReadBLEFilterBMajorOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 + (void)lb_readBLEFilterDeviceMinorWithType:(mk_lb_filterRulesType)type
                                    sucBlock:(void (^)(id returnData))sucBlock
                                 failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"65";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterAMinorOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"6d";
+        taskID = mk_lb_taskReadBLEFilterBMinorOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 + (void)lb_readBLEFilterDeviceRawDataWithType:(mk_lb_filterRulesType)type
                                      sucBlock:(void (^)(id returnData))sucBlock
                                   failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"66";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterARawDataOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"6e";
+        taskID = mk_lb_taskReadBLEFilterBRawDataOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 + (void)lb_readBLEFilterDeviceUUIDWithType:(mk_lb_filterRulesType)type
                                   sucBlock:(void (^)(id returnData))sucBlock
                                failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"67";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterAUUIDOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"6f";
+        taskID = mk_lb_taskReadBLEFilterBUUIDOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 + (void)lb_readBLEFilterDeviceRSSIWithType:(mk_lb_filterRulesType)type
                                   sucBlock:(void (^)(id returnData))sucBlock
                                failedBlock:(void (^)(NSError *error))failedBlock {
-    
+    NSString *cmd = @"68";
+    mk_lb_taskOperationID taskID = mk_lb_taskReadBLEFilterARssiOperation;
+    if (type == mk_lb_filterRulesClassBType) {
+        cmd = @"70";
+        taskID = mk_lb_taskReadBLEFilterBRssiOperation;
+    }
+    [self readDataWithTaskID:taskID
+                     cmdFlag:cmd
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
 }
 
 #pragma mark - private method

@@ -18,6 +18,8 @@
 #import "MKNormalTextCell.h"
 #import "MKTextButtonCell.h"
 
+#import "MKLBInterface+MKLBConfig.h"
+
 #import "MKLBFilterOptionsModel.h"
 
 #import "MKLBFilterConditionCell.h"
@@ -44,6 +46,11 @@ MKLBFilterConditionCellDelegate>
 
 - (void)dealloc {
     NSLog(@"MKLBFilterOptionsController销毁");
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self readDataFromDevice];
 }
 
 - (void)viewDidLoad {
@@ -104,7 +111,15 @@ MKLBFilterConditionCellDelegate>
 
 #pragma mark - MKLBFilterConditionCellDelegate
 - (void)mk_filterConditionsChanged:(NSInteger)conditionIndex {
-    
+    self.dataModel.ABIsOr = (conditionIndex == 1);
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    [MKLBInterface lb_configBLELogicalRelationship:(self.dataModel.ABIsOr ? mk_lb_lLELogicalRelationshipOR : mk_lb_lLELogicalRelationshipAND) sucBlock:^{
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:@"Success"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - MKTextButtonCellDelegate
@@ -115,7 +130,48 @@ MKLBFilterConditionCellDelegate>
 - (void)mk_loraTextButtonCellSelected:(NSInteger)index
                         dataListIndex:(NSInteger)dataListIndex
                                 value:(NSString *)value {
+    if (index == 0) {
+        //Filter Repeating Data
+        self.dataModel.filterRepeatingDataType = dataListIndex;
+        [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+        [MKLBInterface lb_configFilterRepeatingDataType:dataListIndex sucBlock:^{
+            [[MKHudManager share] hide];
+            [self.view showCentralToast:@"Success"];
+        } failedBlock:^(NSError * _Nonnull error) {
+            [[MKHudManager share] hide];
+            [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+        }];
+        return;
+    }
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf updateCellState];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
+- (void)updateCellState {
+    MKNormalTextCellModel *conditionAModel = self.section0List[0];
+    conditionAModel.rightMsg = (self.dataModel.conditionAIsOn ? @"ON" : @"OFF");
     
+    MKNormalTextCellModel *conditionBModel = self.section0List[1];
+    conditionBModel.rightMsg = (self.dataModel.conditionBIsOn ? @"ON" : @"OFF");
+    
+    MKLBFilterConditionCellModel *cellModel = self.section1List[0];
+    cellModel.conditionIndex = (self.dataModel.ABIsOr ? 1 : 0);
+    
+    MKTextButtonCellModel *repeatModel = self.section2List[0];
+    repeatModel.dataListIndex = self.dataModel.filterRepeatingDataType;
+    
+    [self.tableView reloadData];
 }
 
 #pragma mark - loadSectionDatas
@@ -143,7 +199,6 @@ MKLBFilterConditionCellDelegate>
 
 - (void)loadSection1Datas {
     MKLBFilterConditionCellModel *cellModel = [[MKLBFilterConditionCellModel alloc] init];
-    cellModel.conditionIndex = 1;
     [self.section1List addObject:cellModel];
 }
 

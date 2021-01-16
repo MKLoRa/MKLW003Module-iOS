@@ -50,6 +50,33 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRepeatingDataType) {
     mk_lb_filterRepeatingDataTypeMacRawData,
 };
 
+typedef NS_ENUM(NSInteger, mk_lb_BLELogicalRelationship) {
+    mk_lb_lLELogicalRelationshipOR,
+    mk_lb_lLELogicalRelationshipAND
+};
+
+typedef NS_ENUM(NSInteger, mk_lb_filterRules) {
+    mk_lb_filterRules_off,
+    mk_lb_filterRules_forward,          //Filter data forward
+    mk_lb_filterRules_reverse,          //Filter data in reverse
+};
+
+@protocol mk_lb_BLEFilterRawDataProtocol <NSObject>
+
+/// The currently filtered data type, refer to the definition of different Bluetooth data types by the International Bluetooth Organization, 1 byte of hexadecimal data
+@property (nonatomic, copy)NSString *dataType;
+
+/// Data location to start filtering.
+@property (nonatomic, assign)NSInteger minIndex;
+
+/// Data location to end filtering.
+@property (nonatomic, assign)NSInteger maxIndex;
+
+/// The currently filtered content. The data length should be maxIndex-minIndex, if maxIndex=0&&minIndex==0, the item length is not checked whether it meets the requirements.MAX length:29 Bytes
+@property (nonatomic, copy)NSString *rawData;
+
+@end
+
 @interface MKLBInterface (MKLBConfig)
 
 #pragma mark ****************************************设备系统应用信息设置************************************************
@@ -377,6 +404,110 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRepeatingDataType) {
                   failedBlock:(void (^)(NSError *error))failedBlock;
 
 #pragma mark ****************************************蓝牙过滤规则************************************************
+
+/// Configure the logical relationship between the two sets of filtering rules, the two sets of rules can be OR and and.
+/// @param ship ship
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLELogicalRelationship:(mk_lb_BLELogicalRelationship)ship
+                               sucBlock:(void (^)(void))sucBlock
+                            failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure filter rule switch status.
+/// @param type rule1 or rule2
+/// @param isOn isOn
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterStatusWithType:(mk_lb_filterRulesType)type
+                                    isOn:(BOOL)isOn
+                                sucBlock:(void (^)(void))sucBlock
+                             failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure the filtered device name.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param deviceName 1~29 ascii characters.If rules == mk_lb_filterRules_off, it can be empty.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceNameWithType:(mk_lb_filterRulesType)type
+                                       rules:(mk_lb_filterRules)rules
+                                  deviceName:(NSString *)deviceName
+                                    sucBlock:(void (^)(void))sucBlock
+                                 failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure the filtered device mac.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param mac 1Byte ~ 6Byte.If rules == mk_lb_filterRules_off, it can be empty.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceMacWithType:(mk_lb_filterRulesType)type
+                                      rules:(mk_lb_filterRules)rules
+                                        mac:(NSString *)mac
+                                   sucBlock:(void (^)(void))sucBlock
+                                failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure the filtered MAJOR range.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param majorMin 0~65535
+/// @param majorMax majorMin ~ 65535
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceMajorWithType:(mk_lb_filterRulesType)type
+                                        rules:(mk_lb_filterRules)rules
+                                     majorMin:(NSInteger)majorMin
+                                     majorMax:(NSInteger)majorMax
+                                     sucBlock:(void (^)(void))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure the filtered MAINOR range.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param minorMin 0~65535
+/// @param minorMax minorMin ~ 65535
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceMinorWithType:(mk_lb_filterRulesType)type
+                                        rules:(mk_lb_filterRules)rules
+                                     minorMin:(NSInteger)minorMin
+                                     minorMax:(NSInteger)minorMax
+                                     sucBlock:(void (^)(void))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure filtered raw data.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param rawDataList Filter rules, up to five groups of filters.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceRawDataWithType:(mk_lb_filterRulesType)type
+                                          rules:(mk_lb_filterRules)rules
+                                    rawDataList:(NSArray <mk_lb_BLEFilterRawDataProtocol> *)rawDataList
+                                       sucBlock:(void (^)(void))sucBlock
+                                    failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure filtered UUID.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param uuid 1Byte ~ 16Byte.If rules == mk_lb_filterRules_off, it can be empty.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceUUIDWithType:(mk_lb_filterRulesType)type
+                                       rules:(mk_lb_filterRules)rules
+                                        uuid:(NSString *)uuid
+                                    sucBlock:(void (^)(void))sucBlock
+                                 failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Configure filtered RSSI.
+/// @param type rule1 or rule2
+/// @param rssi -127dBm~0dBm
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceRSSIWithType:(mk_lb_filterRulesType)type
+                                        rssi:(NSInteger)rssi
+                                    sucBlock:(void (^)(void))sucBlock
+                                 failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
 

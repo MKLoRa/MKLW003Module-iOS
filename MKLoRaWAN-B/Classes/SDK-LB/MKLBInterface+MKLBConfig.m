@@ -608,6 +608,333 @@
                    failedBlock:failedBlock];
 }
 
+#pragma mark ****************************************蓝牙过滤规则************************************************
+
++ (void)lb_configBLELogicalRelationship:(mk_lb_BLELogicalRelationship)ship
+                               sucBlock:(void (^)(void))sucBlock
+                            failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *commandString = (ship == mk_lb_lLELogicalRelationshipAND ? @"ed01600101" : @"ed01600100");
+    [self configDataWithTaskID:mk_lb_taskConfigBLELogicalRelationshipOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+/// Configure filter rule switch status.
+/// @param type rule1 or rule2
+/// @param isOn isOn
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterStatusWithType:(mk_lb_filterRulesType)type
+                                    isOn:(BOOL)isOn
+                                sucBlock:(void (^)(void))sucBlock
+                             failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"61" : @"69");
+    NSString *state = (isOn ? @"01" : @"00");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAStatusOperation : mk_lb_taskConfigBLEFilterBStatusOperation);
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"01",state];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+/// Configure the filtered device name.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param deviceName 1~29 ascii characters.If rules == mk_lb_filterRules_off, it can be empty.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceNameWithType:(mk_lb_filterRulesType)type
+                                       rules:(mk_lb_filterRules)rules
+                                  deviceName:(NSString *)deviceName
+                                    sucBlock:(void (^)(void))sucBlock
+                                 failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rules == mk_lb_filterRules_off) {
+        //关闭，不需要校验
+        NSString *commandString = (type == mk_lb_filterRulesClassAType ? @"ed01620100" : @"ed016a0100");
+        mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterADeviceNameOperation : mk_lb_taskConfigBLEFilterBDeviceNameOperation);
+        [self configDataWithTaskID:taskID
+                              data:commandString
+                          sucBlock:sucBlock
+                       failedBlock:failedBlock];
+        return;
+    }
+    if (!MKValidStr(deviceName) || deviceName.length > 29) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *tempString = @"";
+    for (NSInteger i = 0; i < deviceName.length; i ++) {
+        int asciiCode = [deviceName characterAtIndex:i];
+        tempString = [tempString stringByAppendingString:[NSString stringWithFormat:@"%1lx",(unsigned long)asciiCode]];
+    }
+    
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"62" : @"6a");
+    NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterADeviceNameOperation : mk_lb_taskConfigBLEFilterBDeviceNameOperation);
+    
+    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)(deviceName.length + 1)];
+    if (lenString.length == 1) {
+        lenString = [@"0" stringByAppendingString:lenString];
+    }
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,tempString];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+/// Configure the filtered device mac.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param mac 1Byte ~ 6Byte.If rules == mk_lb_filterRules_off, it can be empty.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceMacWithType:(mk_lb_filterRulesType)type
+                                      rules:(mk_lb_filterRules)rules
+                                        mac:(NSString *)mac
+                                   sucBlock:(void (^)(void))sucBlock
+                                failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rules == mk_lb_filterRules_off) {
+        //关闭，不需要校验
+        NSString *commandString = (type == mk_lb_filterRulesClassAType ? @"ed01630100" : @"ed016b0100");
+        mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMacOperation : mk_lb_taskConfigBLEFilterBMacOperation);
+        [self configDataWithTaskID:taskID
+                              data:commandString
+                          sucBlock:sucBlock
+                       failedBlock:failedBlock];
+        return;
+    }
+    mac = [mac stringByReplacingOccurrencesOfString:@":" withString:@""];
+    mac = [mac stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    if (!MKValidStr(mac) || mac.length > 12 || ![MKBLEBaseSDKAdopter checkHexCharacter:mac] || mac.length % 2 != 0) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"63" : @"6b");
+    NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMacOperation : mk_lb_taskConfigBLEFilterBMacOperation);
+    
+    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((mac.length / 2) + 1)];
+    if (lenString.length == 1) {
+        lenString = [@"0" stringByAppendingString:lenString];
+    }
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,mac];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+/// Configure the filtered MAJOR range.
+/// @param type rule1 or rule2
+/// @param rules rules
+/// @param majorMin 0~65535
+/// @param majorMax majorMin ~ 65535
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configBLEFilterDeviceMajorWithType:(mk_lb_filterRulesType)type
+                                        rules:(mk_lb_filterRules)rules
+                                     majorMin:(NSInteger)majorMin
+                                     majorMax:(NSInteger)majorMax
+                                     sucBlock:(void (^)(void))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rules == mk_lb_filterRules_off) {
+        //关闭，不需要校验
+        NSString *commandString = (type == mk_lb_filterRulesClassAType ? @"ed01640100" : @"ed016c0100");
+        mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMajorOperation : mk_lb_taskConfigBLEFilterBMajorOperation);
+        [self configDataWithTaskID:taskID
+                              data:commandString
+                          sucBlock:sucBlock
+                       failedBlock:failedBlock];
+        return;
+    }
+    if (majorMin < 0 || majorMin > 65535 || majorMax < majorMin || majorMax > 65535) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *minString = [NSString stringWithFormat:@"%1lx",(unsigned long)majorMin];
+    if (minString.length == 1) {
+        minString = [@"000" stringByAppendingString:minString];
+    }else if (minString.length == 2) {
+        minString = [@"00" stringByAppendingString:minString];
+    }else if (minString.length == 3) {
+        minString = [@"0" stringByAppendingString:minString];
+    }
+    NSString *maxString = [NSString stringWithFormat:@"%1lx",(unsigned long)majorMax];
+    if (maxString.length == 1) {
+        maxString = [@"000" stringByAppendingString:maxString];
+    }else if (maxString.length == 2) {
+        maxString = [@"00" stringByAppendingString:maxString];
+    }else if (maxString.length == 3) {
+        maxString = [@"0" stringByAppendingString:maxString];
+    }
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"64" : @"6c");
+    NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMajorOperation : mk_lb_taskConfigBLEFilterBMajorOperation);
+    
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"05",rulesString,minString,maxString];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configBLEFilterDeviceMinorWithType:(mk_lb_filterRulesType)type
+                                        rules:(mk_lb_filterRules)rules
+                                     minorMin:(NSInteger)minorMin
+                                     minorMax:(NSInteger)minorMax
+                                     sucBlock:(void (^)(void))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rules == mk_lb_filterRules_off) {
+        //关闭，不需要校验
+        NSString *commandString = (type == mk_lb_filterRulesClassAType ? @"ed01650100" : @"ed016d0100");
+        mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMinorOperation : mk_lb_taskConfigBLEFilterBMinorOperation);
+        [self configDataWithTaskID:taskID
+                              data:commandString
+                          sucBlock:sucBlock
+                       failedBlock:failedBlock];
+        return;
+    }
+    if (minorMin < 0 || minorMin > 65535 || minorMax < minorMin || minorMax > 65535) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *minString = [NSString stringWithFormat:@"%1lx",(unsigned long)minorMin];
+    if (minString.length == 1) {
+        minString = [@"000" stringByAppendingString:minString];
+    }else if (minString.length == 2) {
+        minString = [@"00" stringByAppendingString:minString];
+    }else if (minString.length == 3) {
+        minString = [@"0" stringByAppendingString:minString];
+    }
+    NSString *maxString = [NSString stringWithFormat:@"%1lx",(unsigned long)minorMax];
+    if (maxString.length == 1) {
+        maxString = [@"000" stringByAppendingString:maxString];
+    }else if (maxString.length == 2) {
+        maxString = [@"00" stringByAppendingString:maxString];
+    }else if (maxString.length == 3) {
+        maxString = [@"0" stringByAppendingString:maxString];
+    }
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"65" : @"6d");
+    NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMinorOperation : mk_lb_taskConfigBLEFilterBMinorOperation);
+    
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"05",rulesString,minString,maxString];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configBLEFilterDeviceRawDataWithType:(mk_lb_filterRulesType)type
+                                          rules:(mk_lb_filterRules)rules
+                                    rawDataList:(NSArray <mk_lb_BLEFilterRawDataProtocol> *)rawDataList
+                                       sucBlock:(void (^)(void))sucBlock
+                                    failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rules == mk_lb_filterRules_off) {
+        //关闭，不需要校验
+        NSString *commandString = (type == mk_lb_filterRulesClassAType ? @"ed01660100" : @"ed016e0100");
+        mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterARawDataOperation : mk_lb_taskConfigBLEFilterBRawDataOperation);
+        [self configDataWithTaskID:taskID
+                              data:commandString
+                          sucBlock:sucBlock
+                       failedBlock:failedBlock];
+        return;
+    }
+    if (!MKValidArray(rawDataList) || rawDataList.count > 5) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *contentData = @"";
+    for (id <mk_lb_BLEFilterRawDataProtocol>protocol in rawDataList) {
+        if (![self isConfirmRawFilterProtocol:protocol]) {
+            [self operationParamsErrorBlock:failedBlock];
+            return;
+        }
+        NSString *minIndex = [NSString stringWithFormat:@"%1lx",(unsigned long)protocol.minIndex];
+        if (minIndex.length == 1) {
+            minIndex = [@"0" stringByAppendingString:minIndex];
+        }
+        NSString *maxIndex = [NSString stringWithFormat:@"%1lx",(unsigned long)protocol.maxIndex];
+        if (maxIndex.length == 1) {
+            maxIndex = [@"0" stringByAppendingString:maxIndex];
+        }
+        NSString *lenString = [NSString stringWithFormat:@"%1lx",(unsigned long)(protocol.rawData.length / 2 + 3)];
+        if (lenString.length == 1) {
+            lenString = [@"0" stringByAppendingString:lenString];
+        }
+        NSString *conditionString = [NSString stringWithFormat:@"%@%@%@%@%@",lenString,protocol.dataType,minIndex,maxIndex,protocol.rawData];
+        contentData = [contentData stringByAppendingString:conditionString];
+    }
+    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((contentData.length / 2) + 1)];
+    if (lenString.length == 1) {
+        lenString = [@"0" stringByAppendingString:lenString];
+    }
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"66" : @"6e");
+    NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterARawDataOperation : mk_lb_taskConfigBLEFilterBRawDataOperation);
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,contentData];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configBLEFilterDeviceUUIDWithType:(mk_lb_filterRulesType)type
+                                       rules:(mk_lb_filterRules)rules
+                                        uuid:(NSString *)uuid
+                                    sucBlock:(void (^)(void))sucBlock
+                                 failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rules == mk_lb_filterRules_off) {
+        //关闭，不需要校验
+        NSString *commandString = (type == mk_lb_filterRulesClassAType ? @"ed01670100" : @"ed016f0100");
+        mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAUUIDOperation : mk_lb_taskConfigBLEFilterBUUIDOperation);
+        [self configDataWithTaskID:taskID
+                              data:commandString
+                          sucBlock:sucBlock
+                       failedBlock:failedBlock];
+        return;
+    }
+    uuid = [uuid stringByReplacingOccurrencesOfString:@":" withString:@""];
+    uuid = [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
+    if (!MKValidStr(uuid) || uuid.length > 32 || uuid.length % 2 != 0) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((uuid.length / 2) + 1)];
+    if (lenString.length == 1) {
+        lenString = [@"0" stringByAppendingString:lenString];
+    }
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"67" : @"6f");
+    NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAUUIDOperation : mk_lb_taskConfigBLEFilterBUUIDOperation);
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,uuid];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_configBLEFilterDeviceRSSIWithType:(mk_lb_filterRulesType)type
+                                        rssi:(NSInteger)rssi
+                                    sucBlock:(void (^)(void))sucBlock
+                                 failedBlock:(void (^)(NSError *error))failedBlock {
+    if (rssi < -127 || rssi > 0) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *rssiValue = [MKBLEBaseSDKAdopter hexStringFromSignedNumber:rssi];
+    NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"68" : @"70");
+    mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterARSSIOperation : mk_lb_taskConfigBLEFilterBRSSIOperation);
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"01",rssiValue];
+    [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
 #pragma mark - private method
 + (void)configDataWithTaskID:(mk_lb_taskOperationID)taskID
                         data:(NSString *)data
@@ -666,6 +993,52 @@
         case mk_lb_loraWanRegionRU864:
             return @"09";
     }
+}
+
++ (BOOL)isConfirmRawFilterProtocol:(id <mk_lb_BLEFilterRawDataProtocol>)protocol {
+    if (![protocol conformsToProtocol:@protocol(mk_lb_BLEFilterRawDataProtocol)]) {
+        return NO;
+    }
+    if (!MKValidStr(protocol.dataType) || protocol.dataType.length != 2 || ![MKBLEBaseSDKAdopter checkHexCharacter:protocol.dataType]) {
+        return NO;
+    }
+    NSArray *typeList = [self dataTypeList];
+    if (![typeList containsObject:[protocol.dataType uppercaseString]]) {
+        return NO;
+    }
+    if (protocol.minIndex == 0 && protocol.maxIndex == 0) {
+        if (!MKValidStr(protocol.rawData) || protocol.rawData.length > 58 || ![MKBLEBaseSDKAdopter checkHexCharacter:protocol.rawData] || (protocol.rawData.length % 2 != 0)) {
+            return NO;
+        }
+        return YES;
+    }
+    if (protocol.minIndex < 0 || protocol.minIndex > 29 || protocol.maxIndex < 0 || protocol.maxIndex > 29) {
+        return NO;
+    }
+    
+    if (protocol.maxIndex < protocol.minIndex) {
+        return NO;
+    }
+    if (!MKValidStr(protocol.rawData) || protocol.rawData.length > 58 || ![MKBLEBaseSDKAdopter checkHexCharacter:protocol.rawData]) {
+        return NO;
+    }
+    NSInteger totalLen = (protocol.maxIndex - protocol.minIndex + 1) * 2;
+    if (protocol.rawData.length != totalLen) {
+        return NO;
+    }
+    return YES;
+}
+
++ (NSArray *)dataTypeList {
+    return @[@"01",@"02",@"03",@"04",@"05",
+             @"06",@"07",@"08",@"09",@"0A",
+             @"0D",@"0E",@"0F",@"10",@"11",
+             @"12",@"14",@"15",@"16",@"17",
+             @"18",@"19",@"1A",@"1B",@"1C",
+             @"1D",@"1E",@"1F",@"20",@"21",
+             @"22",@"23",@"24",@"25",@"26",
+             @"27",@"28",@"29",@"2A",@"2B",
+             @"2C",@"2D",@"3D",@"FF"];
 }
 
 @end

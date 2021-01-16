@@ -14,6 +14,7 @@
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
 #import "UITableView+MKAdd.h"
+#import "NSObject+MKModel.h"
 
 #import "MKHudManager.h"
 #import "MKFilterDataCell.h"
@@ -35,7 +36,8 @@ UITableViewDataSource,
 MKLBFilterRssiCellDelegate,
 MKFilterDataCellDelegate,
 MKRawAdvDataOperationCellDelegate,
-mk_textSwitchCellDelegate>
+mk_textSwitchCellDelegate,
+MKFilterRawAdvDataCellDelegate>
 
 @property (nonatomic, strong)MKBaseTableView *tableView;
 
@@ -62,7 +64,30 @@ mk_textSwitchCellDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadSectionDatas];
+    [self readDataFromDevice];
+}
+
+#pragma mark - super method
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    NSMutableArray *list = [NSMutableArray array];
+    for (NSInteger i = 0; i < self.section3List.count; i ++) {
+        MKFilterRawAdvDataCellModel *cellModel = self.section3List[i];
+        MKFilterRawAdvDataModel *model = [[MKFilterRawAdvDataModel alloc] init];
+        model.dataType = cellModel.dataType;
+        model.maxIndex = cellModel.maxIndex;
+        model.minIndex = cellModel.minIndex;
+        model.rawData = cellModel.rawData;
+        [list addObject:model];
+    }
+    WS(weakSelf);
+    [self.dataModel configWithRawDataList:list sucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -295,6 +320,53 @@ mk_textSwitchCellDelegate>
     }
 }
 
+#pragma mark - MKFilterRawAdvDataCellDelegate
+/// 输入框内容发生改变
+/// @param textType 哪个输入框发生改变了
+/// @param index 当前cell所在的row
+/// @param textValue 当前textField内容
+- (void)rawFilterDataChanged:(mk_filterRawAdvDataTextType)textType
+                       index:(NSInteger)index
+                   textValue:(NSString *)textValue {
+    if (index >= self.section3List.count) {
+        return;
+    }
+    MKFilterRawAdvDataCellModel *cellModel = self.section3List[index];
+    if (textType == mk_filterRawAdvDataTextTypeDataType) {
+        //过滤类型输入框内容发生改变
+        cellModel.dataType = textValue;
+        return;
+    }
+    if (textType == mk_filterRawAdvDataTextTypeMinIndex) {
+        //开始过滤的Byte索引输入框发生改变
+        cellModel.minIndex = textValue;
+        return;
+    }
+    if (textType == mk_filterRawAdvDataTextTypeMaxIndex) {
+        //截止过滤的Byte索引输入框发生改变
+        cellModel.maxIndex = textValue;
+        return;
+    }
+    if (textType == mk_filterRawAdvDataTextTypeRawDataType) {
+        //过滤内容输入框发生改变
+        cellModel.rawData = textValue;
+        return;
+    }
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf loadSectionDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 #pragma mark - loadSectionDatas
 - (void)loadSectionDatas {
     [self loadSection0Datas];
@@ -308,7 +380,7 @@ mk_textSwitchCellDelegate>
 
 - (void)loadSection0Datas {
     MKLBFilterRssiCellModel *cellModel = [[MKLBFilterRssiCellModel alloc] init];
-    cellModel.rssi = -120;
+    cellModel.rssi = self.dataModel.rssiValue;
     [self.section0List addObject:cellModel];
 }
 
@@ -319,6 +391,9 @@ mk_textSwitchCellDelegate>
     macModel.textFieldPlaceholder = @"1 ~ 6 Bytes";
     macModel.textFieldType = mk_hexCharOnly;
     macModel.maxLength = 12;
+    macModel.isOn = self.dataModel.macIson;
+    macModel.selected = self.dataModel.macWhiteListIson;
+    macModel.textFieldValue = self.dataModel.macValue;
     [self.section1List addObject:macModel];
     
     MKFilterDataCellModel *advNameModel = [[MKFilterDataCellModel alloc] init];
@@ -327,6 +402,9 @@ mk_textSwitchCellDelegate>
     advNameModel.textFieldPlaceholder = @"1 ~ 10 Characters";
     advNameModel.textFieldType = mk_normal;
     advNameModel.maxLength = 10;
+    advNameModel.isOn = self.dataModel.advNameIson;
+    advNameModel.selected = self.dataModel.advNameWhiteListIson;
+    advNameModel.textFieldValue = self.dataModel.advNameValue;
     [self.section1List addObject:advNameModel];
     
     MKFilterDataCellModel *uuidModel = [[MKFilterDataCellModel alloc] init];
@@ -334,29 +412,47 @@ mk_textSwitchCellDelegate>
     uuidModel.msg = @"Filter by iBeacon Proximity UUID";
     uuidModel.textFieldPlaceholder = @"16 Bytes";
     uuidModel.textFieldType = mk_uuidMode;
+    uuidModel.isOn = self.dataModel.uuidIson;
+    uuidModel.selected = self.dataModel.uuidWhiteListIson;
+    uuidModel.textFieldValue = self.dataModel.uuidValue;
     [self.section1List addObject:uuidModel];
     
     MKFilterDataCellModel *majorModel = [[MKFilterDataCellModel alloc] init];
     majorModel.index = 3;
     majorModel.msg = @"Filter by iBeacon Major";
     majorModel.cellType = mk_filterDataCellType_double;
+    majorModel.isOn = self.dataModel.majorIson;
+    majorModel.selected = self.dataModel.majorWhiteListIson;
+    majorModel.leftTextFieldValue = self.dataModel.majorMinValue;
+    majorModel.rightTextFieldValue = self.dataModel.majorMaxValue;
     [self.section1List addObject:majorModel];
     
     MKFilterDataCellModel *minorModel = [[MKFilterDataCellModel alloc] init];
     minorModel.index = 4;
     minorModel.msg = @"Filter by iBeacon Minor";
     minorModel.cellType = mk_filterDataCellType_double;
+    minorModel.isOn = self.dataModel.minorIson;
+    minorModel.selected = self.dataModel.minorWhiteListIson;
+    minorModel.leftTextFieldValue = self.dataModel.minorMinValue;
+    minorModel.rightTextFieldValue = self.dataModel.minorMaxValue;
     [self.section1List addObject:minorModel];
 }
 
 - (void)loadSection2Datas {
     MKRawAdvDataOperationCellModel *cellModel = [[MKRawAdvDataOperationCellModel alloc] init];
     cellModel.msg = @"Filter by Raw Adv Data";
+    cellModel.selected = self.dataModel.rawDataIson;
+    cellModel.isOn = self.dataModel.rawDataWhiteListIson;
     [self.section2List addObject:cellModel];
 }
 
 - (void)loadSection3Datas {
-    
+    for (NSInteger i = 0; i < self.dataModel.rawDataList.count; i ++) {
+        NSDictionary *dic = self.dataModel.rawDataList[i];
+        MKFilterRawAdvDataCellModel *cellModel = [[MKFilterRawAdvDataCellModel alloc] init];
+        [cellModel mk_modelSetWithJSON:dic];
+        [self.section3List addObject:cellModel];
+    }
 }
 
 - (void)loadSection4Datas {
@@ -366,6 +462,7 @@ mk_textSwitchCellDelegate>
     cellModel.msg = [@"Enable Filter Condition " stringByAppendingString:conditionType];
     cellModel.noteMsg = [NSString stringWithFormat:@"*Turn on the Filter Condition %@ ,all filtration of this page will take effect.Turn off the Filter Condition %@, all filtration of this page will not take effect.",conditionType,conditionType];
     cellModel.noteMsgColor = RGBCOLOR(102, 102, 102);
+    cellModel.isOn = self.dataModel.enableFilterConditions;
     [self.section4List addObject:cellModel];
 }
 

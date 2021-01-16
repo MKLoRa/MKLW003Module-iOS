@@ -8,6 +8,24 @@
 
 #import <Foundation/Foundation.h>
 
+#import "MKLBInterface+MKLBConfig.h"
+
+@interface MKFilterRawAdvDataModel : NSObject<mk_lb_BLEFilterRawDataProtocol>
+
+@property (nonatomic, copy)NSString *dataType;
+
+/// Data location to start filtering.
+@property (nonatomic, assign)NSInteger minIndex;
+
+/// Data location to end filtering.
+@property (nonatomic, assign)NSInteger maxIndex;
+
+/// The currently filtered content. The data length should be maxIndex-minIndex, if maxIndex=0&&minIndex==0, the item length is not checked whether it meets the requirements.MAX length:29 Bytes
+@property (nonatomic, copy)NSString *rawData;
+
+@end
+
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MKLBFilterConditionModel : NSObject
@@ -59,7 +77,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)BOOL rawDataWhiteListIson;
 
+/// 过滤的原始数据
+@property (nonatomic, strong)NSMutableArray *rawDataList;
+
 @property (nonatomic, assign)BOOL enableFilterConditions;
+
+- (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
+
+- (void)configWithRawDataList:(NSArray <MKFilterRawAdvDataModel *>*)list
+                     sucBlock:(void (^)(void))sucBlock
+                  failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
 

@@ -60,8 +60,22 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
 #pragma mark - 蓝牙过滤规则
     mk_lb_taskReadBLELogicalRelationshipOperation,  //读取两种蓝牙过滤规则关系
     mk_lb_taskReadBLEFilterAStatusOperation,        //读取蓝牙过滤规则1的开关状态
+    mk_lb_taskReadBLEFilterADeviceNameOperation,    //读取蓝牙过滤规则1的过滤设备名字
+    mk_lb_taskReadBLEFilterADeviceMacOperation,     //读取蓝牙过滤规则1的过滤设备MAC地址
+    mk_lb_taskReadBLEFilterAMajorOperation,         //读取蓝牙过滤规则1的过滤major范围
+    mk_lb_taskReadBLEFilterAMinorOperation,         //读取蓝牙过滤规则1的过滤minor范围
+    mk_lb_taskReadBLEFilterARawDataOperation,       //读取蓝牙过滤规则1的过滤原始数据信息
+    mk_lb_taskReadBLEFilterAUUIDOperation,          //读取蓝牙过滤规则1的过滤UUID信息
+    mk_lb_taskReadBLEFilterARssiOperation,          //读取蓝牙过滤规则1的过滤rssi
     
     mk_lb_taskReadBLEFilterBStatusOperation,        //读取蓝牙过滤规则2的开关状态
+    mk_lb_taskReadBLEFilterBDeviceNameOperation,    //读取蓝牙过滤规则2的过滤设备名字
+    mk_lb_taskReadBLEFilterBDeviceMacOperation,     //读取蓝牙过滤规则2的过滤设备MAC地址
+    mk_lb_taskReadBLEFilterBMajorOperation,         //读取蓝牙过滤规则2的过滤major范围
+    mk_lb_taskReadBLEFilterBMinorOperation,         //读取蓝牙过滤规则2的过滤minor范围
+    mk_lb_taskReadBLEFilterBRawDataOperation,       //读取蓝牙过滤规则2的过滤原始数据信息
+    mk_lb_taskReadBLEFilterBUUIDOperation,          //读取蓝牙过滤规则2的过滤UUID信息
+    mk_lb_taskReadBLEFilterBRssiOperation,          //读取蓝牙过滤规则1的过滤rssi
     
     
 #pragma mark - 设备系统应用信息配置
@@ -108,4 +122,24 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskConfigDeviceBroadcastIntervalOperation,   //配置广播间隔
     mk_lb_taskConfigScanStatusOperation,                //配置扫描开关
     mk_lb_taskConfigScanParamsOperation,                //配置扫描参数
+    
+#pragma mark - 配置蓝牙过滤规则
+    mk_lb_taskConfigBLELogicalRelationshipOperation,    //配置蓝牙过滤规则开关逻辑
+    mk_lb_taskConfigBLEFilterAStatusOperation,          //配置过滤规则1的开关状态
+    mk_lb_taskConfigBLEFilterADeviceNameOperation,      //配置过滤规则1的广播名称
+    mk_lb_taskConfigBLEFilterAMacOperation,             //配置过滤规则1的MAC地址
+    mk_lb_taskConfigBLEFilterAMajorOperation,           //配置过滤规则1的MAJOR范围
+    mk_lb_taskConfigBLEFilterAMinorOperation,           //配置过滤规则1的MINOR范围
+    mk_lb_taskConfigBLEFilterARawDataOperation,         //配置过滤规则1的raw data
+    mk_lb_taskConfigBLEFilterAUUIDOperation,            //配置过滤规则1的UUID
+    mk_lb_taskConfigBLEFilterARSSIOperation,            //配置过滤规则1的RSSI
+    
+    mk_lb_taskConfigBLEFilterBStatusOperation,          //配置过滤规则2的开关状态
+    mk_lb_taskConfigBLEFilterBDeviceNameOperation,      //配置过滤规则2的广播名称
+    mk_lb_taskConfigBLEFilterBMacOperation,             //配置过滤规则2的MAC地址
+    mk_lb_taskConfigBLEFilterBMajorOperation,           //配置过滤规则2的MAJOR范围
+    mk_lb_taskConfigBLEFilterBMinorOperation,           //配置过滤规则2的MINOR范围
+    mk_lb_taskConfigBLEFilterBRawDataOperation,         //配置过滤规则2的raw data
+    mk_lb_taskConfigBLEFilterBUUIDOperation,            //配置过滤规则2的UUID
+    mk_lb_taskConfigBLEFilterBRSSIOperation,            //配置过滤规则2的RSSI
 };
