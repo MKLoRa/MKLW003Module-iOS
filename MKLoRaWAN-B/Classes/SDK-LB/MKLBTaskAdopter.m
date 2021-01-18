@@ -57,8 +57,8 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         //密码相关
         NSString *content = [MKBLEBaseSDKAdopter hexStringFromData:readData];
         NSString *state = @"";
-        if (content.length == 8) {
-            state = [content substringWithRange:NSMakeRange(6, 2)];
+        if (content.length == 10) {
+            state = [content substringWithRange:NSMakeRange(8, 2)];
         }
         return [self dataParserGetDataSuccess:@{@"state":state} operationID:mk_lb_connectPasswordOperation];
     }
@@ -164,7 +164,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadBeaconReportDataContentOperation;
     }else if ([cmd isEqualToString:@"0f"]) {
         //读取扫描MAC超限开关
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -268,14 +268,14 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadLorawanDROperation;
     }else if ([cmd isEqualToString:@"2e"]) {
         //读取LoRaWAN ADR
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
         operationID = mk_lb_taskReadLorawanADROperation;
     }else if ([cmd isEqualToString:@"2f"]) {
         //读取LoRaWAN 组播开关
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -312,7 +312,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadLorawanUplinkdwelltimeOperation;
     }else if ([cmd isEqualToString:@"35"]) {
         //读取LoRaWAN duty cycle
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -339,7 +339,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadBroadcastIntervalOperation;
     }else if ([cmd isEqualToString:@"52"]) {
         //读取蓝牙扫描开关状态
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -361,7 +361,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadBLELogicalRelationshipOperation;
     }else if ([cmd isEqualToString:@"61"]) {
         //读取蓝牙过滤规则1开关
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -474,7 +474,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadBLEFilterARssiOperation;
     }else if ([cmd isEqualToString:@"69"]) {
         //读取蓝牙过滤规则2开关
-        BOOL isOn = ([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(content, content.length)] == 1);
+        BOOL isOn = ([content isEqualToString:@"01"]);
         resultDic = @{
             @"isOn":@(isOn)
         };
@@ -591,7 +591,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
 
 + (NSDictionary *)parseCustomConfigData:(NSString *)content cmd:(NSString *)cmd {
     mk_lb_taskOperationID operationID = mk_lb_defaultTaskOperationID;
-    BOOL success = [content isEqualToString:@"00"];
+    BOOL success = [content isEqualToString:@"01"];
     if ([cmd isEqualToString:@"01"]) {
         //入网/重启
         operationID = mk_lb_taskConfigConnectNetworkOperation;

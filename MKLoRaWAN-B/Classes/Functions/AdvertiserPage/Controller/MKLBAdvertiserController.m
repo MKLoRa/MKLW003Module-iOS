@@ -48,7 +48,20 @@ MKTextFieldCellDelegate>
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
-    [self loadTableDatas];
+    [self readDataFromDevice];
+}
+
+#pragma mark - super method
+- (void)rightButtonMethod {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel configDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:@"Success!"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - UITableViewDelegate
@@ -72,12 +85,27 @@ MKTextFieldCellDelegate>
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
         //adv name
+        self.dataModel.advName = value;
         return;
     }
     if (index == 1) {
         //adv interval
+        self.dataModel.advInterval = value;
         return;
     }
+}
+
+#pragma mark - interface
+- (void)readDataFromDevice {
+    [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
+    WS(weakSelf);
+    [self.dataModel readDataWithSucBlock:^{
+        [[MKHudManager share] hide];
+        [weakSelf loadTableDatas];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - loadDatas
@@ -87,6 +115,7 @@ MKTextFieldCellDelegate>
     cellModel1.msg = @"ADV Name";
     cellModel1.textPlaceholder = @"1 ~ 15 Characters";
     cellModel1.maxLength = 15;
+    cellModel1.textFieldValue = self.dataModel.advName;
     [self.dataList addObject:cellModel1];
     
     MKTextFieldCellModel *cellModel2 = [[MKTextFieldCellModel alloc] init];
@@ -95,6 +124,7 @@ MKTextFieldCellDelegate>
     cellModel2.textPlaceholder = @"1 ~ 100";
     cellModel2.maxLength = 3;
     cellModel2.unit = @"x 100ms";
+    cellModel2.textFieldValue = self.dataModel.advInterval;
     [self.dataList addObject:cellModel2];
     
     [self.tableView reloadData];

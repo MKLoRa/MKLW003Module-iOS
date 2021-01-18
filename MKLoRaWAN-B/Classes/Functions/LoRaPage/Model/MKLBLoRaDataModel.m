@@ -59,6 +59,11 @@
 
 - (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        NSString *paramsMsg = [self checkParams];
+        if (ValidStr(paramsMsg)) {
+            [self operationFailedBlockWithMsg:paramsMsg block:failedBlock];
+            return;
+        }
         if (![self configDevTimeSyncInterval]) {
             [self operationFailedBlockWithMsg:@"Config DevTime Sync Interval Error" block:failedBlock];
             return;
@@ -185,6 +190,16 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (NSString *)checkParams {
+    if (!ValidStr(self.syncInterval)) {
+        return @"Params cannot be empty";
+    }
+    if ([self.syncInterval integerValue] < 0 || [self.syncInterval integerValue] > 240) {
+        return @"Time sync interval must be 0 ~ 240";
+    }
+    return @"";
 }
 
 - (NSDictionary *)RegionDic {

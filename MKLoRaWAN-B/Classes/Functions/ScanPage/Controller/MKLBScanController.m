@@ -25,6 +25,7 @@
 
 #import "MKLBSDK.h"
 
+#import "MKLBConnectModel.h"
 #import "MKLBScanPageModel.h"
 #import "MKLBScanPageCell.h"
 
@@ -97,6 +98,8 @@ MKLBTabBarControllerDelegate>
 @property (nonatomic, assign)BOOL isNeedRefresh;
 
 @property (nonatomic, strong)UITextField *passwordField;
+
+@property (nonatomic, strong)MKLBConnectModel *connectModel;
 
 @end
 
@@ -421,16 +424,18 @@ MKLBTabBarControllerDelegate>
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Connecting..." inView:self.view isPenetration:NO];
-    [[MKLBCentralManager shared] connectPeripheral:trackerModel.peripheral password:password sucBlock:^(CBPeripheral * _Nonnull peripheral) {
+    WS(weakSelf);
+    [self.connectModel connectDevice:trackerModel.peripheral password:password sucBlock:^{
+        [[NSUserDefaults standardUserDefaults] setObject:password forKey:localPasswordKey];
         [[MKHudManager share] hide];
-        [self.view showCentralToast:@"Time sync completed!"];
+        [weakSelf.view showCentralToast:@"Time sync completed!"];
 //            [MKLBDatabaseManager clearDataTable];
 //            [MKLBDatabaseManager initStepDataBase];
-        [self performSelector:@selector(pushTabBarPage) withObject:nil afterDelay:0.6f];
+        [weakSelf performSelector:@selector(pushTabBarPage) withObject:nil afterDelay:0.6f];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
-        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
-        [self connectFailed];
+        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+        [weakSelf connectFailed];
     }];
 }
 
@@ -562,6 +567,13 @@ MKLBTabBarControllerDelegate>
         _dataList = [NSMutableArray array];
     }
     return _dataList;
+}
+
+- (MKLBConnectModel *)connectModel {
+    if (!_connectModel) {
+        _connectModel = [[MKLBConnectModel alloc] init];
+    }
+    return _connectModel;
 }
 
 @end

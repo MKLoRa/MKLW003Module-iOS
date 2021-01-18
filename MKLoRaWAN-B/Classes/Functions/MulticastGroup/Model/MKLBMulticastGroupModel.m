@@ -51,6 +51,11 @@
 
 - (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        NSString *checkMsg = [self checkParams];
+        if (ValidStr(checkMsg)) {
+            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+            return;
+        }
         if (![self configMulticastStatus]) {
             [self operationFailedBlockWithMsg:@"Config Multicast Status Error" block:failedBlock];
             return;
@@ -184,6 +189,22 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (NSString *)checkParams {
+    if (!self.isOn) {
+        return @"";
+    }
+    if (!ValidStr(self.mcAddr) || self.mcAddr.length != 8) {
+        return @"McAddr must be 8 bits long";
+    }
+    if (!ValidStr(self.mcAppSkey) || self.mcAppSkey.length != 32) {
+        return @"McAppSkey must be 32 bits long";
+    }
+    if (!ValidStr(self.mcNwkSkey) || self.mcNwkSkey.length != 32) {
+        return @"McNwkSkey must be 32 bits long";
+    }
+    return @"";
 }
 
 #pragma mark - getter

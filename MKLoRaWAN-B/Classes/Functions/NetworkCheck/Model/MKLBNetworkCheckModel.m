@@ -72,9 +72,15 @@
 
 - (BOOL)configNetworkCheckInterval {
     __block BOOL success = NO;
-    [MKLBInterface lb_configLinkCheckInterval:[self.checkInterval integerValue] sucBlock:^{
+    NSInteger interval = 0;
+    if (self.checkStatus > 0) {
+        //间隔为0的情况下，开关关闭
+        interval = [self.checkInterval integerValue];
+    }
+    [MKLBInterface lb_configLinkCheckInterval:interval sucBlock:^{
         success = YES;
-        self.checkStatus = ([self.checkInterval integerValue] > 0);
+        self.checkStatus = (interval > 0);
+        self.checkInterval = [NSString stringWithFormat:@"%ld",(long)interval];
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);

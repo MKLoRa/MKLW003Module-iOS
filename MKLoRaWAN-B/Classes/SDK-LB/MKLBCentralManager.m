@@ -119,6 +119,7 @@ static dispatch_once_t onceToken;
     }else if (connectState == MKPeripheralConnectStateDisconnect) {
         self.connectStatus = mk_lb_bleCentralConnectStatusDisconnect;
     }
+    NSLog(@"当前连接状态发生改变了:%@",@(connectState));
     [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
 }
 
@@ -262,7 +263,7 @@ static dispatch_once_t onceToken;
     self.failedBlock = failedBlock;
     MKLBPeripheral *trackerPeripheral = [[MKLBPeripheral alloc] initWithPeripheral:peripheral];
     [[MKBLEBaseCentralManager shared] connectDevice:trackerPeripheral sucBlock:^(CBPeripheral * _Nonnull peripheral) {
-//        [self sendPasswordToDevice];
+        [self sendPasswordToDevice];
         self.connectStatus = mk_lb_bleCentralConnectStatusConnected;
         [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
         if (self.sucBlock) {

@@ -131,6 +131,8 @@ MKTextFieldCellDelegate>
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
         self.dataModel.checkInterval = value;
+        MKTextFieldCellModel *intervalModel = self.section1List[0];
+        intervalModel.textFieldValue = value;
         return;
     }
 }

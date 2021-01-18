@@ -425,7 +425,7 @@
 + (void)lb_configMulticastStatus:(BOOL)isOn
                         sucBlock:(void (^)(void))sucBlock
                      failedBlock:(void (^)(NSError *error))failedBlock {
-    NSString *commandString = (isOn ? @"ed012f0100" : @"ed012f0101");
+    NSString *commandString = (isOn ? @"ed012f0101" : @"ed012f0102");
     [self configDataWithTaskID:mk_lb_taskConfigMulticastStatusOperation
                           data:commandString
                       sucBlock:sucBlock

@@ -12,6 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MKLBAdvertiserDataModel : NSObject
 
+@property (nonatomic, copy)NSString *advName;
+
+@property (nonatomic, copy)NSString *advInterval;
+
+- (void)readDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
+
+- (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

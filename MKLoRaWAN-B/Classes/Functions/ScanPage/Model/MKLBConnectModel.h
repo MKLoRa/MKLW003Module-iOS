@@ -17,11 +17,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param peripheral 设备
 /// @param password 密码
 /// @param sucBlock 成功回调
-/// @param failed 失败回调
+/// @param failedBlock 失败回调
 - (void)connectDevice:(CBPeripheral *)peripheral
              password:(NSString *)password
              sucBlock:(void (^)(void))sucBlock
-          failedBlock:(void (^)(NSError *error))failed;
+          failedBlock:(void (^)(NSError *error))failedBlock;
 
 @end
 

@@ -68,10 +68,6 @@ MKTextFieldCellDelegate>
 }
 
 - (void)rightButtonMethod {
-    if ([self.dataModel.syncInterval integerValue] > 240) {
-        [self.view showCentralToast:@"Params error"];
-        return;
-    }
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     WS(weakSelf);
     [self.dataModel configWithSucBlock:^{
@@ -154,6 +150,9 @@ MKTextFieldCellDelegate>
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
         self.dataModel.syncInterval = value;
+        MKTextFieldCellModel *intervalModel = self.section1List[0];
+        intervalModel.textFieldValue = value;
+        return;
     }
 }
 

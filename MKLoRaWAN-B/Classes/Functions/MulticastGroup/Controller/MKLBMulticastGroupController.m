@@ -114,14 +114,20 @@ mk_textSwitchCellDelegate>
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
     if (index == 0) {
         self.dataModel.mcAddr = value;
+        MKTextFieldCellModel *mcAddrModel = self.section1List[0];
+        mcAddrModel.textFieldValue = value;
         return;
     }
     if (index == 1) {
         self.dataModel.mcAppSkey = value;
+        MKTextFieldCellModel *mcAppSkeyModel = self.section1List[1];
+        mcAppSkeyModel.textFieldValue = value;
         return;
     }
     if (index == 2) {
         self.dataModel.mcNwkSkey = value;
+        MKTextFieldCellModel *mcNwkSkeyModel = self.section1List[2];
+        mcNwkSkeyModel.textFieldValue = value;
         return;
     }
 }

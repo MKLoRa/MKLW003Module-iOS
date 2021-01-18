@@ -105,6 +105,11 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        NSString *checkMsg = [self checkParams];
+        if (ValidStr(checkMsg)) {
+            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+            return;
+        }
         if (![self configModem]) {
             [self operationFailedBlockWithMsg:@"Config Modem Error" block:failedBlock];
             return;
@@ -121,22 +126,28 @@
             [self operationFailedBlockWithMsg:@"Config AppEUI Error" block:failedBlock];
             return;
         }
-        if (![self configAppKey]) {
-            [self operationFailedBlockWithMsg:@"Config AppKey Error" block:failedBlock];
-            return;
+        if (self.modem == 1) {
+            //ABP
+            if (![self configDevAddr]) {
+                [self operationFailedBlockWithMsg:@"Config Region Error" block:failedBlock];
+                return;
+            }
+            if (![self configAppSkey]) {
+                [self operationFailedBlockWithMsg:@"Config AppSKEY Error" block:failedBlock];
+                return;
+            }
+            if (![self configNwkSkey]) {
+                [self operationFailedBlockWithMsg:@"Config NWKSKEY Error" block:failedBlock];
+                return;
+            }
+        }else if (self.modem == 2) {
+            //OTAA
+            if (![self configAppKey]) {
+                [self operationFailedBlockWithMsg:@"Config AppKey Error" block:failedBlock];
+                return;
+            }
         }
-        if (![self configDevAddr]) {
-            [self operationFailedBlockWithMsg:@"Config Region Error" block:failedBlock];
-            return;
-        }
-        if (![self configAppSkey]) {
-            [self operationFailedBlockWithMsg:@"Config AppSKEY Error" block:failedBlock];
-            return;
-        }
-        if (![self configNwkSkey]) {
-            [self operationFailedBlockWithMsg:@"Config NWKSKEY Error" block:failedBlock];
-            return;
-        }
+        
         if (![self configMessageType]) {
             [self operationFailedBlockWithMsg:@"Config Message Type Error" block:failedBlock];
             return;
@@ -153,21 +164,29 @@
             });
             return;
         }
-        if (![self configCHValue]) {
-            [self operationFailedBlockWithMsg:@"Config CH Error" block:failedBlock];
-            return;
+        if (self.region == 1 || self.region == 2 || self.region == 8) {
+            if (![self configCHValue]) {
+                [self operationFailedBlockWithMsg:@"Config CH Error" block:failedBlock];
+                return;
+            }
         }
-        if (![self configDutyStatus]) {
-            [self operationFailedBlockWithMsg:@"Config Duty Cycle Error" block:failedBlock];
-            return;
+        if (self.region == 0 || self.region == 3 || self.region == 4
+            || self.region == 5 || self.region == 6 || self.region == 7 || self.region == 9) {
+            if (![self configDutyStatus]) {
+                [self operationFailedBlockWithMsg:@"Config Duty Cycle Error" block:failedBlock];
+                return;
+            }
         }
+        
         if (![self configADRStatus]) {
             [self operationFailedBlockWithMsg:@"Config ADR Error" block:failedBlock];
             return;
         }
-        if (![self configDRValue]) {
-            [self operationFailedBlockWithMsg:@"Config DR Error" block:failedBlock];
-            return;
+        if (!self.adrIsOn) {
+            if (![self configDRValue]) {
+                [self operationFailedBlockWithMsg:@"Config DR Error" block:failedBlock];
+                return;
+            }
         }
         if (![self configDellTime]) {
             [self operationFailedBlockWithMsg:@"Config Uplink Dell Time Error" block:failedBlock];
@@ -617,6 +636,43 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (NSString *)checkParams {
+    //0:ABP,1:OTAA
+    if (self.modem != 1 && self.modem != 2) {
+        return @"Modem error";
+    }
+    if (!ValidStr(self.devEUI) || self.devEUI.length != 16) {
+        return @"devEUI must be 16 bits long";
+    }
+    if (!ValidStr(self.appEUI) || self.appEUI.length != 16) {
+        return @"appEUI must be 16 bits long";
+    }
+    if (self.modem == 1) {
+        //ABP
+        if (!ValidStr(self.devAddr) || self.devAddr.length != 8) {
+            return @"devAddr must be 8 bits long";
+        }
+        if (!ValidStr(self.nwkSKey) || self.nwkSKey.length != 32) {
+            return @"nwkSKey must be 32 bits long";
+        }
+        if (!ValidStr(self.appSKey) || self.appSKey.length != 32) {
+            return @"appSKey must be 32 bits long";
+        }
+    }else {
+        //OTAA
+        if (!ValidStr(self.appKey) || self.appKey.length != 32) {
+            return @"appKey must be 32 bits long";
+        }
+    }
+    if (self.region < 0 || self.region > 9) {
+        return @"Region error";
+    }
+    if (self.messageType != 0 && self.messageType != 1) {
+        return @"message type error";
+    }
+    return @"";
 }
 
 - (NSDictionary *)RegionDic {

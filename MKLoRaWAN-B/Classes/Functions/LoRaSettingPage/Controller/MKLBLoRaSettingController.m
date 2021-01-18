@@ -222,9 +222,9 @@ MKLoRaSettingCHCellDelegate>
     }
     if (index == 1) {
         //region
-        self.dataModel.region = index;
+        self.dataModel.region = dataListIndex;
         MKTextButtonCellModel *regionModel = self.section2List[0];
-        regionModel.dataListIndex = index;
+        regionModel.dataListIndex = dataListIndex;
         //刷新了region，如果当前是存在高级设置的，需要同步更新所有的高级设置
         if (self.dataModel.needAdvanceSetting) {
             [self regionValueChanged];
@@ -233,21 +233,21 @@ MKLoRaSettingCHCellDelegate>
     }
     if (index == 2) {
         //message type
-        self.dataModel.messageType = index;
+        self.dataModel.messageType = dataListIndex;
         MKTextButtonCellModel *messageModel = self.section2List[1];
-        messageModel.dataListIndex = index;
+        messageModel.dataListIndex = dataListIndex;
         return;
     }
     if (index == 3) {
         //DR
-        self.dataModel.DR = index;
+        self.dataModel.DR = dataListIndex;
         MKTextButtonCellModel *drModel = self.advSection3List[0];
         drModel.dataListIndex = self.dataModel.DR;
         return;
     }
     if (index == 4) {
         //UplinkDellTime
-        self.dataModel.dellTime = index;
+        self.dataModel.dellTime = dataListIndex;
         MKTextButtonCellModel *dellTimeModel = self.advSection3List[1];
         dellTimeModel.dataListIndex = self.dataModel.dellTime;
         return;

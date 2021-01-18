@@ -20,6 +20,8 @@
 #import "MKNormalTextCell.h"
 #import "MKTextButtonCell.h"
 
+#import "MKLBInterface+MKLBConfig.h"
+
 #import "MKLBSettingDataModel.h"
 
 #import "MKLBAdvertiserController.h"
@@ -36,6 +38,15 @@ MKTextButtonCellDelegate>
 @property (nonatomic, strong)NSMutableArray *section1List;
 
 @property (nonatomic, strong)MKLBSettingDataModel *dataModel;
+
+@property (nonatomic, strong)UITextField *passwordField;
+
+@property (nonatomic, strong)UITextField *passwordTextField;
+
+@property (nonatomic, strong)UITextField *confirmTextField;
+
+/// 当前present的alert
+@property (nonatomic, strong)UIAlertController *currentAlert;
 
 @end
 
@@ -82,6 +93,11 @@ MKTextButtonCellDelegate>
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
+    if (indexPath.section == 0 && indexPath.row == 1) {
+        //修改密码
+        [self configPassword];
+        return;
+    }
     if (indexPath.section == 0 && indexPath.row == 2) {
         MKLBLocalDataController *vc = [[MKLBLocalDataController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
@@ -125,6 +141,72 @@ MKTextButtonCellDelegate>
                         dataListIndex:(NSInteger)dataListIndex
                                 value:(NSString *)value {
     
+}
+
+#pragma mark - 设置密码
+- (void)configPassword{
+    WS(weakSelf);
+    self.currentAlert = nil;
+    NSString *msg = @"Note:The password should be 8 characters.";
+    self.currentAlert = [UIAlertController alertControllerWithTitle:@"Change Password"
+                                                            message:msg
+                                                     preferredStyle:UIAlertControllerStyleAlert];
+    [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        weakSelf.passwordTextField = nil;
+        weakSelf.passwordTextField = textField;
+        [weakSelf.passwordTextField setPlaceholder:@"Enter new password"];
+        [weakSelf.passwordTextField addTarget:weakSelf
+                                       action:@selector(passwordTextFieldValueChanged:)
+                             forControlEvents:UIControlEventEditingChanged];
+    }];
+    [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+        weakSelf.confirmTextField = nil;
+        weakSelf.confirmTextField = textField;
+        [weakSelf.confirmTextField setPlaceholder:@"Enter new password again"];
+        [weakSelf.confirmTextField addTarget:weakSelf
+                                      action:@selector(passwordTextFieldValueChanged:)
+                            forControlEvents:UIControlEventEditingChanged];
+    }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [self.currentAlert addAction:cancelAction];
+    UIAlertAction *moreAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [weakSelf setPasswordToDevice];
+    }];
+    [self.currentAlert addAction:moreAction];
+    
+    [self presentViewController:self.currentAlert animated:YES completion:nil];
+}
+
+- (void)passwordTextFieldValueChanged:(UITextField *)textField{
+    NSString *tempInputString = textField.text;
+    if (!ValidStr(tempInputString)) {
+        textField.text = @"";
+        return;
+    }
+    textField.text = (tempInputString.length > 8 ? [tempInputString substringToIndex:8] : tempInputString);
+}
+
+- (void)setPasswordToDevice{
+    NSString *password = self.passwordTextField.text;
+    NSString *confirmpassword = self.confirmTextField.text;
+    if (!ValidStr(password) || !ValidStr(confirmpassword) || password.length != 8 || confirmpassword.length != 8) {
+        [self.view showCentralToast:@"The password should be 8 characters.Please try again."];
+        return;
+    }
+    if (![password isEqualToString:confirmpassword]) {
+        [self.view showCentralToast:@"Password do not match! Please try again."];
+        return;
+    }
+    [[MKHudManager share] showHUDWithTitle:@"Setting..."
+                                     inView:self.view
+                              isPenetration:NO];
+    [MKLBInterface lb_configPassword:password sucBlock:^{
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:@"Success"];
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
 }
 
 #pragma mark - interface
