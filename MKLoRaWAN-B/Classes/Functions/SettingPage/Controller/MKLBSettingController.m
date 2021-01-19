@@ -25,7 +25,7 @@
 #import "MKLBSettingDataModel.h"
 
 #import "MKLBAdvertiserController.h"
-#import "MKLBLocalDataController.h"
+#import "MKLBSynDataController.h"
 
 @interface MKLBSettingController ()<UITableViewDelegate,
 UITableViewDataSource,
@@ -99,7 +99,7 @@ MKTextButtonCellDelegate>
         return;
     }
     if (indexPath.section == 0 && indexPath.row == 2) {
-        MKLBLocalDataController *vc = [[MKLBLocalDataController alloc] init];
+        MKLBSynDataController *vc = [[MKLBSynDataController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
@@ -140,7 +140,24 @@ MKTextButtonCellDelegate>
 - (void)mk_loraTextButtonCellSelected:(NSInteger)index
                         dataListIndex:(NSInteger)dataListIndex
                                 value:(NSString *)value {
-    
+    if (index == 0) {
+        //配置默认上电状态
+        [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+        mk_lb_defaultPowerStatus status = mk_lb_defaultPowerStatusSwitchOff;
+        if (dataListIndex == 0) {
+            status = mk_lb_defaultPowerStatusSwitchOn;
+        }else if (dataListIndex == 2) {
+            status = mk_lb_defaultPowerStatusSwitchRevertToLastStatus;
+        }
+        [MKLBInterface lb_configDefaultPowerStatus:status sucBlock:^{
+            [[MKHudManager share] hide];
+            self.dataModel.powerStatus = status;
+        } failedBlock:^(NSError * _Nonnull error) {
+            [[MKHudManager share] hide];
+            [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+        }];
+        return;
+    }
 }
 
 #pragma mark - 设置密码

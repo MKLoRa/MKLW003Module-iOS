@@ -10,6 +10,8 @@
 
 #import "Masonry.h"
 
+#import "MLInputDodger.h"
+
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
@@ -61,6 +63,19 @@ MKFilterRawAdvDataCellDelegate>
     NSLog(@"MKLBFilterConditionController销毁");
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    //本页面禁止右划退出手势
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    self.view.shiftHeightAsDodgeViewForMLInputDodger = 50.0f;
+    [self.view registerAsDodgeViewForMLInputDodgerWithOriginalY:self.view.frame.origin.y];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadSubViews];
@@ -69,17 +84,21 @@ MKFilterRawAdvDataCellDelegate>
 
 #pragma mark - super method
 - (void)rightButtonMethod {
-    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     NSMutableArray *list = [NSMutableArray array];
     for (NSInteger i = 0; i < self.section3List.count; i ++) {
         MKFilterRawAdvDataCellModel *cellModel = self.section3List[i];
+        if (![cellModel validParamsSuccess]) {
+            [self.view showCentralToast:@"Filter by Raw Adv Data Params Error"];
+            return;
+        }
         MKFilterRawAdvDataModel *model = [[MKFilterRawAdvDataModel alloc] init];
         model.dataType = cellModel.dataType;
-        model.maxIndex = cellModel.maxIndex;
-        model.minIndex = cellModel.minIndex;
+        model.maxIndex = [cellModel.maxIndex integerValue];
+        model.minIndex = [cellModel.minIndex integerValue];
         model.rawData = cellModel.rawData;
         [list addObject:model];
     }
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     WS(weakSelf);
     [self.dataModel configWithRawDataList:list sucBlock:^{
         [[MKHudManager share] hide];

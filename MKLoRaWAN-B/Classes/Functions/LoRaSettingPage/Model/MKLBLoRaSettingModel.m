@@ -67,6 +67,10 @@
             [self operationFailedBlockWithMsg:@"Read Message Type Error" block:failedBlock];
             return;
         }
+        if (![self readClassType]) {
+            [self operationFailedBlockWithMsg:@"Read Class Type Error" block:failedBlock];
+            return;
+        }
         if (!self.needAdvanceSetting) {
             moko_dispatch_main_safe(^{
                 if (sucBlock) {
@@ -150,6 +154,10 @@
         
         if (![self configMessageType]) {
             [self operationFailedBlockWithMsg:@"Config Message Type Error" block:failedBlock];
+            return;
+        }
+        if (![self configClassType]) {
+            [self operationFailedBlockWithMsg:@"Config Class Type Error" block:failedBlock];
             return;
         }
         if (!self.needAdvanceSetting) {
@@ -456,6 +464,40 @@
 - (BOOL)configMessageType {
     __block BOOL success = NO;
     [MKLBInterface lb_configMessageType:self.messageType sucBlock:^{
+        success = YES;
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readClassType {
+    __block BOOL success = NO;
+    [MKLBInterface lb_readLorawanClassTypeWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        NSInteger type = [returnData[@"result"][@"classType"] integerValue];
+        if (type == 0) {
+            self.classType = 0;
+        }else {
+            self.classType = 1;
+        }
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)configClassType {
+    __block BOOL success = NO;
+    mk_lb_loraWanClassType type = mk_lb_loraWanClassTypeA;
+    if (self.classType == 1) {
+        type = mk_lb_loraWanClassTypeC;
+    }
+    [MKLBInterface lb_configClassType:type sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {

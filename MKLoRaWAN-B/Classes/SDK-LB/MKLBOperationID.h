@@ -144,4 +144,10 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskConfigBLEFilterBRawDataOperation,         //配置过滤规则2的raw data
     mk_lb_taskConfigBLEFilterBUUIDOperation,            //配置过滤规则2的UUID
     mk_lb_taskConfigBLEFilterBRSSIOperation,            //配置过滤规则2的RSSI
+    
+    
+#pragma mark - 存储数据协议
+    mk_lb_taskReadNumberOfDaysStoredDataOperation,      //读取多少天本地存储的数据
+    mk_lb_taskClearAllDatasOperation,                   //清除存储的所有数据
+    mk_lb_taskPauseSendLocalDataOperation,              //暂停/恢复数据传输
 };

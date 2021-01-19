@@ -10,6 +10,7 @@
 
 #import "MKMacroDefines.h"
 #import "NSObject+MKModel.h"
+#import "NSString+MKAdd.h"
 
 #import "MKLBInterface.h"
 #import "MKLBInterface+MKLBConfig.h"
@@ -75,6 +76,10 @@
                      sucBlock:(void (^)(void))sucBlock
                   failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        if (![self validParams]) {
+            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
+            return ;
+        }
         if (![self configRssi]) {
             [self operationFailedBlockWithMsg:@"Config rssi error" block:failedBlock];
             return;
@@ -358,6 +363,49 @@
     }];
     dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
     return success;
+}
+
+#pragma mark - params valid
+- (BOOL)validParams {
+    if (self.macIson) {
+        if (self.macValue.length % 2 != 0 || self.macValue.length == 0 || self.macValue.length > 12) {
+            return NO;
+        }
+    }
+    if (self.advNameIson) {
+        if (!ValidStr(self.advNameValue) || self.advNameValue.length > 29) {
+            return NO;
+        }
+    }
+    if (self.uuidIson) {
+        if (![self.uuidValue isUUIDNumber]) {
+            return NO;
+        }
+    }
+    if (self.majorIson) {
+        if (!ValidStr(self.majorMaxValue) || [self.majorMaxValue integerValue] < 0 || [self.majorMaxValue integerValue] > 65535) {
+            return NO;
+        }
+        if (!ValidStr(self.majorMinValue) || [self.majorMinValue integerValue] < 0 || [self.majorMinValue integerValue] > 65535) {
+            return NO;
+        }
+        if ([self.majorMaxValue integerValue] < [self.majorMinValue integerValue]) {
+            return NO;
+        }
+    }
+    if (self.minorIson) {
+        if (!ValidStr(self.minorMaxValue) || [self.minorMaxValue integerValue] < 0 || [self.minorMaxValue integerValue] > 65535) {
+            return NO;
+        }
+        if (!ValidStr(self.minorMinValue) || [self.minorMinValue integerValue] < 0 || [self.minorMinValue integerValue] > 65535) {
+            return NO;
+        }
+        if ([self.minorMaxValue integerValue] < [self.minorMinValue integerValue]) {
+            return NO;
+        }
+    }
+    
+    return YES;
 }
 
 #pragma mark - private method

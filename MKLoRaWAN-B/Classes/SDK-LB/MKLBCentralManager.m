@@ -38,8 +38,6 @@ static dispatch_once_t onceToken;
 
 @property (nonatomic, assign)mk_lb_bleCentralConnectStatus connectStatus;
 
-@property (nonatomic, strong)NSMutableArray *dataList;
-
 @end
 
 @implementation MKLBCentralManager
@@ -140,7 +138,6 @@ static dispatch_once_t onceToken;
     if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA03"]]) {
         //设备存储的数据
         NSString *content = [MKBLEBaseSDKAdopter hexStringFromData:characteristic.value];
-        [self.dataList addObject:content];
         [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_receiveStorageDataNotification
                                                             object:nil
                                                           userInfo:@{@"content":content}];
@@ -264,11 +261,6 @@ static dispatch_once_t onceToken;
     MKLBPeripheral *trackerPeripheral = [[MKLBPeripheral alloc] initWithPeripheral:peripheral];
     [[MKBLEBaseCentralManager shared] connectDevice:trackerPeripheral sucBlock:^(CBPeripheral * _Nonnull peripheral) {
         [self sendPasswordToDevice];
-        self.connectStatus = mk_lb_bleCentralConnectStatusConnected;
-        [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
-        if (self.sucBlock) {
-            self.sucBlock([MKBLEBaseCentralManager shared].peripheral);
-        }
     } failedBlock:failedBlock];
 }
 
@@ -482,13 +474,6 @@ static dispatch_once_t onceToken;
             failedBlock(error);
         }
     });
-}
-
-- (NSMutableArray *)dataList {
-    if (!_dataList) {
-        _dataList = [NSMutableArray array];
-    }
-    return _dataList;
 }
 
 @end

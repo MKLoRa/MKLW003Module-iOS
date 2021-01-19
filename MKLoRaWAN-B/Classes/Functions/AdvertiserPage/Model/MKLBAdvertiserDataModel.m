@@ -43,6 +43,11 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        NSString *checkMsg = [self checkParam];
+        if (ValidStr(checkMsg)) {
+            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+            return;
+        }
         if (![self configAdvName]) {
             [self operationFailedBlockWithMsg:@"Config adv name error" block:failedBlock];
             return;
@@ -118,6 +123,16 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (NSString *)checkParam {
+    if (!ValidStr(self.advName) || self.advName.length > 15) {
+        return @"The maximum length of ADV Name is 15 characters";
+    }
+    if (!ValidStr(self.advInterval) || [self.advInterval integerValue] < 1 || [self.advInterval integerValue] > 100) {
+        return @"ADV Interval range is 1~100";
+    }
+    return @"";
 }
 
 #pragma mark - getter

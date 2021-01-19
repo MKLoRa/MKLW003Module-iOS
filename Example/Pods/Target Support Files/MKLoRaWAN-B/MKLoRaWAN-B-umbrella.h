@@ -12,6 +12,7 @@
 
 #import "MKLBApplicationModule.h"
 #import "CTMediator+MKLBAdd.h"
+#import "MKLBDatabaseManager.h"
 #import "MKLBAdvertiserController.h"
 #import "MKLBAdvertiserDataModel.h"
 #import "MKLBDeviceInfoController.h"
@@ -23,7 +24,6 @@
 #import "MKLBFilterOptionsController.h"
 #import "MKLBFilterOptionsModel.h"
 #import "MKLBFilterConditionCell.h"
-#import "MKLBLocalDataController.h"
 #import "MKLBLoRaController.h"
 #import "MKLBLoRaDataModel.h"
 #import "MKLBLoRaSettingController.h"
@@ -44,6 +44,7 @@
 #import "MKLBSettingController.h"
 #import "MKLBSettingDataModel.h"
 #import "MKLBSynDataController.h"
+#import "MKLBSynDataParser.h"
 #import "MKLBSynDataCell.h"
 #import "MKLBSynTableHeaderView.h"
 #import "MKLBTabBarController.h"

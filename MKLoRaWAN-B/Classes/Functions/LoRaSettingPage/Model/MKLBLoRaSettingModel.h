@@ -50,6 +50,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 0:非确认帧，1:确认帧
 @property (nonatomic, assign)NSInteger messageType;
 
+/// 0：classA,1:classC,
+@property (nonatomic, assign)NSInteger classType;
+
 /// 底部是否需要高级选项
 @property (nonatomic, assign)BOOL needAdvanceSetting;
 

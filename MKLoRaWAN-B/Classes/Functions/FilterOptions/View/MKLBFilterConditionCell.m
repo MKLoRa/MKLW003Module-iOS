@@ -98,6 +98,9 @@
     }
     NSArray *dataList = @[@"And",@"Or"];
     [self.centerButton setTitle:dataList[_dataModel.conditionIndex] forState:UIControlStateNormal];
+    self.centerButton.enabled = _dataModel.enable;
+    [self.centerButton setBackgroundColor:(_dataModel.enable ? UIColorFromRGB(0x2F84D0) : [UIColor grayColor])];
+    [self.centerButton setTitleColor:(_dataModel.enable ? COLOR_WHITE_MACROS : DEFAULT_TEXT_COLOR) forState:UIControlStateNormal];
 }
 
 #pragma mark - getter

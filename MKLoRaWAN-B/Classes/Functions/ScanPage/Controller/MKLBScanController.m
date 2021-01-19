@@ -25,6 +25,8 @@
 
 #import "MKLBSDK.h"
 
+#import "MKLBDatabaseManager.h"
+
 #import "MKLBConnectModel.h"
 #import "MKLBScanPageModel.h"
 #import "MKLBScanPageCell.h"
@@ -126,7 +128,7 @@ MKLBTabBarControllerDelegate>
 
 - (void)rightButtonMethod {
     MKLBAboutPageModel *model = [[MKLBAboutPageModel alloc] init];
-    model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_aboutIcon.png");
+    model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_about_logo.png");
     model.appName = @"MokoTracker+";
     model.appVersion = @"1.0.0";
     MKTrackerAboutController *vc = [[MKTrackerAboutController alloc] initWithProtocol:model];
@@ -429,8 +431,8 @@ MKLBTabBarControllerDelegate>
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:localPasswordKey];
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:@"Time sync completed!"];
-//            [MKLBDatabaseManager clearDataTable];
-//            [MKLBDatabaseManager initStepDataBase];
+        [MKLBDatabaseManager clearDataTable];
+        [MKLBDatabaseManager initDataBase];
         [weakSelf performSelector:@selector(pushTabBarPage) withObject:nil afterDelay:0.6f];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];

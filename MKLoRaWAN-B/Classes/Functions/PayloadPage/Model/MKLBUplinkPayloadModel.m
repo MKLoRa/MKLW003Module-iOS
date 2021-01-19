@@ -55,6 +55,11 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        NSString *checkMsg = [self checkParams];
+        if (ValidStr(checkMsg)) {
+            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+            return;
+        }
         if (![self configDeviceInfoInterval]) {
             [self operationFailedBlockWithMsg:@"Config Device Info Report Interval Error" block:failedBlock];
             return;
@@ -144,7 +149,7 @@
         self.broadcastIsOn = [returnData[@"result"][@"broadcast"] boolValue];
         self.rssiIsOn = [returnData[@"result"][@"rssi"] boolValue];
         self.macIsOn = [returnData[@"result"][@"mac"] boolValue];
-        self.timestampIsOn = [returnData[@"rsult"][@"timestamp"] boolValue];
+        self.timestampIsOn = [returnData[@"result"][@"timestamp"] boolValue];
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);
@@ -223,6 +228,16 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (NSString *)checkParams {
+    if (!ValidStr(self.deviceInfoInterval) || [self.deviceInfoInterval integerValue] < 1 || [self.deviceInfoInterval integerValue] > 14400) {
+        return @"Device Info Payload Report Interval Error";
+    }
+    if (!ValidStr(self.beaconReportInterval) || [self.beaconReportInterval integerValue] < 10 || [self.beaconReportInterval integerValue] > 65535) {
+        return @"Beacon Payload Report Interval Error";
+    }
+    return @"";
 }
 
 #pragma mark - getter

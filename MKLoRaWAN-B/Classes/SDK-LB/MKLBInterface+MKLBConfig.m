@@ -694,7 +694,7 @@
     if (lenString.length == 1) {
         lenString = [@"0" stringByAppendingString:lenString];
     }
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,tempString];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@",@"ed01",typeString,lenString,rulesString,tempString];
     [self configDataWithTaskID:taskID
                           data:commandString
                       sucBlock:sucBlock
@@ -736,7 +736,7 @@
     if (lenString.length == 1) {
         lenString = [@"0" stringByAppendingString:lenString];
     }
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,mac];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@",@"ed01",typeString,lenString,rulesString,mac];
     [self configDataWithTaskID:taskID
                           data:commandString
                       sucBlock:sucBlock
@@ -790,7 +790,7 @@
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMajorOperation : mk_lb_taskConfigBLEFilterBMajorOperation);
     
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"05",rulesString,minString,maxString];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@",@"ed01",typeString,@"05",rulesString,minString,maxString];
     [self configDataWithTaskID:taskID
                           data:commandString
                       sucBlock:sucBlock
@@ -837,7 +837,7 @@
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMinorOperation : mk_lb_taskConfigBLEFilterBMinorOperation);
     
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"05",rulesString,minString,maxString];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@%@",@"ed01",typeString,@"05",rulesString,minString,maxString];
     [self configDataWithTaskID:taskID
                           data:commandString
                       sucBlock:sucBlock
@@ -891,7 +891,7 @@
     NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"66" : @"6e");
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterARawDataOperation : mk_lb_taskConfigBLEFilterBRawDataOperation);
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,contentData];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@",@"ed01",typeString,lenString,rulesString,contentData];
     [self configDataWithTaskID:taskID
                           data:commandString
                       sucBlock:sucBlock
@@ -926,7 +926,7 @@
     NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"67" : @"6f");
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAUUIDOperation : mk_lb_taskConfigBLEFilterBUUIDOperation);
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,lenString,rulesString,uuid];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@",@"ed01",typeString,lenString,rulesString,uuid];
     [self configDataWithTaskID:taskID
                           data:commandString
                       sucBlock:sucBlock
@@ -946,6 +946,49 @@
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterARSSIOperation : mk_lb_taskConfigBLEFilterBRSSIOperation);
     NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@",@"ed01",typeString,@"01",rssiValue];
     [self configDataWithTaskID:taskID
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
+#pragma mark ****************************************存储数据协议************************************************
+
++ (void)lb_readNumberOfDaysStoredData:(NSInteger)days
+                             sucBlock:(void (^)(void))sucBlock
+                          failedBlock:(void (^)(NSError *error))failedBlock {
+    if (days < 1 || days > 65535) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)days];
+    if (value.length == 1) {
+        value = [@"000" stringByAppendingString:value];
+    }else if (value.length == 2) {
+        value = [@"00" stringByAppendingString:value];
+    }else if (value.length == 3) {
+        value = [@"0" stringByAppendingString:value];
+    }
+    NSString *commandString = [@"ed01a002" stringByAppendingString:value];
+    [self configDataWithTaskID:mk_lb_taskReadNumberOfDaysStoredDataOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_clearAllDatasWithSucBlock:(void (^)(void))sucBlock
+                         failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *commandString = @"ed01a100";
+    [self configDataWithTaskID:mk_lb_taskClearAllDatasOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
++ (void)lb_pauseSendLocalData:(BOOL)pause
+                     sucBlock:(void (^)(void))sucBlock
+                  failedBlock:(void (^)(NSError *error))failedBlock {
+    NSString *commandString = (pause ? @"ed01a20100" : @"ed01a20101");
+    [self configDataWithTaskID:mk_lb_taskPauseSendLocalDataOperation
                           data:commandString
                       sucBlock:sucBlock
                    failedBlock:failedBlock];

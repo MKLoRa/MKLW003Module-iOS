@@ -458,7 +458,20 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
         NSString *uuid = @"";
         if ([rule integerValue] > 0 && content.length > 2) {
-            uuid = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+            NSString *tempContent = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+            
+            NSMutableArray *array = [NSMutableArray arrayWithObjects:[tempContent substringWithRange:NSMakeRange(0, 8)],
+                                     [tempContent substringWithRange:NSMakeRange(8, 4)],
+                                     [tempContent substringWithRange:NSMakeRange(12, 4)],
+                                     [tempContent substringWithRange:NSMakeRange(16,4)],
+                                     [tempContent substringWithRange:NSMakeRange(20, 12)], nil];
+            [array insertObject:@"-" atIndex:1];
+            [array insertObject:@"-" atIndex:3];
+            [array insertObject:@"-" atIndex:5];
+            [array insertObject:@"-" atIndex:7];
+            for (NSString *string in array) {
+                uuid = [uuid stringByAppendingString:string];
+            }
         }
         resultDic = @{
             @"rule":rule,
@@ -571,7 +584,20 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
         NSString *uuid = @"";
         if ([rule integerValue] > 0 && content.length > 2) {
-            uuid = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+            NSString *tempContent = [content substringWithRange:NSMakeRange(2, content.length - 2)];
+            
+            NSMutableArray *array = [NSMutableArray arrayWithObjects:[tempContent substringWithRange:NSMakeRange(0, 8)],
+                                     [tempContent substringWithRange:NSMakeRange(8, 4)],
+                                     [tempContent substringWithRange:NSMakeRange(12, 4)],
+                                     [tempContent substringWithRange:NSMakeRange(16,4)],
+                                     [tempContent substringWithRange:NSMakeRange(20, 12)], nil];
+            [array insertObject:@"-" atIndex:1];
+            [array insertObject:@"-" atIndex:3];
+            [array insertObject:@"-" atIndex:5];
+            [array insertObject:@"-" atIndex:7];
+            for (NSString *string in array) {
+                uuid = [uuid stringByAppendingString:string];
+            }
         }
         resultDic = @{
             @"rule":rule,
@@ -760,6 +786,15 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"70"]) {
         //配置过滤规则2的RSSI
         operationID = mk_lb_taskConfigBLEFilterBRSSIOperation;
+    }else if ([cmd isEqualToString:@"a0"]) {
+        //读取多少天本地存储的数据
+        operationID = mk_lb_taskReadNumberOfDaysStoredDataOperation;
+    }else if ([cmd isEqualToString:@"a1"]) {
+        //清除存储的所有数据
+        operationID = mk_lb_taskClearAllDatasOperation;
+    }else if ([cmd isEqualToString:@"a2"]) {
+        //暂停/恢复数据传输
+        operationID = mk_lb_taskPauseSendLocalDataOperation;
     }
     return [self dataParserGetDataSuccess:@{@"success":@(success)} operationID:operationID];
 }

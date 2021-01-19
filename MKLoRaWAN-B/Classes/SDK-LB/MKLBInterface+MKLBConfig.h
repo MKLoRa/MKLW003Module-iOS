@@ -523,6 +523,30 @@ typedef NS_ENUM(NSInteger, mk_lb_defaultPowerStatus) {
                                     sucBlock:(void (^)(void))sucBlock
                                  failedBlock:(void (^)(NSError *error))failedBlock;
 
+#pragma mark ****************************************存储数据协议************************************************
+
+/// Read the data stored by the device every day.
+/// @param days 1 ~ 65535
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readNumberOfDaysStoredData:(NSInteger)days
+                             sucBlock:(void (^)(void))sucBlock
+                          failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Clear all data stored in the device.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_clearAllDatasWithSucBlock:(void (^)(void))sucBlock
+                         failedBlock:(void (^)(NSError *error))failedBlock;
+
+/// Pause/resume data transmission of local data.
+/// @param pause YES:pause,NO:resume
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_pauseSendLocalData:(BOOL)pause
+                     sucBlock:(void (^)(void))sucBlock
+                  failedBlock:(void (^)(NSError *error))failedBlock;
+
 @end
 
 NS_ASSUME_NONNULL_END

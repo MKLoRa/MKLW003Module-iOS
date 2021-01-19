@@ -59,6 +59,11 @@
 
 - (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        NSString *checkMsg = [self checkParams];
+        if (ValidStr(checkMsg)) {
+            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+            return;
+        }
         if (![self configScanStatus]) {
             [self operationFailedBlockWithMsg:@"Config scan status error" block:failedBlock];
             return;
@@ -252,6 +257,29 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (NSString *)checkParams {
+    if (self.scanStatus) {
+        if (!ValidStr(self.scanWindow) || [self.scanWindow integerValue] < 1 || [self.scanWindow integerValue] > 20) {
+            return @"Scan window must be 1~ 20";
+        }
+        if (!ValidStr(self.scanInterval)) {
+            return @"Scan interval cannot be empty";
+        }
+        if ([self.scanInterval integerValue] > 20 || [self.scanInterval integerValue] < [self.scanWindow integerValue]) {
+            return @"Scan window tine can not be more than scan interval time";
+        }
+    }
+    if (self.overLimitStatus) {
+        if (!ValidStr(self.quantities) || [self.quantities integerValue] < 1 || [self.quantities integerValue] > 255) {
+            return @"Over-limit MAC Quantities must be 1 ~ 255";
+        }
+        if (!ValidStr(self.duration) || [self.duration integerValue] < 1 || [self.duration integerValue] > 600) {
+            return @"The duration for trigger MAC and RSSI must be 1 ~ 600";
+        }
+    }
+    return @"";
 }
 
 #pragma mark - getter

@@ -166,6 +166,7 @@ MKLBFilterConditionCellDelegate>
     conditionBModel.rightMsg = (self.dataModel.conditionBIsOn ? @"ON" : @"OFF");
     
     MKLBFilterConditionCellModel *cellModel = self.section1List[0];
+    cellModel.enable = (self.dataModel.conditionAIsOn && self.dataModel.conditionBIsOn);
     cellModel.conditionIndex = (self.dataModel.ABIsOr ? 1 : 0);
     
     MKTextButtonCellModel *repeatModel = self.section2List[0];

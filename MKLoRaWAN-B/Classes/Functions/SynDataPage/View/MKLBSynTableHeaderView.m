@@ -232,7 +232,7 @@ static CGFloat const buttonSpace = 10.f;
 - (MKMsgIconButton *)synButton {
     if (!_synButton) {
         _synButton = [[MKMsgIconButton alloc] init];
-        _synButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_threeAxisAcceLoadingIcon.png");
+        _synButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_sync_enableIcon.png");
         _synButton.msgLabel.text = @"Sync";
     }
     return _synButton;
@@ -241,7 +241,7 @@ static CGFloat const buttonSpace = 10.f;
 - (MKMsgIconButton *)emptyButton {
     if (!_emptyButton) {
         _emptyButton = [[MKMsgIconButton alloc] init];
-        _emptyButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_slot_export_deleteIcon.png");
+        _emptyButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_delete_enableIcon.png");
         _emptyButton.msgLabel.text = @"Empty";
     }
     return _emptyButton;
@@ -250,7 +250,7 @@ static CGFloat const buttonSpace = 10.f;
 - (MKMsgIconButton *)exportButton {
     if (!_exportButton) {
         _exportButton = [[MKMsgIconButton alloc] init];
-        _exportButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_slot_export_enableIcon.png");
+        _exportButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_export_enableIcon.png");
         _exportButton.msgLabel.text = @"Export";
     }
     return _exportButton;

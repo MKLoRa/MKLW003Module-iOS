@@ -252,6 +252,13 @@ MKLoRaSettingCHCellDelegate>
         dellTimeModel.dataListIndex = self.dataModel.dellTime;
         return;
     }
+    if (index == 5) {
+        //Class Type
+        self.dataModel.classType = dataListIndex;
+        MKTextButtonCellModel *classModel = self.section2List[2];
+        classModel.dataListIndex = dataListIndex;
+        return;
+    }
 }
 
 #pragma mark - MKTextFieldCellDelegate
@@ -518,6 +525,14 @@ MKLoRaSettingCHCellDelegate>
     messageModel.buttonLabelFont = MKFont(13.f);
     messageModel.dataListIndex = self.dataModel.messageType;
     [self.section2List addObject:messageModel];
+    
+    MKTextButtonCellModel *classModel = [[MKTextButtonCellModel alloc] init];
+    classModel.index = 5;
+    classModel.msg = @"Device Type";
+    classModel.dataList = @[@"ClassA",@"ClassC"];
+    classModel.buttonLabelFont = MKFont(13.f);
+    classModel.dataListIndex = self.dataModel.classType;
+    [self.section2List addObject:classModel];
 }
 
 #pragma mark - 加载底部列表

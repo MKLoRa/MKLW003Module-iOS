@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)NSInteger conditionIndex;
 
+/// 当前按钮是否可用
+@property (nonatomic, assign)BOOL enable;
+
 @end
 
 @protocol MKLBFilterConditionCellDelegate <NSObject>
