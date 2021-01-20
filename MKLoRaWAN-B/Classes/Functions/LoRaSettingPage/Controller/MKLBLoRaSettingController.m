@@ -44,13 +44,17 @@ MKLoRaSettingCHCellDelegate>
 
 @property (nonatomic, strong)NSMutableArray *section2List;
 
-@property (nonatomic, strong)NSMutableArray *advSection0List;
+@property (nonatomic, strong)NSMutableArray *optionsList0;
 
-@property (nonatomic, strong)NSMutableArray *advSection1List;
+@property (nonatomic, strong)NSMutableArray *optionsList1;
 
-@property (nonatomic, strong)NSMutableArray *advSection2List;
+@property (nonatomic, strong)NSMutableArray *optionsList2;
 
-@property (nonatomic, strong)NSMutableArray *advSection3List;
+@property (nonatomic, strong)NSMutableArray *optionsList3;
+
+@property (nonatomic, strong)NSMutableArray *optionsList4;
+
+@property (nonatomic, strong)NSMutableArray *optionsList5;
 
 @property (nonatomic, strong)MKLBLoRaSettingModel *dataModel;
 
@@ -94,15 +98,26 @@ MKLoRaSettingCHCellDelegate>
     }
     //底部需要高级设置
     if (indexPath.section == 3 || indexPath.section == 4) {
-        //Advanced Setting
+        //Advanced Setting/CH
         return 80.f;
     }
     if (indexPath.section == 5) {
-        MKTextSwitchCellModel *cellModel = self.advSection2List[indexPath.row];
+        //Duty-cycle
+        MKTextSwitchCellModel *cellModel = self.optionsList2[indexPath.row];
         return [cellModel cellHeightWithContentWidth:kViewWidth];
     }
     if (indexPath.section == 6) {
-        MKTextButtonCellModel *cellModel = self.advSection3List[indexPath.row];
+        //ADR
+        return 44.f;
+    }
+    if (indexPath.section == 7) {
+        //DR
+        MKTextButtonCellModel *cellModel = self.optionsList4[indexPath.row];
+        return [cellModel cellHeightWithContentWidth:kViewWidth];
+    }
+    if (indexPath.section == 8) {
+        //UplinkDellTime
+        MKTextButtonCellModel *cellModel = self.optionsList5[indexPath.row];
         return [cellModel cellHeightWithContentWidth:kViewWidth];
     }
     return 0.f;
@@ -120,7 +135,7 @@ MKLoRaSettingCHCellDelegate>
         return 4;
     }
     //高级设置开关状态打开
-    return 7;
+    return 9;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -142,20 +157,43 @@ MKLoRaSettingCHCellDelegate>
     }
     //存在高级设置选项
     if (section == 3) {
-        return self.advSection0List.count;
+        return self.optionsList0.count;
     }
     if (!self.dataModel.advancedStatus) {
         //高级选项开关关闭状态
         return 0;
     }
     if (section == 4) {
-        return self.advSection1List.count;
+        //CH
+        if (self.dataModel.region == 1 || self.dataModel.region == 2 || self.dataModel.region == 8) {
+            //US915、AU915、CN470
+            return self.optionsList1.count;
+        }
     }
     if (section == 5) {
-        return self.advSection2List.count;
+        //Duty-cycle
+        if (self.dataModel.region == 0 || self.dataModel.region == 3
+             || self.dataModel.region == 4 || self.dataModel.region == 5
+             || self.dataModel.region == 6 || self.dataModel.region == 7
+             || self.dataModel.region == 9) {
+            //EU868,CN779, EU433,AS923,KR920,IN865,and RU864
+            return self.optionsList2.count;
+        }
     }
     if (section == 6) {
-        return self.advSection3List.count;
+        //ADR
+        return self.optionsList3.count;
+    }
+    if (section == 7) {
+        //DR
+        return self.optionsList4.count;
+    }
+    if (section == 8) {
+        //UplinkDellTime
+        if (self.dataModel.region == 0 || self.dataModel.region == 1) {
+            //AS923、AU915
+            return self.optionsList5.count;
+        }
     }
     return 0;
 }
@@ -182,24 +220,36 @@ MKLoRaSettingCHCellDelegate>
     }
     if (indexPath.section == 3) {
         MKLoRaAdvancedSettingCell *cell = [MKLoRaAdvancedSettingCell initCellWithTableView:tableView];
-        cell.dataModel = self.advSection0List[indexPath.row];
+        cell.dataModel = self.optionsList0[indexPath.row];
         cell.delegate = self;
         return cell;
     }
     if (indexPath.section == 4) {
         MKLoRaSettingCHCell *cell = [MKLoRaSettingCHCell initCellWithTableView:tableView];
-        cell.dataModel = self.advSection1List[indexPath.row];
+        cell.dataModel = self.optionsList1[indexPath.row];
         cell.delegate = self;
         return cell;
     }
     if (indexPath.section == 5) {
         MKTextSwitchCell *cell = [MKTextSwitchCell initCellWithTableView:tableView];
-        cell.dataModel = self.advSection2List[indexPath.row];
+        cell.dataModel = self.optionsList2[indexPath.row];
+        cell.delegate = self;
+        return cell;
+    }
+    if (indexPath.section == 6) {
+        MKTextSwitchCell *cell = [MKTextSwitchCell initCellWithTableView:tableView];
+        cell.dataModel = self.optionsList3[indexPath.row];
+        cell.delegate = self;
+        return cell;
+    }
+    if (indexPath.section == 7) {
+        MKTextButtonCell *cell = [MKTextButtonCell initCellWithTableView:tableView];
+        cell.dataModel = self.optionsList4[indexPath.row];
         cell.delegate = self;
         return cell;
     }
     MKTextButtonCell *cell = [MKTextButtonCell initCellWithTableView:tableView];
-    cell.dataModel = self.advSection3List[indexPath.row];
+    cell.dataModel = self.optionsList5[indexPath.row];
     cell.delegate = self;
     return cell;
 }
@@ -239,24 +289,24 @@ MKLoRaSettingCHCellDelegate>
         return;
     }
     if (index == 3) {
-        //DR
-        self.dataModel.DR = dataListIndex;
-        MKTextButtonCellModel *drModel = self.advSection3List[0];
-        drModel.dataListIndex = self.dataModel.DR;
-        return;
-    }
-    if (index == 4) {
-        //UplinkDellTime
-        self.dataModel.dellTime = dataListIndex;
-        MKTextButtonCellModel *dellTimeModel = self.advSection3List[1];
-        dellTimeModel.dataListIndex = self.dataModel.dellTime;
-        return;
-    }
-    if (index == 5) {
         //Class Type
         self.dataModel.classType = dataListIndex;
         MKTextButtonCellModel *classModel = self.section2List[2];
         classModel.dataListIndex = dataListIndex;
+        return;
+    }
+    if (index == 4) {
+        //DR
+        self.dataModel.DR = dataListIndex;
+        MKTextButtonCellModel *drModel = self.optionsList4[0];
+        drModel.dataListIndex = self.dataModel.DR;
+        return;
+    }
+    if (index == 5) {
+        //UplinkDellTime
+        self.dataModel.dellTime = dataListIndex;
+        MKTextButtonCellModel *dellTimeModel = self.optionsList5[0];
+        dellTimeModel.dataListIndex = self.dataModel.dellTime;
         return;
     }
 }
@@ -309,15 +359,21 @@ MKLoRaSettingCHCellDelegate>
     if (index == 0) {
         //Duty-cycle
         self.dataModel.dutyIsOn = isOn;
-        MKTextSwitchCellModel *dutyModel = self.advSection2List[0];
+        MKTextSwitchCellModel *dutyModel = self.optionsList2[0];
         dutyModel.isOn = self.dataModel.dutyIsOn;
         return;
     }
     if (index == 1) {
         //ADR
         self.dataModel.adrIsOn = isOn;
-        MKTextSwitchCellModel *adrModel = self.advSection2List[1];
+        MKTextSwitchCellModel *adrModel = self.optionsList3[0];
         adrModel.isOn = self.dataModel.adrIsOn;
+        //ADR关闭状态才能改变DR
+        MKTextButtonCellModel *drModel = self.optionsList4[0];
+        drModel.buttonEnable = !isOn;
+        [self.tableView mk_reloadRow:0
+                           inSection:7
+                    withRowAnimation:UITableViewRowAnimationNone];
         return;
     }
 }
@@ -332,7 +388,7 @@ MKLoRaSettingCHCellDelegate>
                               chHighIndex:(NSInteger)chHighIndex
                                 cellIndex:(NSInteger)index {
     self.dataModel.CHH = chHighIndex;
-    MKLoRaSettingCHCellModel *cellModel = self.advSection1List[0];
+    MKLoRaSettingCHCellModel *cellModel = self.optionsList1[0];
     cellModel.chHighIndex = self.dataModel.CHH;
 }
 
@@ -344,7 +400,7 @@ MKLoRaSettingCHCellDelegate>
                               chLowIndex:(NSInteger)chLowIndex
                                cellIndex:(NSInteger)index {
     self.dataModel.CHL = chLowIndex;
-    MKLoRaSettingCHCellModel *cellModel = self.advSection1List[0];
+    MKLoRaSettingCHCellModel *cellModel = self.optionsList1[0];
     cellModel.chLowIndex = self.dataModel.CHL;
     cellModel.chHighValueList = [self.dataModel CHHValueList];
 }
@@ -352,7 +408,7 @@ MKLoRaSettingCHCellDelegate>
 #pragma mark - MKLoRaAdvancedSettingCellDelegate
 - (void)mk_loraSetting_advanceCell_switchStatusChanged:(BOOL)isOn {
     self.dataModel.advancedStatus = isOn;
-    MKLoRaAdvancedSettingCellModel *cellModel = self.advSection0List[0];
+    MKLoRaAdvancedSettingCellModel *cellModel = self.optionsList0[0];
     cellModel.isOn = isOn;
     [self.tableView reloadData];
 }
@@ -374,23 +430,23 @@ MKLoRaSettingCHCellDelegate>
 - (void)regionValueChanged {
     [self.dataModel configAdvanceSettingDefaultParams];
     //CH
-    MKLoRaSettingCHCellModel *cellModel = self.advSection1List[0];
+    MKLoRaSettingCHCellModel *cellModel = self.optionsList1[0];
     cellModel.chLowValueList = [self.dataModel CHLValueList];
     cellModel.chLowIndex = self.dataModel.CHL;
     cellModel.chHighValueList = [self.dataModel CHHValueList];
     cellModel.chHighIndex = self.dataModel.CHH;
     //Duty-cycle
-    MKTextSwitchCellModel *dutyModel = self.advSection2List[0];
+    MKTextSwitchCellModel *dutyModel = self.optionsList2[0];
     dutyModel.isOn = self.dataModel.dutyIsOn;
     //ADR
-    MKTextSwitchCellModel *adrModel = self.advSection2List[1];
+    MKTextSwitchCellModel *adrModel = self.optionsList3[0];
     adrModel.isOn = self.dataModel.adrIsOn;
     //DR
-    MKTextButtonCellModel *drModel = self.advSection3List[0];
+    MKTextButtonCellModel *drModel = self.optionsList4[0];
     drModel.dataList = [self.dataModel DRValueList];
     drModel.dataListIndex = self.dataModel.DR;
     //UplinkDellTime
-    MKTextButtonCellModel *dellTimeModel = self.advSection3List[1];
+    MKTextButtonCellModel *dellTimeModel = self.optionsList5[0];
     dellTimeModel.dataList = @[@"0",@"1"];
     dellTimeModel.dataListIndex = self.dataModel.dellTime;
     [self.tableView reloadData];
@@ -406,10 +462,12 @@ MKLoRaSettingCHCellDelegate>
         [self.tableView reloadData];
         return;
     }
-    [self loadAdvSection0List];
-    [self loadAdvSection1List];
-    [self loadAdvSection2List];
-    [self loadAdvSection3List];
+    [self loadOptionsList0];
+    [self loadOptionsList1];
+    [self loadOptionsList2];
+    [self loadOptionsList3];
+    [self loadOptionsList4];
+    [self loadOptionsList5];
     [self.tableView reloadData];
 }
 
@@ -527,7 +585,7 @@ MKLoRaSettingCHCellDelegate>
     [self.section2List addObject:messageModel];
     
     MKTextButtonCellModel *classModel = [[MKTextButtonCellModel alloc] init];
-    classModel.index = 5;
+    classModel.index = 3;
     classModel.msg = @"Device Type";
     classModel.dataList = @[@"ClassA",@"ClassC"];
     classModel.buttonLabelFont = MKFont(13.f);
@@ -536,13 +594,13 @@ MKLoRaSettingCHCellDelegate>
 }
 
 #pragma mark - 加载底部列表
-- (void)loadAdvSection0List {
+- (void)loadOptionsList0 {
     MKLoRaAdvancedSettingCellModel *cellModel = [[MKLoRaAdvancedSettingCellModel alloc] init];
     cellModel.isOn = self.dataModel.advancedStatus;
-    [self.advSection0List addObject:cellModel];
+    [self.optionsList0 addObject:cellModel];
 }
 
-- (void)loadAdvSection1List {
+- (void)loadOptionsList1 {
     MKLoRaSettingCHCellModel *cellModel = [[MKLoRaSettingCHCellModel alloc] init];
     cellModel.msg = @"CH";
     cellModel.noteMsg = @"*It is only used for US915,AU915,CN470";
@@ -551,43 +609,47 @@ MKLoRaSettingCHCellDelegate>
     cellModel.chLowIndex = self.dataModel.CHL;
     cellModel.chHighValueList = [self.dataModel CHHValueList];
     cellModel.chHighIndex = self.dataModel.CHH;
-    [self.advSection1List addObject:cellModel];
+    [self.optionsList1 addObject:cellModel];
 }
 
-- (void)loadAdvSection2List {
+- (void)loadOptionsList2 {
     MKTextSwitchCellModel *dutyModel = [[MKTextSwitchCellModel alloc] init];
     dutyModel.index = 0;
     dutyModel.msg = @"Duty-cycle";
     dutyModel.noteMsg = @"*It is only used for EU868,CN779, EU433,AS923,KR920,IN865,and RU864. Off: The uplink report interval will not be limit by region freqency. On:The uplink report interval will be limit by region freqency.";
     dutyModel.noteMsgColor = RGBCOLOR(102, 102, 102);
     dutyModel.isOn = self.dataModel.dutyIsOn;
-    [self.advSection2List addObject:dutyModel];
-    
+    [self.optionsList2 addObject:dutyModel];
+}
+
+- (void)loadOptionsList3 {
     MKTextSwitchCellModel *adrModel = [[MKTextSwitchCellModel alloc] init];
     adrModel.index = 1;
     adrModel.msg = @"ADR";
     adrModel.isOn = self.dataModel.adrIsOn;
-    [self.advSection2List addObject:adrModel];
+    [self.optionsList3 addObject:adrModel];
 }
 
-- (void)loadAdvSection3List {
+- (void)loadOptionsList4 {
     MKTextButtonCellModel *drModel = [[MKTextButtonCellModel alloc] init];
     drModel.msg = @"DR";
     drModel.dataList = [self.dataModel DRValueList];
     drModel.dataListIndex = self.dataModel.DR;
-    drModel.index = 3;
+    drModel.index = 4;
     drModel.noteMsg = @"*DR only can be changed after the ADR off.";
     drModel.noteMsgColor = RGBCOLOR(102, 102, 102);
-    [self.advSection3List addObject:drModel];
-    
+    [self.optionsList4 addObject:drModel];
+}
+
+- (void)loadOptionsList5 {
     MKTextButtonCellModel *dellTimeModel = [[MKTextButtonCellModel alloc] init];
     dellTimeModel.msg = @"UplinkDellTime";
     dellTimeModel.dataList = @[@"0",@"1"];
     dellTimeModel.dataListIndex = self.dataModel.dellTime;
-    dellTimeModel.index = 4;
+    dellTimeModel.index = 5;
     dellTimeModel.noteMsg = @"*It is only used for AS923 and AU915.0: Dell Time no limit,1:Dell Time 400ms.";
     dellTimeModel.noteMsgColor = RGBCOLOR(102, 102, 102);
-    [self.advSection3List addObject:dellTimeModel];
+    [self.optionsList5 addObject:dellTimeModel];
 }
 
 #pragma mark - UI
@@ -648,32 +710,46 @@ MKLoRaSettingCHCellDelegate>
     return _dataModel;
 }
 
-- (NSMutableArray *)advSection0List {
-    if (!_advSection0List) {
-        _advSection0List = [NSMutableArray array];
+- (NSMutableArray *)optionsList0 {
+    if (!_optionsList0) {
+        _optionsList0 = [NSMutableArray array];
     }
-    return _advSection0List;
+    return _optionsList0;
 }
 
-- (NSMutableArray *)advSection1List {
-    if (!_advSection1List) {
-        _advSection1List = [NSMutableArray array];
+- (NSMutableArray *)optionsList1 {
+    if (!_optionsList1) {
+        _optionsList1 = [NSMutableArray array];
     }
-    return _advSection1List;
+    return _optionsList1;
 }
 
-- (NSMutableArray *)advSection2List {
-    if (!_advSection2List) {
-        _advSection2List = [NSMutableArray array];
+- (NSMutableArray *)optionsList2 {
+    if (!_optionsList2) {
+        _optionsList2 = [NSMutableArray array];
     }
-    return _advSection2List;
+    return _optionsList2;
 }
 
-- (NSMutableArray *)advSection3List {
-    if (!_advSection3List) {
-        _advSection3List = [NSMutableArray array];
+- (NSMutableArray *)optionsList3 {
+    if (!_optionsList3) {
+        _optionsList3 = [NSMutableArray array];
     }
-    return _advSection3List;
+    return _optionsList3;
+}
+
+- (NSMutableArray *)optionsList4 {
+    if (!_optionsList4) {
+        _optionsList4 = [NSMutableArray array];
+    }
+    return _optionsList4;
+}
+
+- (NSMutableArray *)optionsList5 {
+    if (!_optionsList5) {
+        _optionsList5 = [NSMutableArray array];
+    }
+    return _optionsList5;
 }
 
 @end

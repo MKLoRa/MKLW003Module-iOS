@@ -79,13 +79,23 @@
             });
             return;
         }
-        if (![self readCHValue]) {
-            [self operationFailedBlockWithMsg:@"Read CH Error" block:failedBlock];
-            return;
+        if (self.region == 1 || self.region == 2 || self.region == 8) {
+            //US915、AU915、CN470
+            if (![self readCHValue]) {
+                [self operationFailedBlockWithMsg:@"Read CH Error" block:failedBlock];
+                return;
+            }
         }
-        if (![self readDutyStatus]) {
-            [self operationFailedBlockWithMsg:@"Read Duty Cycle Error" block:failedBlock];
-            return;
+        //Duty-cycle
+        if (self.region == 0 || self.region == 3
+             || self.region == 4 || self.region == 5
+             || self.region == 6 || self.region == 7
+             || self.region == 9) {
+            //EU868,CN779, EU433,AS923,KR920,IN865,and RU864
+            if (![self readDutyStatus]) {
+                [self operationFailedBlockWithMsg:@"Read Duty Cycle Error" block:failedBlock];
+                return;
+            }
         }
         if (![self readADRStatus]) {
             [self operationFailedBlockWithMsg:@"Read ADR Error" block:failedBlock];
@@ -95,9 +105,13 @@
             [self operationFailedBlockWithMsg:@"Read DR Error" block:failedBlock];
             return;
         }
-        if (![self readDellTime]) {
-            [self operationFailedBlockWithMsg:@"Read Uplink Dell Time Error" block:failedBlock];
-            return;
+        //UplinkDellTime
+        if (self.region == 0 || self.region == 1) {
+            //AS923、AU915
+            if (![self readDellTime]) {
+                [self operationFailedBlockWithMsg:@"Read Uplink Dell Time Error" block:failedBlock];
+                return;
+            }
         }
         moko_dispatch_main_safe(^{
             if (sucBlock) {
@@ -196,9 +210,12 @@
                 return;
             }
         }
-        if (![self configDellTime]) {
-            [self operationFailedBlockWithMsg:@"Config Uplink Dell Time Error" block:failedBlock];
-            return;
+        if (self.region == 0 || self.region == 1) {
+            //AS923、AU915
+            if (![self configDellTime]) {
+                [self operationFailedBlockWithMsg:@"Config Uplink Dell Time Error" block:failedBlock];
+                return;
+            }
         }
         if (![self connectCommand]) {
             [self operationFailedBlockWithMsg:@"Connect network error" block:failedBlock];

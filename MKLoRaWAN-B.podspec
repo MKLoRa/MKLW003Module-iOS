@@ -35,6 +35,227 @@ TODO: Add long description of the pod here.
   s.resource_bundles = {
     'MKLoRaWAN-B' => ['MKLoRaWAN-B/Assets/*.png']
   }
+  
+  s.subspec 'ApplicationModule' do |ss|
+    ss.source_files = 'MKLoRaWAN-B/Classes/ApplicationModule/**'
+  end
+  
+  s.subspec 'CTMediator' do |ss|
+    ss.source_files = 'MKLoRaWAN-B/Classes/CTMediator/**'
+  end
+  
+  s.subspec 'DatabaseManager' do |ss|
+    ss.source_files = 'MKLoRaWAN-B/Classes/DatabaseManager/**'
+  end
+  
+  s.subspec 'SDK-LB' do |ss|
+    ss.source_files = 'MKLoRaWAN-B/Classes/SDK-LB/**'
+  end
+  
+  s.subspec 'Target' do |ss|
+    ss.source_files = 'MKLoRaWAN-B/Classes/Target/**'
+    ss.dependency 'MKLoRaWAN-B/Functions'
+  end
+  
+  s.subspec 'Functions' do |ss|
+    
+    ss.subspec 'AdvertiserPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/AdvertiserPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/AdvertiserPage/Model'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/AdvertiserPage/Model/**'
+      end
+    end
+    
+    ss.subspec 'DevicePage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/DevicePage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/DevicePage/Model'
+        ssss.dependency 'MKLoRaWAN-B/Functions/DevicePage/View'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/UpdatePage/Controller'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/DevicePage/Model/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/DevicePage/View/**'
+      end
+    end
+    
+    ss.subspec 'FilterCondition' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterCondition/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/FilterCondition/Model'
+        ssss.dependency 'MKLoRaWAN-B/Functions/FilterCondition/View'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterCondition/Model/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterCondition/View/**'
+      end
+    end
+    
+    ss.subspec 'FilterOptions' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterOptions/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/FilterOptions/Model'
+        ssss.dependency 'MKLoRaWAN-B/Functions/FilterOptions/View'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/FilterCondition/Controller'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterOptions/Model/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterOptions/View/**'
+      end
+    end
+    
+    ss.subspec 'LoRaPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/LoRaPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/LoRaPage/Model'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/LoRaSettingPage/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/NetworkCheck/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/MulticastGroup/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/PayloadPage/Controller'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/LoRaPage/Model/**'
+      end
+    end
+    
+    ss.subspec 'LoRaSettingPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/LoRaSettingPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/LoRaSettingPage/Model'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/LoRaSettingPage/Model/**'
+      end
+    end
+    
+    ss.subspec 'MulticastGroup' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/MulticastGroup/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/MulticastGroup/Model'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/MulticastGroup/Model/**'
+      end
+    end
+    
+    ss.subspec 'NetworkCheck' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/NetworkCheck/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/NetworkCheck/Model'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/NetworkCheck/Model/**'
+      end
+    end
+    
+    ss.subspec 'PayloadPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/PayloadPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/PayloadPage/Model'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/PayloadPage/Model/**'
+      end
+    end
+    
+    ss.subspec 'ScannerPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScannerPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/ScannerPage/Model'
+        ssss.dependency 'MKLoRaWAN-B/Functions/ScannerPage/View'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/FilterOptions/Controller'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScannerPage/Model/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScannerPage/View/**'
+      end
+    end
+    
+    ss.subspec 'ScanPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScanPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/ScanPage/Model'
+        ssss.dependency 'MKLoRaWAN-B/Functions/ScanPage/View'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/TabBarPage/Controller'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScanPage/Model/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScanPage/View/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/ScanPage/Model'
+      end
+    end
+    
+    ss.subspec 'SettingPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/SettingPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/SettingPage/Model'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/AdvertiserPage/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/SynDataPage/Controller'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/SettingPage/Model/**'
+      end
+    end
+    
+    ss.subspec 'SynDataPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/SynDataPage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/SynDataPage/Parser'
+        ssss.dependency 'MKLoRaWAN-B/Functions/SynDataPage/View'
+      end
+      sss.subspec 'Parser' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/SynDataPage/Parser/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/SynDataPage/View/**'
+      end
+    end
+    
+    ss.subspec 'TabBarPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/TabBarPage/Controller/**'
+        
+        ssss.dependency 'MKLoRaWAN-B/Functions/LoRaPage/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/ScannerPage/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/SettingPage/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/DevicePage/Controller'
+      end
+    end
+    
+    ss.subspec 'UpdatePage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/UpdatePage/Controller/**'
+        ssss.dependency 'MKLoRaWAN-B/Functions/UpdatePage/Model'
+      end
+      sss.subspec 'Model' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/UpdatePage/Model/**'
+      end
+    end
+    
+    ss.dependency 'MKLoRaWAN-B/SDK-LB'
+    ss.dependency 'MKLoRaWAN-B/DatabaseManager'
+    ss.dependency 'MKLoRaWAN-B/CTMediator'
+    
+  end
 
   s.dependency 'MKBaseBleModule'
   s.dependency 'MKBaseModuleLibrary'
@@ -44,6 +265,5 @@ TODO: Add long description of the pod here.
   s.dependency 'MLInputDodger'
   s.dependency 'iOSDFULibrary','4.6.1'
   s.dependency 'CTMediator'
-  s.dependency 'WMZTags'
   
 end

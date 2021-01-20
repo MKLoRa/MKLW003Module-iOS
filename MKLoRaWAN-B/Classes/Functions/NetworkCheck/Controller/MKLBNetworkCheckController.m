@@ -66,7 +66,11 @@ MKTextFieldCellDelegate>
     [self.dataModel configDataWithSucBlock:^{
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:@"Success!"];
-        [weakSelf.tableView mk_reloadSection:1 withRowAnimation:UITableViewRowAnimationNone];
+        
+        MKTextSwitchCellModel *checkModel = self.section0List[0];
+        checkModel.isOn = self.dataModel.checkStatus;
+        
+        [weakSelf.tableView reloadData];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
