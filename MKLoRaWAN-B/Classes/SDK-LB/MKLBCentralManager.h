@@ -32,9 +32,7 @@ extern NSString *const mk_lb_centralManagerStateChangedNotification;
 extern NSString *const mk_lb_receiveStorageDataNotification;
 
 /*
- After connecting the device, if no password is entered within one minute, it returns 0x00. After successful password change, it returns 0x01, after restoring the factory settings, it returns 0x02, the device has no data communication for two consecutive minutes, it returns 0x03, and the shutdown protocol is sent to make the device shut down and return 0x04.
- note:This notification is available only when the device disconnect type feature monitoring is turned on.
- note:[[MKTrackerCentralManager share] notifyDisconnectType:YES];
+ After connecting the device, if no password is entered within one minute, it returns 0x01. After successful password change, it returns 0x02, the device has no data communication for two consecutive minutes, it returns 0x03, and the shutdown protocol is sent to make the device shut down and return 0x04.
  */
 extern NSString *const mk_lb_deviceDisconnectTypeNotification;
 

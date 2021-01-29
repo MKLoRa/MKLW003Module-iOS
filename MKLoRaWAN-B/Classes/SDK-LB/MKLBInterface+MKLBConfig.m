@@ -415,7 +415,7 @@
 + (void)lb_configADRStatus:(BOOL)isOn
                   sucBlock:(void (^)(void))sucBlock
                failedBlock:(void (^)(NSError *error))failedBlock {
-    NSString *commandString = (isOn ? @"ed012e0100" : @"ed012e0101");
+    NSString *commandString = (isOn ? @"ed012e0101" : @"ed012e0100");
     [self configDataWithTaskID:mk_lb_taskConfigADRStatusOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -636,11 +636,6 @@
                    failedBlock:failedBlock];
 }
 
-/// Configure filter rule switch status.
-/// @param type rule1 or rule2
-/// @param isOn isOn
-/// @param sucBlock Success callback
-/// @param failedBlock Failure callback
 + (void)lb_configBLEFilterStatusWithType:(mk_lb_filterRulesType)type
                                     isOn:(BOOL)isOn
                                 sucBlock:(void (^)(void))sucBlock
@@ -655,12 +650,6 @@
                    failedBlock:failedBlock];
 }
 
-/// Configure the filtered device name.
-/// @param type rule1 or rule2
-/// @param rules rules
-/// @param deviceName 1~29 ascii characters.If rules == mk_lb_filterRules_off, it can be empty.
-/// @param sucBlock Success callback
-/// @param failedBlock Failure callback
 + (void)lb_configBLEFilterDeviceNameWithType:(mk_lb_filterRulesType)type
                                        rules:(mk_lb_filterRules)rules
                                   deviceName:(NSString *)deviceName
@@ -701,12 +690,6 @@
                    failedBlock:failedBlock];
 }
 
-/// Configure the filtered device mac.
-/// @param type rule1 or rule2
-/// @param rules rules
-/// @param mac 1Byte ~ 6Byte.If rules == mk_lb_filterRules_off, it can be empty.
-/// @param sucBlock Success callback
-/// @param failedBlock Failure callback
 + (void)lb_configBLEFilterDeviceMacWithType:(mk_lb_filterRulesType)type
                                       rules:(mk_lb_filterRules)rules
                                         mac:(NSString *)mac
@@ -743,13 +726,6 @@
                    failedBlock:failedBlock];
 }
 
-/// Configure the filtered MAJOR range.
-/// @param type rule1 or rule2
-/// @param rules rules
-/// @param majorMin 0~65535
-/// @param majorMax majorMin ~ 65535
-/// @param sucBlock Success callback
-/// @param failedBlock Failure callback
 + (void)lb_configBLEFilterDeviceMajorWithType:(mk_lb_filterRulesType)type
                                         rules:(mk_lb_filterRules)rules
                                      majorMin:(NSInteger)majorMin
@@ -913,12 +889,12 @@
                        failedBlock:failedBlock];
         return;
     }
-    uuid = [uuid stringByReplacingOccurrencesOfString:@":" withString:@""];
-    uuid = [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    if (!MKValidStr(uuid) || uuid.length > 32 || uuid.length % 2 != 0) {
+    if (![MKBLEBaseSDKAdopter isUUIDString:uuid]) {
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
+    uuid = [uuid stringByReplacingOccurrencesOfString:@":" withString:@""];
+    uuid = [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
     NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((uuid.length / 2) + 1)];
     if (lenString.length == 1) {
         lenString = [@"0" stringByAppendingString:lenString];

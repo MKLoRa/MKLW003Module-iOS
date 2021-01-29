@@ -54,6 +54,7 @@ MKTextButtonCellDelegate>
 
 - (void)dealloc {
     NSLog(@"MKLBSettingController销毁");
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -67,6 +68,10 @@ MKTextButtonCellDelegate>
     [super viewDidLoad];
     [self loadSubViews];
     [self loadSectionDatas];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dismissAlert)
+                                                 name:@"mk_lb_settingPageNeedDismissAlert"
+                                               object:nil];
 }
 
 #pragma mark - super method
@@ -157,6 +162,13 @@ MKTextButtonCellDelegate>
             [self.view showCentralToast:error.userInfo[@"errorInfo"]];
         }];
         return;
+    }
+}
+
+#pragma mark - note
+- (void)dismissAlert {
+    if (self.currentAlert && (self.presentedViewController == self.currentAlert)) {
+        [self.currentAlert dismissViewControllerAnimated:NO completion:nil];
     }
 }
 

@@ -10,7 +10,7 @@
 
 #import "MKLBInterface+MKLBConfig.h"
 
-@interface MKFilterRawAdvDataModel : NSObject<mk_lb_BLEFilterRawDataProtocol>
+@interface MKLBFilterRawAdvDataModel : NSObject<mk_lb_BLEFilterRawDataProtocol>
 
 @property (nonatomic, copy)NSString *dataType;
 
@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)readWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock;
 
-- (void)configWithRawDataList:(NSArray <MKFilterRawAdvDataModel *>*)list
+- (void)configWithRawDataList:(NSArray <MKLBFilterRawAdvDataModel *>*)list
                      sucBlock:(void (^)(void))sucBlock
                   failedBlock:(void (^)(NSError *error))failedBlock;
 

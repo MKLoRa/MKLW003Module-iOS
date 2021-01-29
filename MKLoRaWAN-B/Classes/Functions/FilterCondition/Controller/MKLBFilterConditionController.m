@@ -24,8 +24,7 @@
 #import "MKRawAdvDataOperationCell.h"
 #import "MKFilterRawAdvDataCell.h"
 #import "MKCustomUIAdopter.h"
-
-#import "MKLBFilterRssiCell.h"
+#import "MKNormalSliderCell.h"
 
 #import "MKLBFilterConditionModel.h"
 
@@ -35,7 +34,7 @@ static CGFloat const statusOffHeight = 60.f;
 @interface MKLBFilterConditionController ()
 <UITableViewDelegate,
 UITableViewDataSource,
-MKLBFilterRssiCellDelegate,
+MKNormalSliderCellDelegate,
 MKFilterDataCellDelegate,
 MKRawAdvDataOperationCellDelegate,
 mk_textSwitchCellDelegate,
@@ -91,7 +90,7 @@ MKFilterRawAdvDataCellDelegate>
             [self.view showCentralToast:@"Filter by Raw Adv Data Params Error"];
             return;
         }
-        MKFilterRawAdvDataModel *model = [[MKFilterRawAdvDataModel alloc] init];
+        MKLBFilterRawAdvDataModel *model = [[MKLBFilterRawAdvDataModel alloc] init];
         model.dataType = cellModel.dataType;
         model.maxIndex = [cellModel.maxIndex integerValue];
         model.minIndex = [cellModel.minIndex integerValue];
@@ -175,7 +174,7 @@ MKFilterRawAdvDataCellDelegate>
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        MKLBFilterRssiCell *cell = [MKLBFilterRssiCell initCellWithTableView:tableView];
+        MKNormalSliderCell *cell = [MKNormalSliderCell initCellWithTableView:tableView];
         cell.dataModel = self.section0List[indexPath.row];
         cell.delegate = self;
         return cell;
@@ -204,11 +203,18 @@ MKFilterRawAdvDataCellDelegate>
     return cell;
 }
 
-#pragma mark - MKLBFilterRssiCellDelegate
-- (void)mk_fliterRssiValueChanged:(NSInteger)rssi {
-    self.dataModel.rssiValue = rssi;
-    MKLBFilterRssiCellModel *cellModel = self.section0List[0];
-    cellModel.rssi = rssi;
+#pragma mark - MKNormalSliderCellDelegate
+/// slider值发生改变的回调事件
+/// @param value 当前slider的值
+/// @param index 当前cell所在的index
+- (void)mk_normalSliderValueChanged:(NSInteger)value index:(NSInteger)index {
+    if (index == 0) {
+        //RSSI
+        self.dataModel.rssiValue = value;
+        MKNormalSliderCellModel *cellModel = self.section0List[0];
+        cellModel.sliderValue = value;
+        return;
+    }
 }
 
 #pragma mark - MKFilterDataCellDelegate
@@ -398,8 +404,16 @@ MKFilterRawAdvDataCellDelegate>
 }
 
 - (void)loadSection0Datas {
-    MKLBFilterRssiCellModel *cellModel = [[MKLBFilterRssiCellModel alloc] init];
-    cellModel.rssi = self.dataModel.rssiValue;
+    MKNormalSliderCellModel *cellModel = [[MKNormalSliderCellModel alloc] init];
+    cellModel.index = 0;
+    cellModel.msg = [MKCustomUIAdopter attributedString:@[@"RSSI Filter",@"   (-127dBm ~ 0dBm)"] fonts:@[MKFont(15.f),MKFont(13.f)] colors:@[DEFAULT_TEXT_COLOR,UIColorFromRGB(0x353535)]];
+    cellModel.sliderValue = self.dataModel.rssiValue;
+    cellModel.sliderMaxValue = 0;
+    cellModel.sliderMinValue = -127;
+    cellModel.changed = YES;
+    cellModel.leftNoteMsg = @"*The device will uplink valid ADV data with RSSI no less than";
+    cellModel.unit = @"dBm";
+    cellModel.rightNoteMsg = @".";
     [self.section0List addObject:cellModel];
 }
 
@@ -477,7 +491,7 @@ MKFilterRawAdvDataCellDelegate>
 - (void)loadSection4Datas {
     MKTextSwitchCellModel *cellModel = [[MKTextSwitchCellModel alloc] init];
     cellModel.index = 0;
-    NSString *conditionType = (self.conditionType == mk_conditionType_A) ? @"A" : @"B";
+    NSString *conditionType = (self.conditionType == mk_lb_conditionType_A) ? @"A" : @"B";
     cellModel.msg = [@"Enable Filter Condition " stringByAppendingString:conditionType];
     cellModel.noteMsg = [NSString stringWithFormat:@"*Turn on the Filter Condition %@ ,all filtration of this page will take effect.Turn off the Filter Condition %@, all filtration of this page will not take effect.",conditionType,conditionType];
     cellModel.noteMsgColor = RGBCOLOR(102, 102, 102);
@@ -487,7 +501,7 @@ MKFilterRawAdvDataCellDelegate>
 
 #pragma mark - UI
 - (void)loadSubViews {
-    self.defaultTitle = (self.conditionType == mk_conditionType_A) ? @"FILTER Condition A" : @"FILTER Condition B";
+    self.defaultTitle = (self.conditionType == mk_lb_conditionType_A) ? @"FILTER Condition A" : @"FILTER Condition B";
     [self.rightButton setImage:LOADICON(@"MKLoRaWAN-B", @"MKLBFilterConditionController", @"lb_slotSaveIcon.png") forState:UIControlStateNormal];
     [self.view addSubview:self.tableView];
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -546,7 +560,7 @@ MKFilterRawAdvDataCellDelegate>
 - (MKLBFilterConditionModel *)dataModel {
     if (!_dataModel) {
         _dataModel = [[MKLBFilterConditionModel alloc] init];
-        _dataModel.isConditionA = (self.conditionType == mk_conditionType_A);
+        _dataModel.isConditionA = (self.conditionType == mk_lb_conditionType_A);
     }
     return _dataModel;
 }

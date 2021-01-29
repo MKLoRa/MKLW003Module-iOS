@@ -29,8 +29,6 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
-
-  s.source_files = 'MKLoRaWAN-B/Classes/**/*'
   
   s.resource_bundles = {
     'MKLoRaWAN-B' => ['MKLoRaWAN-B/Assets/*.png']
@@ -89,13 +87,9 @@ TODO: Add long description of the pod here.
       sss.subspec 'Controller' do |ssss|
         ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterCondition/Controller/**'
         ssss.dependency 'MKLoRaWAN-B/Functions/FilterCondition/Model'
-        ssss.dependency 'MKLoRaWAN-B/Functions/FilterCondition/View'
       end
       sss.subspec 'Model' do |ssss|
         ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterCondition/Model/**'
-      end
-      sss.subspec 'View' do |ssss|
-        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/FilterCondition/View/**'
       end
     end
     

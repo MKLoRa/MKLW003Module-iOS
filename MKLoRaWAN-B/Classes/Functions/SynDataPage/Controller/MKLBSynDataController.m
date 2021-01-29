@@ -173,8 +173,7 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
         self.headerView.sumLabel.text = [NSString stringWithFormat:@"Sum:%@",[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)]];
         return;
     }
-    NSString *subContent = [content substringFromIndex:10];
-    [self.contentList addObject:subContent];
+    [self.contentList addObject:content];
 }
 
 #pragma mark - event method

@@ -76,7 +76,7 @@ static dispatch_once_t onceToken;
                                              RSSI:(NSNumber *)RSSI {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         NSLog(@"%@,%@",advertisementData,RSSI);
-        NSDictionary *dataModel = [self parseModelWith:RSSI advDic:advertisementData peripheral:peripheral];
+        NSDictionary *dataModel = [self parseModelWithRssi:RSSI advDic:advertisementData peripheral:peripheral];
         if (!dataModel) {
             return ;
         }
@@ -424,7 +424,7 @@ static dispatch_once_t onceToken;
 }
 
 #pragma mark - private method
-- (NSDictionary *)parseModelWith:(NSNumber *)rssi advDic:(NSDictionary *)advDic peripheral:(CBPeripheral *)peripheral {
+- (NSDictionary *)parseModelWithRssi:(NSNumber *)rssi advDic:(NSDictionary *)advDic peripheral:(CBPeripheral *)peripheral {
     if ([rssi integerValue] == 127 || !MKValidDict(advDic) || !peripheral) {
         return @{};
     }

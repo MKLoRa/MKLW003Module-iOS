@@ -15,7 +15,7 @@
 #import "MKLBInterface.h"
 #import "MKLBInterface+MKLBConfig.h"
 
-@implementation MKFilterRawAdvDataModel
+@implementation MKLBFilterRawAdvDataModel
 @end
 
 @interface MKLBFilterConditionModel ()
@@ -72,7 +72,7 @@
     });
 }
 
-- (void)configWithRawDataList:(NSArray <MKFilterRawAdvDataModel *>*)list
+- (void)configWithRawDataList:(NSArray <MKLBFilterRawAdvDataModel *>*)list
                      sucBlock:(void (^)(void))sucBlock
                   failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
@@ -324,7 +324,7 @@
     return success;
 }
 
-- (BOOL)configRawDataWithList:(NSArray <MKFilterRawAdvDataModel *>*)list {
+- (BOOL)configRawDataWithList:(NSArray <MKLBFilterRawAdvDataModel *>*)list {
     __block BOOL success = NO;
     mk_lb_filterRules rules = mk_lb_filterRules_off;
     if (self.rawDataIson) {

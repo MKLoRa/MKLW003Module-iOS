@@ -55,9 +55,8 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError *error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        NSString *checkMsg = [self checkParams];
-        if (ValidStr(checkMsg)) {
-            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+        if (![self checkParams]) {
+            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
             return;
         }
         if (![self configDeviceInfoInterval]) {
@@ -230,14 +229,14 @@
     })
 }
 
-- (NSString *)checkParams {
+- (BOOL)checkParams {
     if (!ValidStr(self.deviceInfoInterval) || [self.deviceInfoInterval integerValue] < 1 || [self.deviceInfoInterval integerValue] > 14400) {
-        return @"Device Info Payload Report Interval Error";
+        return NO;
     }
     if (!ValidStr(self.beaconReportInterval) || [self.beaconReportInterval integerValue] < 10 || [self.beaconReportInterval integerValue] > 65535) {
-        return @"Beacon Payload Report Interval Error";
+        return NO;
     }
-    return @"";
+    return YES;
 }
 
 #pragma mark - getter

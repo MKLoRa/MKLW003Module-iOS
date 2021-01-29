@@ -51,72 +51,72 @@ PODS:
   - MKBaseModuleLibrary/Tools/MKClassInfo (1.0.11)
   - MKBaseModuleLibrary/Tools/MKDateFormatter (1.0.11)
   - MKBaseModuleLibrary/Tools/MKModuleManager (1.0.11)
-  - MKCustomUIModule (1.0.16):
+  - MKCustomUIModule (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Cell (= 1.0.16)
-    - MKCustomUIModule/Controller (= 1.0.16)
-    - MKCustomUIModule/UIAdopter (= 1.0.16)
-    - MKCustomUIModule/View (= 1.0.16)
-  - MKCustomUIModule/Cell (1.0.16):
+    - MKCustomUIModule/Cell (= 1.0.17)
+    - MKCustomUIModule/Controller (= 1.0.17)
+    - MKCustomUIModule/UIAdopter (= 1.0.17)
+    - MKCustomUIModule/View (= 1.0.17)
+  - MKCustomUIModule/Cell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Cell/LoRaCell (= 1.0.16)
-    - MKCustomUIModule/Cell/NormalCell (= 1.0.16)
-  - MKCustomUIModule/Cell/LoRaCell (1.0.16):
+    - MKCustomUIModule/Cell/LoRaCell (= 1.0.17)
+    - MKCustomUIModule/Cell/NormalCell (= 1.0.17)
+  - MKCustomUIModule/Cell/LoRaCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Cell/LoRaCell/MKAdvancedSettingCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKFilterDataCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKFilterRawAdvDataCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKLoraDeviceTypeCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKLoRaSettingCHCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKMeasureTxPowerCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKMixedChoiceCell (= 1.0.16)
-    - MKCustomUIModule/Cell/LoRaCell/MKRawAdvDataOperationCell (= 1.0.16)
-  - MKCustomUIModule/Cell/LoRaCell/MKAdvancedSettingCell (1.0.16):
+    - MKCustomUIModule/Cell/LoRaCell/MKAdvancedSettingCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKFilterDataCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKFilterRawAdvDataCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKLoraDeviceTypeCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKLoRaSettingCHCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKMeasureTxPowerCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKMixedChoiceCell (= 1.0.17)
+    - MKCustomUIModule/Cell/LoRaCell/MKRawAdvDataOperationCell (= 1.0.17)
+  - MKCustomUIModule/Cell/LoRaCell/MKAdvancedSettingCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Cell/LoRaCell/MKFilterDataCell (1.0.16):
-    - CircleProgressBar
-    - Masonry
-    - MBProgressHUD
-    - MJRefresh
-    - MKBaseModuleLibrary
-    - MKCustomUIModule/View/MKTextField
-  - MKCustomUIModule/Cell/LoRaCell/MKFilterRawAdvDataCell (1.0.16):
+  - MKCustomUIModule/Cell/LoRaCell/MKFilterDataCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
     - MKCustomUIModule/View/MKTextField
-  - MKCustomUIModule/Cell/LoRaCell/MKLoraDeviceTypeCell (1.0.16):
+  - MKCustomUIModule/Cell/LoRaCell/MKFilterRawAdvDataCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Cell/LoRaCell/MKLoRaSettingCHCell (1.0.16):
+    - MKCustomUIModule/View/MKTextField
+  - MKCustomUIModule/Cell/LoRaCell/MKLoraDeviceTypeCell (1.0.17):
+    - CircleProgressBar
+    - Masonry
+    - MBProgressHUD
+    - MJRefresh
+    - MKBaseModuleLibrary
+  - MKCustomUIModule/Cell/LoRaCell/MKLoRaSettingCHCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
     - MKCustomUIModule/View/MKPickerView
-  - MKCustomUIModule/Cell/LoRaCell/MKMeasureTxPowerCell (1.0.16):
+  - MKCustomUIModule/Cell/LoRaCell/MKMeasureTxPowerCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
@@ -124,30 +124,30 @@ PODS:
     - MKBaseModuleLibrary
     - MKCustomUIModule/UIAdopter
     - MKCustomUIModule/View/MKSlider
-  - MKCustomUIModule/Cell/LoRaCell/MKMixedChoiceCell (1.0.16):
+  - MKCustomUIModule/Cell/LoRaCell/MKMixedChoiceCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Cell/LoRaCell/MKRawAdvDataOperationCell (1.0.16):
+  - MKCustomUIModule/Cell/LoRaCell/MKRawAdvDataOperationCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Cell/NormalCell (1.0.16):
+  - MKCustomUIModule/Cell/NormalCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Cell/NormalCell/MKNormalSliderCell (= 1.0.16)
-    - MKCustomUIModule/Cell/NormalCell/MKNormalTextCell (= 1.0.16)
-    - MKCustomUIModule/Cell/NormalCell/MKTextButtonCell (= 1.0.16)
-    - MKCustomUIModule/Cell/NormalCell/MKTextFieldCell (= 1.0.16)
-    - MKCustomUIModule/Cell/NormalCell/MKTextSwitchCell (= 1.0.16)
-  - MKCustomUIModule/Cell/NormalCell/MKNormalSliderCell (1.0.16):
+    - MKCustomUIModule/Cell/NormalCell/MKNormalSliderCell (= 1.0.17)
+    - MKCustomUIModule/Cell/NormalCell/MKNormalTextCell (= 1.0.17)
+    - MKCustomUIModule/Cell/NormalCell/MKTextButtonCell (= 1.0.17)
+    - MKCustomUIModule/Cell/NormalCell/MKTextFieldCell (= 1.0.17)
+    - MKCustomUIModule/Cell/NormalCell/MKTextSwitchCell (= 1.0.17)
+  - MKCustomUIModule/Cell/NormalCell/MKNormalSliderCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
@@ -155,132 +155,132 @@ PODS:
     - MKBaseModuleLibrary
     - MKCustomUIModule/UIAdopter
     - MKCustomUIModule/View/MKSlider
-  - MKCustomUIModule/Cell/NormalCell/MKNormalTextCell (1.0.16):
+  - MKCustomUIModule/Cell/NormalCell/MKNormalTextCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Cell/NormalCell/MKTextButtonCell (1.0.16):
+  - MKCustomUIModule/Cell/NormalCell/MKTextButtonCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
     - MKCustomUIModule/View/MKPickerView
-  - MKCustomUIModule/Cell/NormalCell/MKTextFieldCell (1.0.16):
+  - MKCustomUIModule/Cell/NormalCell/MKTextFieldCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
     - MKCustomUIModule/View/MKTextField
-  - MKCustomUIModule/Cell/NormalCell/MKTextSwitchCell (1.0.16):
+  - MKCustomUIModule/Cell/NormalCell/MKTextSwitchCell (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Controller (1.0.16):
+  - MKCustomUIModule/Controller (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Controller/MKTrackerAboutPage (= 1.0.16)
-    - MKCustomUIModule/Controller/MKTrackerLogPage (= 1.0.16)
-  - MKCustomUIModule/Controller/MKTrackerAboutPage (1.0.16):
+    - MKCustomUIModule/Controller/MKTrackerAboutPage (= 1.0.17)
+    - MKCustomUIModule/Controller/MKTrackerLogPage (= 1.0.17)
+  - MKCustomUIModule/Controller/MKTrackerAboutPage (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Controller/MKTrackerAboutPage/Controller (= 1.0.16)
-  - MKCustomUIModule/Controller/MKTrackerAboutPage/Controller (1.0.16):
+    - MKCustomUIModule/Controller/MKTrackerAboutPage/Controller (= 1.0.17)
+  - MKCustomUIModule/Controller/MKTrackerAboutPage/Controller (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/Controller/MKTrackerLogPage (1.0.16):
+  - MKCustomUIModule/Controller/MKTrackerLogPage (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/Controller/MKTrackerLogPage/Controller (= 1.0.16)
-  - MKCustomUIModule/Controller/MKTrackerLogPage/Controller (1.0.16):
+    - MKCustomUIModule/Controller/MKTrackerLogPage/Controller (= 1.0.17)
+  - MKCustomUIModule/Controller/MKTrackerLogPage/Controller (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/UIAdopter (1.0.16):
+  - MKCustomUIModule/UIAdopter (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View (1.0.16):
+  - MKCustomUIModule/View (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-    - MKCustomUIModule/View/HaveRefreshView (= 1.0.16)
-    - MKCustomUIModule/View/MKHexKeyBoard (= 1.0.16)
-    - MKCustomUIModule/View/MKHudManager (= 1.0.16)
-    - MKCustomUIModule/View/MKPageControl (= 1.0.16)
-    - MKCustomUIModule/View/MKPickerView (= 1.0.16)
-    - MKCustomUIModule/View/MKProgressView (= 1.0.16)
-    - MKCustomUIModule/View/MKSearchButton (= 1.0.16)
-    - MKCustomUIModule/View/MKSearchConditionsView (= 1.0.16)
-    - MKCustomUIModule/View/MKSlider (= 1.0.16)
-    - MKCustomUIModule/View/MKTextField (= 1.0.16)
-  - MKCustomUIModule/View/HaveRefreshView (1.0.16):
+    - MKCustomUIModule/View/HaveRefreshView (= 1.0.17)
+    - MKCustomUIModule/View/MKHexKeyBoard (= 1.0.17)
+    - MKCustomUIModule/View/MKHudManager (= 1.0.17)
+    - MKCustomUIModule/View/MKPageControl (= 1.0.17)
+    - MKCustomUIModule/View/MKPickerView (= 1.0.17)
+    - MKCustomUIModule/View/MKProgressView (= 1.0.17)
+    - MKCustomUIModule/View/MKSearchButton (= 1.0.17)
+    - MKCustomUIModule/View/MKSearchConditionsView (= 1.0.17)
+    - MKCustomUIModule/View/MKSlider (= 1.0.17)
+    - MKCustomUIModule/View/MKTextField (= 1.0.17)
+  - MKCustomUIModule/View/HaveRefreshView (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKHexKeyBoard (1.0.16):
+  - MKCustomUIModule/View/MKHexKeyBoard (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKHudManager (1.0.16):
+  - MKCustomUIModule/View/MKHudManager (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKPageControl (1.0.16):
+  - MKCustomUIModule/View/MKPageControl (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKPickerView (1.0.16):
+  - MKCustomUIModule/View/MKPickerView (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
     - MKCustomUIModule/UIAdopter
-  - MKCustomUIModule/View/MKProgressView (1.0.16):
+  - MKCustomUIModule/View/MKProgressView (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKSearchButton (1.0.16):
+  - MKCustomUIModule/View/MKSearchButton (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKSearchConditionsView (1.0.16):
+  - MKCustomUIModule/View/MKSearchConditionsView (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
@@ -288,13 +288,13 @@ PODS:
     - MKBaseModuleLibrary
     - MKCustomUIModule/UIAdopter
     - MKCustomUIModule/View/MKSlider
-  - MKCustomUIModule/View/MKSlider (1.0.16):
+  - MKCustomUIModule/View/MKSlider (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKCustomUIModule/View/MKTextField (1.0.16):
+  - MKCustomUIModule/View/MKTextField (1.0.17):
     - CircleProgressBar
     - Masonry
     - MBProgressHUD
@@ -308,12 +308,744 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ApplicationModule (= 1.0.0)
+    - MKLoRaWAN-B/CTMediator (= 1.0.0)
+    - MKLoRaWAN-B/DatabaseManager (= 1.0.0)
+    - MKLoRaWAN-B/Functions (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB (= 1.0.0)
+    - MKLoRaWAN-B/Target (= 1.0.0)
     - MLInputDodger
-    - WMZTags
+  - MKLoRaWAN-B/ApplicationModule (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKLoRaWAN-B/CTMediator (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKLoRaWAN-B/DatabaseManager (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/AdvertiserPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/DevicePage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/FilterCondition (= 1.0.0)
+    - MKLoRaWAN-B/Functions/FilterOptions (= 1.0.0)
+    - MKLoRaWAN-B/Functions/LoRaPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/LoRaSettingPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/MulticastGroup (= 1.0.0)
+    - MKLoRaWAN-B/Functions/NetworkCheck (= 1.0.0)
+    - MKLoRaWAN-B/Functions/PayloadPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/ScannerPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/ScanPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/SettingPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/SynDataPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/TabBarPage (= 1.0.0)
+    - MKLoRaWAN-B/Functions/UpdatePage (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/AdvertiserPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/AdvertiserPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/AdvertiserPage/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/AdvertiserPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/DevicePage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/DevicePage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/DevicePage/Model (= 1.0.0)
+    - MKLoRaWAN-B/Functions/DevicePage/View (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/DevicePage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/DevicePage/Model
+    - MKLoRaWAN-B/Functions/DevicePage/View
+    - MKLoRaWAN-B/Functions/UpdatePage/Controller
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/DevicePage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/DevicePage/View (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterCondition (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/FilterCondition/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/FilterCondition/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterCondition/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/FilterCondition/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterCondition/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterOptions (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/FilterOptions/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/FilterOptions/Model (= 1.0.0)
+    - MKLoRaWAN-B/Functions/FilterOptions/View (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterOptions/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/FilterCondition/Controller
+    - MKLoRaWAN-B/Functions/FilterOptions/Model
+    - MKLoRaWAN-B/Functions/FilterOptions/View
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterOptions/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/FilterOptions/View (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/LoRaPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/LoRaPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/LoRaPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/LoRaPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/LoRaPage/Model
+    - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller
+    - MKLoRaWAN-B/Functions/MulticastGroup/Controller
+    - MKLoRaWAN-B/Functions/NetworkCheck/Controller
+    - MKLoRaWAN-B/Functions/PayloadPage/Controller
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/LoRaPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/LoRaSettingPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/LoRaSettingPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/LoRaSettingPage/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/LoRaSettingPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/MulticastGroup (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/MulticastGroup/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/MulticastGroup/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/MulticastGroup/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/MulticastGroup/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/MulticastGroup/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/NetworkCheck (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/NetworkCheck/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/NetworkCheck/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/NetworkCheck/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/NetworkCheck/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/NetworkCheck/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/PayloadPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/PayloadPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/PayloadPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/PayloadPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/PayloadPage/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/PayloadPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScannerPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/ScannerPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/ScannerPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/Functions/ScannerPage/View (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScannerPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/FilterOptions/Controller
+    - MKLoRaWAN-B/Functions/ScannerPage/Model
+    - MKLoRaWAN-B/Functions/ScannerPage/View
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScannerPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScannerPage/View (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScanPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/ScanPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/ScanPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/Functions/ScanPage/View (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScanPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/ScanPage/Model
+    - MKLoRaWAN-B/Functions/ScanPage/View
+    - MKLoRaWAN-B/Functions/TabBarPage/Controller
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScanPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/ScanPage/View (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/ScanPage/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SettingPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/SettingPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/SettingPage/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SettingPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/AdvertiserPage/Controller
+    - MKLoRaWAN-B/Functions/SettingPage/Model
+    - MKLoRaWAN-B/Functions/SynDataPage/Controller
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SettingPage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SynDataPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/SynDataPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/SynDataPage/Parser (= 1.0.0)
+    - MKLoRaWAN-B/Functions/SynDataPage/View (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SynDataPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/SynDataPage/Parser
+    - MKLoRaWAN-B/Functions/SynDataPage/View
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SynDataPage/Parser (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/SynDataPage/View (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/TabBarPage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/TabBarPage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/TabBarPage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/DevicePage/Controller
+    - MKLoRaWAN-B/Functions/LoRaPage/Controller
+    - MKLoRaWAN-B/Functions/ScannerPage/Controller
+    - MKLoRaWAN-B/Functions/SettingPage/Controller
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/UpdatePage (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/UpdatePage/Controller (= 1.0.0)
+    - MKLoRaWAN-B/Functions/UpdatePage/Model (= 1.0.0)
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/UpdatePage/Controller (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/Functions/UpdatePage/Model
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/UpdatePage/Model (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK-LB
+    - MLInputDodger
+  - MKLoRaWAN-B/SDK-LB (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MLInputDodger
+  - MKLoRaWAN-B/Target (1.0.0):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/Functions
+    - MLInputDodger
   - MLInputDodger (1.5.2)
   - Toast (4.0.0)
-  - WMZTags (1.0.0):
-    - Masonry
   - ZIPFoundation (0.9.9)
 
 DEPENDENCIES:
@@ -334,7 +1066,6 @@ SPEC REPOS:
     - MKCustomUIModule
     - MLInputDodger
     - Toast
-    - WMZTags
     - ZIPFoundation
 
 EXTERNAL SOURCES:
@@ -352,11 +1083,10 @@ SPEC CHECKSUMS:
   MJRefresh: 6afc955813966afb08305477dd7a0d9ad5e79a16
   MKBaseBleModule: ab876657390779fcf62de2ce0494698fa7438b17
   MKBaseModuleLibrary: 7fb73829fe9bef794deeb4484ec80256c03a95e6
-  MKCustomUIModule: c6231bb479258e07a14fd2c3401521485fadd2a9
-  MKLoRaWAN-B: 9e1cb13389db1f611fffe49a5bf8a2ade5a99e93
+  MKCustomUIModule: 2b9fda55300ba251a782501807a13e963d2ecf66
+  MKLoRaWAN-B: fad421cafd7d88cd80adc80038af2d769a6eec11
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  WMZTags: d70f2909f34a351fdce112ec51f242bf2d3c80fb
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef
 
 PODFILE CHECKSUM: 885179aa5df80de061dc18c8736f50de8db202ed

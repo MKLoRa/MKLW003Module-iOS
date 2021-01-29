@@ -51,9 +51,8 @@
 
 - (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        NSString *checkMsg = [self checkParams];
-        if (ValidStr(checkMsg)) {
-            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+        if (![self checkParams]) {
+            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
             return;
         }
         if (![self configMulticastStatus]) {
@@ -191,20 +190,20 @@
     })
 }
 
-- (NSString *)checkParams {
+- (BOOL)checkParams {
     if (!self.isOn) {
-        return @"";
+        return YES;
     }
     if (!ValidStr(self.mcAddr) || self.mcAddr.length != 8) {
-        return @"McAddr must be 8 bits long";
+        return NO;
     }
     if (!ValidStr(self.mcAppSkey) || self.mcAppSkey.length != 32) {
-        return @"McAppSkey must be 32 bits long";
+        return NO;
     }
     if (!ValidStr(self.mcNwkSkey) || self.mcNwkSkey.length != 32) {
-        return @"McNwkSkey must be 32 bits long";
+        return NO;
     }
-    return @"";
+    return YES;
 }
 
 #pragma mark - getter

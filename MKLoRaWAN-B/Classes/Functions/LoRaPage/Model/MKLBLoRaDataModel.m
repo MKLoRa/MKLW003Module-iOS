@@ -59,9 +59,8 @@
 
 - (void)configWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        NSString *paramsMsg = [self checkParams];
-        if (ValidStr(paramsMsg)) {
-            [self operationFailedBlockWithMsg:paramsMsg block:failedBlock];
+        if (![self checkParams]) {
+            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
             return;
         }
         if (![self configDevTimeSyncInterval]) {
@@ -192,14 +191,14 @@
     })
 }
 
-- (NSString *)checkParams {
+- (BOOL)checkParams {
     if (!ValidStr(self.syncInterval)) {
-        return @"Params cannot be empty";
+        return NO;
     }
     if ([self.syncInterval integerValue] < 0 || [self.syncInterval integerValue] > 240) {
-        return @"Time sync interval must be 0 ~ 240";
+        return NO;
     }
-    return @"";
+    return YES;
 }
 
 - (NSDictionary *)RegionDic {

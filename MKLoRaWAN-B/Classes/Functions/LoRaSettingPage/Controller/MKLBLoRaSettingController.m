@@ -444,6 +444,7 @@ MKLoRaSettingCHCellDelegate>
     //DR
     MKTextButtonCellModel *drModel = self.optionsList4[0];
     drModel.dataList = [self.dataModel DRValueList];
+    drModel.buttonEnable = !self.dataModel.adrIsOn;
     drModel.dataListIndex = self.dataModel.DR;
     //UplinkDellTime
     MKTextButtonCellModel *dellTimeModel = self.optionsList5[0];
@@ -635,6 +636,7 @@ MKLoRaSettingCHCellDelegate>
     drModel.msg = @"DR";
     drModel.dataList = [self.dataModel DRValueList];
     drModel.dataListIndex = self.dataModel.DR;
+    drModel.buttonEnable = !self.dataModel.adrIsOn;
     drModel.index = 4;
     drModel.noteMsg = @"*DR only can be changed after the ADR off.";
     drModel.noteMsgColor = RGBCOLOR(102, 102, 102);

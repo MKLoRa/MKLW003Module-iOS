@@ -123,9 +123,8 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        NSString *checkMsg = [self checkParams];
-        if (ValidStr(checkMsg)) {
-            [self operationFailedBlockWithMsg:checkMsg block:failedBlock];
+        if (![self checkParams]) {
+            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
             return;
         }
         if (![self configModem]) {
@@ -697,41 +696,41 @@
     })
 }
 
-- (NSString *)checkParams {
+- (BOOL)checkParams {
     //0:ABP,1:OTAA
     if (self.modem != 1 && self.modem != 2) {
-        return @"Modem error";
+        return NO;
     }
     if (!ValidStr(self.devEUI) || self.devEUI.length != 16) {
-        return @"devEUI must be 16 bits long";
+        return NO;
     }
     if (!ValidStr(self.appEUI) || self.appEUI.length != 16) {
-        return @"appEUI must be 16 bits long";
+        return NO;
     }
     if (self.modem == 1) {
         //ABP
         if (!ValidStr(self.devAddr) || self.devAddr.length != 8) {
-            return @"devAddr must be 8 bits long";
+            return NO;
         }
         if (!ValidStr(self.nwkSKey) || self.nwkSKey.length != 32) {
-            return @"nwkSKey must be 32 bits long";
+            return NO;
         }
         if (!ValidStr(self.appSKey) || self.appSKey.length != 32) {
-            return @"appSKey must be 32 bits long";
+            return NO;
         }
     }else {
         //OTAA
         if (!ValidStr(self.appKey) || self.appKey.length != 32) {
-            return @"appKey must be 32 bits long";
+            return NO;
         }
     }
     if (self.region < 0 || self.region > 9) {
-        return @"Region error";
+        return NO;
     }
     if (self.messageType != 0 && self.messageType != 1) {
-        return @"message type error";
+        return NO;
     }
-    return @"";
+    return YES;
 }
 
 - (NSDictionary *)RegionDic {
