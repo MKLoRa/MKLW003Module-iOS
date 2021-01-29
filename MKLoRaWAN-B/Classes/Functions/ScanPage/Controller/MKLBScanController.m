@@ -128,8 +128,8 @@ MKLBTabBarControllerDelegate>
 
 - (void)rightButtonMethod {
     MKLBAboutPageModel *model = [[MKLBAboutPageModel alloc] init];
-    model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_about_logo.png");
-    model.appName = @"MokoTracker+";
+    model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_aboutIcon.png");
+    model.appName = @"LW003";
     model.appVersion = @"1.0.0";
     MKTrackerAboutController *vc = [[MKTrackerAboutController alloc] initWithProtocol:model];
     [self.navigationController pushViewController:vc animated:YES];
