@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'MKLoRaWAN-B'
   s.version          = '1.0.0'
-  s.summary          = 'A short description of MKLoRaWAN-B.'
+  s.summary          = 'MOKO LW003.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,11 +21,11 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/aadyx2007@163.com/MKLoRaWAN-B'
+  s.homepage         = 'https://github.com/MKLoRa/MKLW003Module-iOS'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'aadyx2007@163.com' => 'aadyx2007@163.com' }
-  s.source           = { :git => 'https://github.com/aadyx2007@163.com/MKLoRaWAN-B.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/MKLoRa/MKLW003Module-iOS.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
