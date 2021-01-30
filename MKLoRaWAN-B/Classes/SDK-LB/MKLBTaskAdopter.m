@@ -111,6 +111,15 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
             @"state":[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, content.length)],
         };
         operationID = mk_lb_taskReadDefaultPowerStatusOperation;
+    }else if ([cmd isEqualToString:@"06"]) {
+        //读取防拆灵敏度
+        BOOL isOn = [[content substringWithRange:NSMakeRange(0, 2)] isEqualToString:@"01"];
+        NSString *value = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 2)];
+        resultDic = @{
+            @"isOn":@(isOn),
+            @"value":value,
+        };
+        operationID = mk_lb_taskReadTriggerSensitivityOperation;
     }else if ([cmd isEqualToString:@"07"]) {
         //读取iBeacon数据上报间隔
         resultDic = @{
@@ -633,6 +642,9 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
     }else if ([cmd isEqualToString:@"05"]) {
         //设置设备默认上电状态
         operationID = mk_lb_taskConfigDefaultPowerStatusOperation;
+    }else if ([cmd isEqualToString:@"06"]) {
+        //设置灵敏度
+        operationID = mk_lb_taskConfigTriggerSensitivityOperation;
     }else if ([cmd isEqualToString:@"07"]) {
         //设置iBeacon数据上报间隔
         operationID = mk_lb_taskConfigBeaconReportIntervalOperation;

@@ -165,7 +165,7 @@ MKTextFieldCellDelegate>
 - (void)loadSection0Datas {
     [self.section0List removeAllObjects];
     MKTextSwitchCellModel *checkModel = [[MKTextSwitchCellModel alloc] init];
-    checkModel.msg = @"Networkcheck";
+    checkModel.msg = @"Network Check";
     checkModel.index = 0;
     checkModel.isOn = self.dataModel.checkStatus;
     [self.section0List addObject:checkModel];

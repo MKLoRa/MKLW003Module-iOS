@@ -98,6 +98,25 @@
                    failedBlock:failedBlock];
 }
 
++ (void)lb_configTriggerSensitivity:(BOOL)isOn
+                        sensitivity:(NSInteger)sensitivity
+                           sucBlock:(void (^)(void))sucBlock
+                        failedBlock:(void (^)(NSError *error))failedBlock {
+    if (isOn && (sensitivity < 1 || sensitivity > 255)) {
+        [self operationParamsErrorBlock:failedBlock];
+        return;
+    }
+    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)sensitivity];
+    if (value.length == 1) {
+        value = [@"0" stringByAppendingString:value];
+    }
+    NSString *commandString = [NSString stringWithFormat:@"ed010602%@%@",isOn ? @"01" : @"00",value];
+    [self configDataWithTaskID:mk_lb_taskConfigTriggerSensitivityOperation
+                          data:commandString
+                      sucBlock:sucBlock
+                   failedBlock:failedBlock];
+}
+
 + (void)lb_configBeaconReportInterval:(NSInteger)interval
                              sucBlock:(void (^)(void))sucBlock
                           failedBlock:(void (^)(NSError *error))failedBlock {

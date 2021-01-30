@@ -42,6 +42,7 @@
 #import "MKLBOverLimitRssiCell.h"
 #import "MKLBSettingController.h"
 #import "MKLBSettingDataModel.h"
+#import "MKLBTriggerSensitivityView.h"
 #import "MKLBSynDataController.h"
 #import "MKLBSynDataParser.h"
 #import "MKLBSynDataCell.h"

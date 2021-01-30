@@ -84,6 +84,14 @@
                  failedBlock:failedBlock];
 }
 
++ (void)lb_readTriggerSensitivityWithSucBlock:(void (^)(id returnData))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock {
+    [self readDataWithTaskID:mk_lb_taskReadTriggerSensitivityOperation
+                     cmdFlag:@"06"
+                    sucBlock:sucBlock
+                 failedBlock:failedBlock];
+}
+
 + (void)lb_readBeaconReportIntervalWithSucBlock:(void (^)(id returnData))sucBlock
                                     failedBlock:(void (^)(NSError *error))failedBlock {
     [self readDataWithTaskID:mk_lb_taskReadBeaconReportIntervalOperation

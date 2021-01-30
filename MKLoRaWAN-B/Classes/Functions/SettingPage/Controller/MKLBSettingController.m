@@ -15,6 +15,7 @@
 #import "MKMacroDefines.h"
 #import "MKBaseTableView.h"
 #import "UIView+MKAdd.h"
+#import "UITableView+MKAdd.h"
 
 #import "MKHudManager.h"
 #import "MKNormalTextCell.h"
@@ -23,6 +24,8 @@
 #import "MKLBInterface+MKLBConfig.h"
 
 #import "MKLBSettingDataModel.h"
+
+#import "MKLBTriggerSensitivityView.h"
 
 #import "MKLBAdvertiserController.h"
 #import "MKLBSynDataController.h"
@@ -106,6 +109,11 @@ MKTextButtonCellDelegate>
     if (indexPath.section == 0 && indexPath.row == 2) {
         MKLBSynDataController *vc = [[MKLBSynDataController alloc] init];
         [self.navigationController pushViewController:vc animated:YES];
+        return;
+    }
+    if (indexPath.section == 0 && indexPath.row == 3) {
+        //灵敏度
+        [self showTriggerSensitivityView];
         return;
     }
 }
@@ -238,6 +246,36 @@ MKTextButtonCellDelegate>
     }];
 }
 
+#pragma mark - 配置防拆灵敏度
+- (void)showTriggerSensitivityView {
+    MKLBTriggerSensitivityView *view = [[MKLBTriggerSensitivityView alloc] init];
+    [view showViewWithValue:self.dataModel.sensitivity completeBlock:^(NSInteger resultValue) {
+        [self configTriggerSensitivityView:resultValue];
+    }];
+}
+
+- (void)configTriggerSensitivityView:(NSInteger)sensitivity {
+    [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
+    [MKLBInterface lb_configTriggerSensitivity:(sensitivity > 0) sensitivity:sensitivity sucBlock:^{
+        [[MKHudManager share] hide];
+        
+        self.dataModel.sensitivity = sensitivity;
+        
+        MKNormalTextCellModel *tamperModel = self.section0List[3];
+        if (self.dataModel.sensitivity == 0) {
+            tamperModel.rightMsg = @"off";
+        }else {
+            tamperModel.rightMsg = [NSString stringWithFormat:@"%ld",(long)self.dataModel.sensitivity];
+        }
+        
+        [self.tableView mk_reloadRow:3 inSection:0 withRowAnimation:UITableViewRowAnimationNone];
+        
+    } failedBlock:^(NSError * _Nonnull error) {
+        [[MKHudManager share] hide];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+    }];
+}
+
 #pragma mark - interface
 - (void)readDataFromDevice {
     [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
@@ -262,6 +300,13 @@ MKTextButtonCellDelegate>
         buttonIndex = 0;
     }else {
         buttonIndex = 2;
+    }
+    
+    MKNormalTextCellModel *tamperModel = self.section0List[3];
+    if (self.dataModel.sensitivity == 0) {
+        tamperModel.rightMsg = @"off";
+    }else {
+        tamperModel.rightMsg = [NSString stringWithFormat:@"%ld",(long)self.dataModel.sensitivity];
     }
     
     MKTextButtonCellModel *cellModel = self.section1List[0];
@@ -290,7 +335,7 @@ MKTextButtonCellDelegate>
     [self.section0List addObject:cellModel2];
     
     MKNormalTextCellModel *cellModel3 = [[MKNormalTextCellModel alloc] init];
-    cellModel3.leftMsg = @"Local Data";
+    cellModel3.leftMsg = @"Local Data Sync";
     cellModel3.showRightIcon = YES;
     [self.section0List addObject:cellModel3];
     

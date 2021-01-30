@@ -1,9 +1,9 @@
 {
   "name": "MKLoRaWAN-B",
-  "version": "1.0.0",
-  "summary": "A short description of MKLoRaWAN-B.",
+  "version": "0.0.2",
+  "summary": "MOKO LW003.",
   "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/aadyx2007@163.com/MKLoRaWAN-B",
+  "homepage": "https://github.com/MKLoRa/MKLW003Module-iOS",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,8 +12,8 @@
     "aadyx2007@163.com": "aadyx2007@163.com"
   },
   "source": {
-    "git": "https://github.com/aadyx2007@163.com/MKLoRaWAN-B.git",
-    "tag": "1.0.0"
+    "git": "https://github.com/MKLoRa/MKLW003Module-iOS.git",
+    "tag": "0.0.2"
   },
   "platforms": {
     "ios": "12.0"
@@ -354,6 +354,9 @@
                 "MKLoRaWAN-B/Functions/SettingPage/Model": [
 
                 ],
+                "MKLoRaWAN-B/Functions/SettingPage/View": [
+
+                ],
                 "MKLoRaWAN-B/Functions/AdvertiserPage/Controller": [
 
                 ],
@@ -365,6 +368,10 @@
             {
               "name": "Model",
               "source_files": "MKLoRaWAN-B/Classes/Functions/SettingPage/Model/**"
+            },
+            {
+              "name": "View",
+              "source_files": "MKLoRaWAN-B/Classes/Functions/SettingPage/View/**"
             }
           ]
         },

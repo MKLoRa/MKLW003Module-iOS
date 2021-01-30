@@ -72,6 +72,12 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRulesType) {
 + (void)lb_readDefaultPowerStatusWithSucBlock:(void (^)(id returnData))sucBlock
                                   failedBlock:(void (^)(NSError *error))failedBlock;
 
+/// The larger the value, the more sensitive the device judges the movement. Trigger Sensitivity is 0, the tamper detection will be off.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_readTriggerSensitivityWithSucBlock:(void (^)(id returnData))sucBlock
+                                  failedBlock:(void (^)(NSError *error))failedBlock;
+
 /// Read iBeacon data reporting interval.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback

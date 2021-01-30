@@ -28,6 +28,10 @@
             [self operationFailedBlockWithMsg:@"Read device name error" block:failedBlock];
             return;
         }
+        if (![self readTriggerSensitivity]) {
+            [self operationFailedBlockWithMsg:@"Read Tamper Detection Error" block:failedBlock];
+            return;
+        }
         if (![self readPowerStatus]) {
             [self operationFailedBlockWithMsg:@"Read power status error" block:failedBlock];
             return;
@@ -46,6 +50,23 @@
     [MKLBInterface lb_readDeviceNameWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
         self.deviceName = returnData[@"result"][@"deviceName"];
+        dispatch_semaphore_signal(self.semaphore);
+    } failedBlock:^(NSError * _Nonnull error) {
+        dispatch_semaphore_signal(self.semaphore);
+    }];
+    dispatch_semaphore_wait(self.semaphore, DISPATCH_TIME_FOREVER);
+    return success;
+}
+
+- (BOOL)readTriggerSensitivity {
+    __block BOOL success = NO;
+    [MKLBInterface lb_readTriggerSensitivityWithSucBlock:^(id  _Nonnull returnData) {
+        success = YES;
+        if ([returnData[@"result"][@"isOn"] boolValue]) {
+            self.sensitivity = [returnData[@"result"][@"value"] integerValue];
+        }else {
+            self.sensitivity = 0;
+        }
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
         dispatch_semaphore_signal(self.semaphore);

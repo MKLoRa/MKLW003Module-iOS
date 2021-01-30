@@ -14,6 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *deviceName;
 
+/// 防拆灵敏度，0代表关闭
+@property (nonatomic, assign)NSInteger sensitivity;
+
 /// 0:Switch off
 /// 1:Switch on
 /// 2:Revert to last status

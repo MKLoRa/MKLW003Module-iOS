@@ -246,7 +246,7 @@
     self.dutyIsOn = NO;
     self.adrIsOn = NO;
     self.DR = 0;
-    self.dellTime = 0;
+    self.dellTime = 1;
 }
 
 - (NSArray <NSString *>*)CHLValueList {

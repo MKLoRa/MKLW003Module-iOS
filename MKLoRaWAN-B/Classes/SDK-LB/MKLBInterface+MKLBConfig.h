@@ -125,6 +125,16 @@ typedef NS_ENUM(NSInteger, mk_lb_defaultPowerStatus) {
                            sucBlock:(void (^)(void))sucBlock
                         failedBlock:(void (^)(NSError *error))failedBlock;
 
+/// The larger the value, the more sensitive the device judges the movement. Trigger Sensitivity is 0, the tamper detection will be off.
+/// @param isOn status of Trigger Sensitivity.
+/// @param sensitivity if isOn=YES,1~240.
+/// @param sucBlock Success callback
+/// @param failedBlock Failure callback
++ (void)lb_configTriggerSensitivity:(BOOL)isOn
+                        sensitivity:(NSInteger)sensitivity
+                           sucBlock:(void (^)(void))sucBlock
+                        failedBlock:(void (^)(NSError *error))failedBlock;
+
 /// Configure iBeacon data reporting interval.
 /// @param interval 10s ~ 65535s
 /// @param sucBlock Success callback
