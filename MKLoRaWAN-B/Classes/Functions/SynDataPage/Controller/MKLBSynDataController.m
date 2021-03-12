@@ -35,7 +35,7 @@
 
 #import "MKLBSynDataParser.h"
 
-static NSTimeInterval const parseDataInterval = 0.10;
+static NSTimeInterval const parseDataInterval = 0.04;
 
 static NSString *synIconAnimationKey = @"synIconAnimationKey";
 

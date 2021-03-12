@@ -26,9 +26,6 @@
         }
         NSInteger subLen = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(index, 2)];
         index += 2;
-        if (content.length < (index + subLen * 2 + 1)) {
-            break;
-        }
         NSString *subContent = [content substringWithRange:NSMakeRange(index, subLen * 2)];
         NSDictionary *dateDic = [self parseDateString:[subContent substringWithRange:NSMakeRange(0, 14)]];
         NSString *tempMac = [[subContent substringWithRange:NSMakeRange(14, 12)] uppercaseString];
