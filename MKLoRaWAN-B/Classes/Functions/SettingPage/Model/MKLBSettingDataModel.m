@@ -28,10 +28,10 @@
             [self operationFailedBlockWithMsg:@"Read device name error" block:failedBlock];
             return;
         }
-        if (![self readTriggerSensitivity]) {
-            [self operationFailedBlockWithMsg:@"Read Tamper Detection Error" block:failedBlock];
-            return;
-        }
+//        if (![self readTriggerSensitivity]) {
+//            [self operationFailedBlockWithMsg:@"Read Tamper Detection Error" block:failedBlock];
+//            return;
+//        }
         if (![self readPowerStatus]) {
             [self operationFailedBlockWithMsg:@"Read power status error" block:failedBlock];
             return;

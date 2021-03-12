@@ -43,6 +43,10 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
+        if (![self checkParams]) {
+            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
+            return;
+        }
         if (![self configNetworkCheckInterval]) {
             [self operationFailedBlockWithMsg:@"Config network check interval error" block:failedBlock];
             return;
@@ -93,7 +97,7 @@
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanNetworkStatusWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
-        NSInteger type = [returnData[@"status"] integerValue];
+        NSInteger type = [returnData[@"result"][@"status"] integerValue];
         if (type == 0) {
             self.networkStatus = @"Disconnected";
         }else if (type == 1) {
@@ -117,6 +121,13 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
+}
+
+- (BOOL)checkParams {
+    if (self.checkStatus && !ValidStr(self.checkInterval)) {
+        return NO;
+    }
+    return YES;
 }
 
 #pragma mark - getter

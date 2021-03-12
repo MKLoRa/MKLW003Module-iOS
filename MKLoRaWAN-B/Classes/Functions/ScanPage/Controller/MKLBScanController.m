@@ -103,6 +103,9 @@ MKLBTabBarControllerDelegate>
 
 @property (nonatomic, strong)MKLBConnectModel *connectModel;
 
+/// 保存当前密码输入框ascii字符部分
+@property (nonatomic, copy)NSString *asciiText;
+
 @end
 
 @implementation MKLBScanController
@@ -181,8 +184,8 @@ MKLBTabBarControllerDelegate>
 }
 
 #pragma mark - mk_lb_centralManagerScanDelegate
-- (void)mk_lb_receiveDevice:(NSDictionary *)trackerModel {
-    MKLBScanPageModel *model = [MKLBScanPageModel mk_modelWithJSON:trackerModel];
+- (void)mk_lb_receiveDevice:(NSDictionary *)deviceModel {
+    MKLBScanPageModel *model = [MKLBScanPageModel mk_modelWithJSON:deviceModel];
     [self updateDataWithTrackerModel:model];
 }
 
@@ -200,7 +203,7 @@ MKLBTabBarControllerDelegate>
 }
 
 #pragma mark - MKLBTabBarControllerDelegate
-- (void)mk_needResetScanDelegate:(BOOL)need {
+- (void)mk_lb_needResetScanDelegate:(BOOL)need {
     if (need) {
         [MKLBCentralManager shared].delegate = self;
     }
@@ -209,7 +212,7 @@ MKLBTabBarControllerDelegate>
 
 #pragma mark - event method
 - (void)refreshButtonPressed {
-    if ([MKLBCentralManager shared].centralStatus != MKCentralManagerStateEnable) {
+    if ([MKLBCentralManager shared].centralStatus != mk_lb_centralManagerStatusEnable) {
         [self.view showCentralToast:@"The current system of bluetooth is not available!"];
         return;
     }
@@ -235,7 +238,7 @@ MKLBTabBarControllerDelegate>
 #pragma mark - notice method
 
 - (void)showCentralStatus{
-    if ([MKLBCentralManager shared].centralStatus != MKCentralManagerStateEnable) {
+    if ([MKLBCentralManager shared].centralStatus != mk_lb_centralManagerStatusEnable) {
         NSString *msg = @"The current system of bluetooth is not available!";
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Dismiss"
                                                                                  message:msg
@@ -403,6 +406,7 @@ MKLBTabBarControllerDelegate>
         weakSelf.passwordField = textField;
         NSString *localPassword = [[NSUserDefaults standardUserDefaults] objectForKey:localPasswordKey];
         textField.text = localPassword;
+        weakSelf.asciiText = localPassword;
         weakSelf.passwordField.placeholder = @"The password is 8 characters.";
         [textField addTarget:self action:@selector(passwordInput) forControlEvents:UIControlEventEditingChanged];
     }];
@@ -462,12 +466,26 @@ MKLBTabBarControllerDelegate>
  监听输入的密码
  */
 - (void)passwordInput{
-    NSString *tempInputString = self.passwordField.text;
-    if (!ValidStr(tempInputString)) {
+    NSString *inputValue = self.passwordField.text;
+    if (!ValidStr(inputValue)) {
         self.passwordField.text = @"";
+        self.asciiText = @"";
         return;
     }
-    self.passwordField.text = (tempInputString.length > 8 ? [tempInputString substringToIndex:8] : tempInputString);
+    NSInteger strLen = inputValue.length;
+    NSInteger dataLen = [inputValue dataUsingEncoding:NSUTF8StringEncoding].length;
+    NSString *currentStr = self.asciiText;
+    if (dataLen == strLen) {
+        //当前输入是ascii字符
+        currentStr = inputValue;
+    }
+    if (currentStr.length > 8) {
+        self.passwordField.text = [currentStr substringToIndex:8];
+        self.asciiText = [currentStr substringToIndex:8];
+    }else {
+        self.passwordField.text = currentStr;
+        self.asciiText = currentStr;
+    }
 }
 
 #pragma mark - UI

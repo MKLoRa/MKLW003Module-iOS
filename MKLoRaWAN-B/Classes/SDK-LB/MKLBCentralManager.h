@@ -14,12 +14,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef NS_ENUM(NSInteger, mk_lb_bleCentralConnectStatus) {
-    mk_lb_bleCentralConnectStatusUnknow,                                           //未知状态
-    mk_lb_bleCentralConnectStatusConnecting,                                       //正在连接
-    mk_lb_bleCentralConnectStatusConnected,                                        //连接成功
-    mk_lb_bleCentralConnectStatusConnectedFailed,                                  //连接失败
-    mk_lb_bleCentralConnectStatusDisconnect,
+typedef NS_ENUM(NSInteger, mk_lb_centralConnectStatus) {
+    mk_lb_centralConnectStatusUnknow,                                           //未知状态
+    mk_lb_centralConnectStatusConnecting,                                       //正在连接
+    mk_lb_centralConnectStatusConnected,                                        //连接成功
+    mk_lb_centralConnectStatusConnectedFailed,                                  //连接失败
+    mk_lb_centralConnectStatusDisconnect,
+};
+
+typedef NS_ENUM(NSInteger, mk_lb_centralManagerStatus) {
+    mk_lb_centralManagerStatusUnable,                           //不可用
+    mk_lb_centralManagerStatusEnable,                           //可用状态
 };
 
 //Notification of device connection status changes.
@@ -41,7 +46,7 @@ extern NSString *const mk_lb_deviceDisconnectTypeNotification;
 
 /// Scan to new device.
 /// @param trackerModel device
-- (void)mk_lb_receiveDevice:(NSDictionary *)trackerModel;
+- (void)mk_lb_receiveDevice:(NSDictionary *)deviceModel;
 
 @optional
 
@@ -58,7 +63,7 @@ extern NSString *const mk_lb_deviceDisconnectTypeNotification;
 @property (nonatomic, weak)id <mk_lb_centralManagerScanDelegate>delegate;
 
 /// Current connection status
-@property (nonatomic, assign, readonly)mk_lb_bleCentralConnectStatus connectStatus;
+@property (nonatomic, assign, readonly)mk_lb_centralConnectStatus connectStatus;
 
 + (MKLBCentralManager *)shared;
 
@@ -74,7 +79,7 @@ extern NSString *const mk_lb_deviceDisconnectTypeNotification;
 - (nullable CBPeripheral *)peripheral;
 
 /// Current Bluetooth center status
-- (MKCentralManagerState )centralStatus;
+- (mk_lb_centralManagerStatus )centralStatus;
 
 /// Bluetooth Center starts scanning
 - (void)startScan;

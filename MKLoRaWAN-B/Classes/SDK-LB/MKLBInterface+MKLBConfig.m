@@ -444,7 +444,7 @@
 + (void)lb_configMulticastStatus:(BOOL)isOn
                         sucBlock:(void (^)(void))sucBlock
                      failedBlock:(void (^)(NSError *error))failedBlock {
-    NSString *commandString = (isOn ? @"ed012f0101" : @"ed012f0102");
+    NSString *commandString = (isOn ? @"ed012f0101" : @"ed012f0100");
     [self configDataWithTaskID:mk_lb_taskConfigMulticastStatusOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -532,7 +532,7 @@
 + (void)lb_configDutyCycleStatus:(BOOL)isOn
                         sucBlock:(void (^)(void))sucBlock
                      failedBlock:(void (^)(NSError *error))failedBlock {
-    NSString *commandString = (isOn ? @"ed01350100" : @"ed01350101");
+    NSString *commandString = (isOn ? @"ed01350101" : @"ed01350100");
     [self configDataWithTaskID:mk_lb_taskConfigDutyCycleStatusOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -615,28 +615,18 @@
                    failedBlock:failedBlock];
 }
 
-/// Configure device scan parameters.
-/// @param scanInterval 1 ~ 20,unit:5ms.
-/// @param scanWindow 1 ~ 20,unit:5ms. scanWindow <= scanInterval
-/// @param sucBlock Success callback
-/// @param failedBlock Failure callback
-+ (void)lb_configScanInterval:(NSInteger)scanInterval
-                   scanWindow:(NSInteger)scanWindow
-                     sucBlock:(void (^)(void))sucBlock
-                  failedBlock:(void (^)(NSError *error))failedBlock {
-    if (scanWindow < 1 || scanWindow > 20 || scanInterval < scanWindow || scanInterval > 20) {
++ (void)lb_configScanWindow:(NSInteger)scanWindow
+                   sucBlock:(void (^)(void))sucBlock
+                failedBlock:(void (^)(NSError *error))failedBlock {
+    if (scanWindow < 1 || scanWindow > 16) {
         [self operationParamsErrorBlock:failedBlock];
         return;
-    }
-    NSString *interValvalue = [NSString stringWithFormat:@"%1lx",(unsigned long)scanInterval];
-    if (interValvalue.length == 1) {
-        interValvalue = [@"0" stringByAppendingString:interValvalue];
     }
     NSString *windowValue = [NSString stringWithFormat:@"%1lx",(unsigned long)scanWindow];
     if (windowValue.length == 1) {
         windowValue = [@"0" stringByAppendingString:windowValue];
     }
-    NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ed015302",interValvalue,windowValue];
+    NSString *commandString = [NSString stringWithFormat:@"%@%@",@"ed015301",windowValue];
     [self configDataWithTaskID:mk_lb_taskConfigScanParamsOperation
                           data:commandString
                       sucBlock:sucBlock
@@ -908,12 +898,10 @@
                        failedBlock:failedBlock];
         return;
     }
-    if (![MKBLEBaseSDKAdopter isUUIDString:uuid]) {
+    if (![MKBLEBaseSDKAdopter checkHexCharacter:uuid] || uuid.length % 2 != 0) {
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    uuid = [uuid stringByReplacingOccurrencesOfString:@":" withString:@""];
-    uuid = [uuid stringByReplacingOccurrencesOfString:@"-" withString:@""];
     NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((uuid.length / 2) + 1)];
     if (lenString.length == 1) {
         lenString = [@"0" stringByAppendingString:lenString];

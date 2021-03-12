@@ -125,7 +125,6 @@
     __block BOOL success = NO;
     [MKLBInterface lb_readDeviceScanParamsWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
-        self.scanInterval = returnData[@"result"][@"scanInterval"];
         self.scanWindow = returnData[@"result"][@"scanWindow"];
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
@@ -137,7 +136,7 @@
 
 - (BOOL)configScanParams {
     __block BOOL success = NO;
-    [MKLBInterface lb_configScanInterval:[self.scanInterval integerValue] scanWindow:[self.scanWindow integerValue] sucBlock:^{
+    [MKLBInterface lb_configScanWindow:[self.scanWindow integerValue] sucBlock:^{
         success = YES;
         dispatch_semaphore_signal(self.semaphore);
     } failedBlock:^(NSError * _Nonnull error) {
@@ -260,13 +259,7 @@
 
 - (BOOL)checkParams {
     if (self.scanStatus) {
-        if (!ValidStr(self.scanWindow) || [self.scanWindow integerValue] < 1 || [self.scanWindow integerValue] > 20) {
-            return NO;
-        }
-        if (!ValidStr(self.scanInterval)) {
-            return NO;
-        }
-        if ([self.scanInterval integerValue] > 20 || [self.scanInterval integerValue] < [self.scanWindow integerValue]) {
+        if (!ValidStr(self.scanWindow) || [self.scanWindow integerValue] < 1 || [self.scanWindow integerValue] > 16) {
             return NO;
         }
     }

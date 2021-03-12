@@ -355,10 +355,8 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         operationID = mk_lb_taskReadScanStatusOperation;
     }else if ([cmd isEqualToString:@"53"]) {
         //读取扫描参数
-        NSString *scanInterval = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
-        NSString *scanWindow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(2, 2)];
+        NSString *scanWindow = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
         resultDic = @{
-            @"scanInterval":scanInterval,
             @"scanWindow":scanWindow,
         };
         operationID = mk_lb_taskReadScanParamsOperation;
@@ -467,20 +465,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
         NSString *uuid = @"";
         if ([rule integerValue] > 0 && content.length > 2) {
-            NSString *tempContent = [content substringWithRange:NSMakeRange(2, content.length - 2)];
-            
-            NSMutableArray *array = [NSMutableArray arrayWithObjects:[tempContent substringWithRange:NSMakeRange(0, 8)],
-                                     [tempContent substringWithRange:NSMakeRange(8, 4)],
-                                     [tempContent substringWithRange:NSMakeRange(12, 4)],
-                                     [tempContent substringWithRange:NSMakeRange(16,4)],
-                                     [tempContent substringWithRange:NSMakeRange(20, 12)], nil];
-            [array insertObject:@"-" atIndex:1];
-            [array insertObject:@"-" atIndex:3];
-            [array insertObject:@"-" atIndex:5];
-            [array insertObject:@"-" atIndex:7];
-            for (NSString *string in array) {
-                uuid = [uuid stringByAppendingString:string];
-            }
+            uuid = [content substringWithRange:NSMakeRange(2, content.length - 2)];
         }
         resultDic = @{
             @"rule":rule,
@@ -593,20 +578,7 @@ NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
         NSString *rule = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(0, 2)];
         NSString *uuid = @"";
         if ([rule integerValue] > 0 && content.length > 2) {
-            NSString *tempContent = [content substringWithRange:NSMakeRange(2, content.length - 2)];
-            
-            NSMutableArray *array = [NSMutableArray arrayWithObjects:[tempContent substringWithRange:NSMakeRange(0, 8)],
-                                     [tempContent substringWithRange:NSMakeRange(8, 4)],
-                                     [tempContent substringWithRange:NSMakeRange(12, 4)],
-                                     [tempContent substringWithRange:NSMakeRange(16,4)],
-                                     [tempContent substringWithRange:NSMakeRange(20, 12)], nil];
-            [array insertObject:@"-" atIndex:1];
-            [array insertObject:@"-" atIndex:3];
-            [array insertObject:@"-" atIndex:5];
-            [array insertObject:@"-" atIndex:7];
-            for (NSString *string in array) {
-                uuid = [uuid stringByAppendingString:string];
-            }
+            uuid = [content substringWithRange:NSMakeRange(2, content.length - 2)];
         }
         resultDic = @{
             @"rule":rule,

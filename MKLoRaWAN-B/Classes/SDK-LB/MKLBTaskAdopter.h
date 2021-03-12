@@ -14,7 +14,7 @@ extern NSString *const mk_lb_communicationDataNum;
 
 @class CBCharacteristic;
 
-@interface MKLBTaskAdopter : NSOperation
+@interface MKLBTaskAdopter : NSObject
 
 + (NSDictionary *)parseReadDataWithCharacteristic:(CBCharacteristic *)characteristic;
 

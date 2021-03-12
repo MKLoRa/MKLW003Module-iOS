@@ -196,11 +196,6 @@ MKLBOverLimitRssiCellDelegate>
 
 #pragma mark - MKTextFieldCellDelegate
 - (void)mk_deviceTextCellValueChanged:(NSInteger)index textValue:(NSString *)value {
-    if (index == 0) {
-        //scan interval
-        self.dataModel.scanInterval = value;
-        return;
-    }
     if (index == 1) {
         //scan window
         self.dataModel.scanWindow = value;
@@ -240,10 +235,7 @@ MKLBOverLimitRssiCellDelegate>
     MKTextSwitchCellModel *scanSwitchModel = self.section0List[0];
     scanSwitchModel.isOn = self.dataModel.scanStatus;
     
-    MKTextFieldCellModel *scanIntervalModel = self.section1List[0];
-    scanIntervalModel.textFieldValue = self.dataModel.scanInterval;
-    
-    MKTextFieldCellModel *scanWindowModel = self.section1List[1];
+    MKTextFieldCellModel *scanWindowModel = self.section1List[0];
     scanWindowModel.textFieldValue = self.dataModel.scanWindow;
     
     MKTextSwitchCellModel *overLimitStatusModel = self.section2List[0];
@@ -280,23 +272,13 @@ MKLBOverLimitRssiCellDelegate>
 }
 
 - (void)loadSection1Datas {
-    MKTextFieldCellModel *cellModel1 = [[MKTextFieldCellModel alloc] init];
-    cellModel1.index = 0;
-    cellModel1.msg = @"Scan Interval";
-    cellModel1.unit = @"x 5ms";
-    cellModel1.textPlaceholder = @"1~20";
-    cellModel1.maxLength = 2;
-    cellModel1.textFieldType = mk_realNumberOnly;
-    [self.section1List addObject:cellModel1];
-    
     MKTextFieldCellModel *cellModel2 = [[MKTextFieldCellModel alloc] init];
     cellModel2.index = 1;
     cellModel2.msg = @"Scan Window";
     cellModel2.unit = @"x 5ms";
-    cellModel2.textPlaceholder = @"1~20";
+    cellModel2.textPlaceholder = @"1~16";
     cellModel2.maxLength = 2;
     cellModel2.textFieldType = mk_realNumberOnly;
-    cellModel2.noteMsg = @"*Scan window tine can not be more than scan interval time. When the scan window time is equal to scan interval, BLE scan always on.";
     cellModel2.noteMsgColor = RGBCOLOR(102, 102, 102);
     [self.section1List addObject:cellModel2];
 }

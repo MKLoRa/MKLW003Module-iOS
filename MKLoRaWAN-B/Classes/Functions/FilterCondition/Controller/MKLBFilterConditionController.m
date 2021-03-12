@@ -299,7 +299,7 @@ MKFilterRawAdvDataCellDelegate>
 #pragma mark - MKRawAdvDataOperationCellDelegate
 /// +号按钮点击事件
 - (void)mk_rawAdvDataOperation_addMethod {
-    if (self.section3List.count > 5) {
+    if (self.section3List.count >= 5) {
         [self.view showCentralToast:@"You can set up to 5 filters!"];
         return;
     }
@@ -432,9 +432,9 @@ MKFilterRawAdvDataCellDelegate>
     MKFilterDataCellModel *advNameModel = [[MKFilterDataCellModel alloc] init];
     advNameModel.index = 1;
     advNameModel.msg = @"Filter by ADV Name";
-    advNameModel.textFieldPlaceholder = @"1 ~ 10 Characters";
+    advNameModel.textFieldPlaceholder = @"1 ~ 29 Characters";
     advNameModel.textFieldType = mk_normal;
-    advNameModel.maxLength = 10;
+    advNameModel.maxLength = 29;
     advNameModel.isOn = self.dataModel.advNameIson;
     advNameModel.selected = self.dataModel.advNameWhiteListIson;
     advNameModel.textFieldValue = self.dataModel.advNameValue;
@@ -443,9 +443,10 @@ MKFilterRawAdvDataCellDelegate>
     MKFilterDataCellModel *uuidModel = [[MKFilterDataCellModel alloc] init];
     uuidModel.index = 2;
     uuidModel.msg = @"Filter by iBeacon Proximity UUID";
-    uuidModel.textFieldPlaceholder = @"16 Bytes";
-    uuidModel.textFieldType = mk_uuidMode;
+    uuidModel.textFieldPlaceholder = @"1 ~ 16 Bytes";
+    uuidModel.textFieldType = mk_hexCharOnly;
     uuidModel.isOn = self.dataModel.uuidIson;
+    uuidModel.maxLength = 32;
     uuidModel.selected = self.dataModel.uuidWhiteListIson;
     uuidModel.textFieldValue = self.dataModel.uuidValue;
     [self.section1List addObject:uuidModel];

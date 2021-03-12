@@ -182,8 +182,8 @@ static CGFloat const humidityIconHeight = 22.f;
     self.macLabel.text = [@"MAC: " stringByAppendingString:(ValidStr(dataModel.macAddress) ? dataModel.macAddress : @"N/A")];
     self.timeLabel.text = dataModel.scanTime;
     self.batteryLabel.text = [NSString stringWithFormat:@"%ld%@",(long)[dataModel.batteryPercentage integerValue],@"%"];
-    self.temperatureLabel.text = [[NSString stringWithFormat:@"%ld",(long)[dataModel.temperature integerValue]] stringByAppendingString:@"°C"];
-    self.humidityLabel.text = [[NSString stringWithFormat:@"%ld",(long)[dataModel.humidity integerValue]] stringByAppendingString:@"%RH"];
+    self.temperatureLabel.text = [dataModel.temperature stringByAppendingString:@"°C"];
+    self.humidityLabel.text = [dataModel.humidity stringByAppendingString:@"%RH"];
     self.connectButton.hidden = !_dataModel.connectable;
 }
 

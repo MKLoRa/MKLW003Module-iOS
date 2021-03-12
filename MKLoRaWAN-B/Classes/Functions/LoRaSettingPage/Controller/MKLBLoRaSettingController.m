@@ -432,9 +432,9 @@ MKLoRaSettingCHCellDelegate>
     //CH
     MKLoRaSettingCHCellModel *cellModel = self.optionsList1[0];
     cellModel.chLowValueList = [self.dataModel CHLValueList];
-    cellModel.chLowIndex = self.dataModel.CHL;
+    cellModel.chLowIndex = [self getCurrentCHLIndex];
     cellModel.chHighValueList = [self.dataModel CHHValueList];
-    cellModel.chHighIndex = self.dataModel.CHH;
+    cellModel.chHighIndex = [self getCurrentCHHIndex];
     //Duty-cycle
     MKTextSwitchCellModel *dutyModel = self.optionsList2[0];
     dutyModel.isOn = self.dataModel.dutyIsOn;
@@ -607,9 +607,9 @@ MKLoRaSettingCHCellDelegate>
     cellModel.noteMsg = @"*It is only used for US915,AU915,CN470";
     cellModel.noteMsgColor = RGBCOLOR(102, 102, 102);
     cellModel.chLowValueList = [self.dataModel CHLValueList];
-    cellModel.chLowIndex = self.dataModel.CHL;
+    cellModel.chLowIndex = [self getCurrentCHLIndex];
     cellModel.chHighValueList = [self.dataModel CHHValueList];
-    cellModel.chHighIndex = self.dataModel.CHH;
+    cellModel.chHighIndex = [self getCurrentCHHIndex];
     [self.optionsList1 addObject:cellModel];
 }
 
@@ -652,6 +652,28 @@ MKLoRaSettingCHCellDelegate>
     dellTimeModel.noteMsg = @"*It is only used for AS923 and AU915.0: Dell Time no limit,1:Dell Time 400ms.";
     dellTimeModel.noteMsgColor = RGBCOLOR(102, 102, 102);
     [self.optionsList5 addObject:dellTimeModel];
+}
+
+- (NSInteger)getCurrentCHLIndex {
+    NSInteger index = 0;
+    for (NSInteger i = 0; i < self.dataModel.CHLValueList.count; i ++) {
+        if (self.dataModel.CHL == [self.dataModel.CHLValueList[i] integerValue]) {
+            index = i;
+            break;
+        }
+    }
+    return index;
+}
+
+- (NSInteger)getCurrentCHHIndex {
+    NSInteger index = 0;
+    for (NSInteger i = 0; i < self.dataModel.CHHValueList.count; i ++) {
+        if (self.dataModel.CHH == [self.dataModel.CHHValueList[i] integerValue]) {
+            index = i;
+            break;
+        }
+    }
+    return index;
 }
 
 #pragma mark - UI

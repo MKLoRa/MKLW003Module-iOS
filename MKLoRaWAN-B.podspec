@@ -48,6 +48,7 @@ TODO: Add long description of the pod here.
   
   s.subspec 'SDK-LB' do |ss|
     ss.source_files = 'MKLoRaWAN-B/Classes/SDK-LB/**'
+    ss.dependency 'MKBaseBleModule'
   end
   
   s.subspec 'Target' do |ss|

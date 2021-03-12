@@ -26,6 +26,7 @@
 
 #import "MKLBDatabaseManager.h"
 
+#import "MKLBInterface.h"
 #import "MKLBInterface+MKLBConfig.h"
 #import "MKLBCentralManager.h"
 
@@ -60,6 +61,12 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 /// 点击了返回按钮，先发送暂停命令给设备，然后2s中没有需要解析的数据了，认为可用返回了
 @property (nonatomic, assign)NSInteger backCount;
 
+/// 为65535时，最近的数据在最上面；为1时，最早的数据在最上面；
+@property (nonatomic, assign)BOOL isMaxCount;
+
+/// 为了解决数据缓存解析时间过长导致长时间不通信设备断开连接的问题，定时向设备发送命令保证通讯
+@property (nonatomic, strong)dispatch_source_t heartBitTimer;
+
 @end
 
 @implementation MKLBSynDataController
@@ -72,6 +79,9 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     }
     if (self.backTimer) {
         dispatch_cancel(self.backTimer);
+    }
+    if (self.heartBitTimer) {
+        dispatch_cancel(self.heartBitTimer);
     }
 }
 
@@ -186,8 +196,10 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     }
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     [MKLBInterface lb_readNumberOfDaysStoredData:[self.headerView.textField.text integerValue] sucBlock:^{
+        self.isMaxCount = ([self.headerView.textField.text integerValue] == 65535);
         [[MKHudManager share] hide];
         [self startButtonMethod];
+        [self addDataHeartBitTimer];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
         [self.view showCentralToast:error.userInfo[@"errorInfo"]];
@@ -308,11 +320,18 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
         [self.headerView.startButton setTitleColor:DEFAULT_TEXT_COLOR forState:UIControlStateNormal];
         
     }else {
-        //本地没有存储数据，则start、empty和export可用，sync不可用
+        //本地没有存储数据，则start、empty、sync不可用
         [self.headerView.startButton setBackgroundColor:UIColorFromRGB(0x2F84D0)];
         [self.headerView.startButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
+        
         self.headerView.synButton.enabled = NO;
         self.headerView.synButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_sync_disableIcon.png");
+        
+        self.headerView.emptyButton.enabled = NO;
+        self.headerView.emptyButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_delete_disableIcon.png");
+        
+        self.headerView.exportButton.enabled = NO;
+        self.headerView.exportButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_export_disableIcon.png");
     }
     
     [self.tableView reloadData];
@@ -360,12 +379,13 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
         self.headerView.synButton.msgLabel.text = @"STOP";
         [self addTimerForRefresh];
     }else {
-        //停止监听数据，empty、export都可用
-        self.headerView.emptyButton.enabled = YES;
-        self.headerView.emptyButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_delete_enableIcon.png");
+        //停止监听数据，本地如果有数据,empty、export都可用，如果没有则empty、export都不可用
+        BOOL enable = (self.dataList.count > 0);
+        self.headerView.emptyButton.enabled = enable;
+        self.headerView.emptyButton.topIcon.image = (enable ? LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_delete_enableIcon.png") : LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_delete_disableIcon.png"));
         
-        self.headerView.exportButton.enabled = YES;
-        self.headerView.exportButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_export_enableIcon.png");
+        self.headerView.exportButton.enabled = enable;
+        self.headerView.exportButton.topIcon.image = (enable ? LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_export_enableIcon.png") : LOADICON(@"MKLoRaWAN-B", @"MKLBSynDataController", @"lb_export_disableIcon.png"));
         
         self.headerView.synButton.msgLabel.text = @"SYNC";
         if (self.parseTimer) {
@@ -450,15 +470,44 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     NSString *firstContent = self.contentList[0];
     NSArray *tempList = [MKLBSynDataParser parseScannerTrackedData:firstContent];
     [self.contentList removeObjectAtIndex:0];
+    //业务需求最近的数据在最上面
     if (self.dataList.count == 0) {
         [self.dataList addObjectsFromArray:tempList];
     }else {
-        for (NSDictionary *dic in tempList) {
-            [self.dataList insertObject:dic atIndex:0];
+        if (self.isMaxCount) {
+            for (NSDictionary *dic in tempList) {
+                [self.dataList insertObject:dic atIndex:0];
+            }
+        }else {
+            for (NSDictionary *dic in tempList) {
+                [self.dataList addObject:dic];
+            }
         }
     }
     self.headerView.countLabel.text = [NSString stringWithFormat:@"Count: %ld",(long)self.dataList.count];
     [self.tableView reloadData];
+}
+
+#pragma mark - 心跳
+- (void)addDataHeartBitTimer {
+    self.heartBitTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,dispatch_get_global_queue(0, 0));
+    dispatch_source_set_timer(self.heartBitTimer, dispatch_time(DISPATCH_TIME_NOW, 20 * NSEC_PER_SEC),  20 * NSEC_PER_SEC, 0);
+    __weak typeof(self) weakSelf = self;
+    dispatch_source_set_event_handler(self.heartBitTimer, ^{
+        __strong typeof(self) sself = weakSelf;
+        moko_dispatch_main_safe(^{
+            [sself sendHeartBitToDevice];
+        });
+    });
+    dispatch_resume(self.heartBitTimer);
+}
+
+- (void)sendHeartBitToDevice {
+    [MKLBInterface lb_readBatteryPowerWithSucBlock:^(id  _Nonnull returnData) {
+        NSLog(@"读取成功");
+    } failedBlock:^(NSError * _Nonnull error) {
+        NSLog(@"读取失败");
+    }];
 }
 
 #pragma mark - UI

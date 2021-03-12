@@ -203,16 +203,16 @@
             [self operationFailedBlockWithMsg:@"Config ADR Error" block:failedBlock];
             return;
         }
-        if (!self.adrIsOn) {
-            if (![self configDRValue]) {
-                [self operationFailedBlockWithMsg:@"Config DR Error" block:failedBlock];
-                return;
-            }
-        }
         if (self.region == 0 || self.region == 1) {
             //AS923、AU915
             if (![self configDellTime]) {
                 [self operationFailedBlockWithMsg:@"Config Uplink Dell Time Error" block:failedBlock];
+                return;
+            }
+        }
+        if (!self.adrIsOn) {
+            if (![self configDRValue]) {
+                [self operationFailedBlockWithMsg:@"Config DR Error" block:failedBlock];
                 return;
             }
         }
@@ -244,7 +244,7 @@
         self.CHH = 1;
     }
     self.dutyIsOn = NO;
-    self.adrIsOn = NO;
+    self.adrIsOn = YES;
     self.DR = 0;
     self.dellTime = 1;
 }

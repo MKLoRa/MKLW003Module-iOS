@@ -25,9 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, copy)NSString *batteryPercentage;
 
-@property (nonatomic, strong)NSNumber *temperature;
+@property (nonatomic, copy)NSString *temperature;
 
-@property (nonatomic, strong)NSNumber *humidity;
+@property (nonatomic, copy)NSString *humidity;
 
 /// cell上面显示的时间
 @property (nonatomic, copy)NSString *scanTime;

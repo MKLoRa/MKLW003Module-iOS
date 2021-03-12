@@ -107,7 +107,7 @@
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanClassTypeWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
-        NSInteger type = [returnData[@"classType"] integerValue];
+        NSInteger type = [returnData[@"result"][@"classType"] integerValue];
         if (type == 0) {
             self.classType = @"ClassA";
         }else if (type == 1) {
@@ -127,7 +127,7 @@
     __block BOOL success = NO;
     [MKLBInterface lb_readLorawanNetworkStatusWithSucBlock:^(id  _Nonnull returnData) {
         success = YES;
-        NSInteger type = [returnData[@"status"] integerValue];
+        NSInteger type = [returnData[@"result"][@"status"] integerValue];
         if (type == 0) {
             self.networkStatus = @"Disconnected";
         }else if (type == 1) {

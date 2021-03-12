@@ -15,11 +15,11 @@
 @implementation MKLBDatabaseManager
 
 + (BOOL)initDataBase {
-    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWAN-B-DB")];
+    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWANBDB")];
     if (![db open]) {
         return NO;
     }
-    NSString *sqlCreateTable = [NSString stringWithFormat:@"create table if not exists LoRaWAN-BTable (year text,month text,day integer,hour text,minute text,second text,macAddress text,rawData text,rssi text)"];
+    NSString *sqlCreateTable = [NSString stringWithFormat:@"create table if not exists LoRaWANBTable (year text,month text,day text,hour text,minute text,second text,macAddress text,rawData text,rssi text)"];
     BOOL resCreate = [db executeUpdate:sqlCreateTable];
     if (!resCreate) {
         [db close];
@@ -35,21 +35,21 @@
         [self operationInsertFailedBlock:failedBlock];
         return ;
     }
-    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWAN-B-DB")];
+    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWANBDB")];
     if (![db open]) {
         [self operationInsertFailedBlock:failedBlock];
         return;
     }
-    NSString *sqlCreateTable = [NSString stringWithFormat:@"create table if not exists LoRaWAN-BTable (year text,month text,day integer,hour text,minute text,second text,macAddress text,rawData text,rssi text)"];
+    NSString *sqlCreateTable = [NSString stringWithFormat:@"create table if not exists LoRaWANBTable (year text,month text,day text,hour text,minute text,second text,macAddress text,rawData text,rssi text)"];
     BOOL resCreate = [db executeUpdate:sqlCreateTable];
     if (!resCreate) {
         [db close];
         [self operationInsertFailedBlock:failedBlock];
         return;
     }
-    [[FMDatabaseQueue databaseQueueWithPath:kFilePath(@"LoRaWAN-B-DB")] inDatabase:^(FMDatabase *db) {
+    [[FMDatabaseQueue databaseQueueWithPath:kFilePath(@"LoRaWANBDB")] inDatabase:^(FMDatabase *db) {
         for (NSDictionary *dic in dataList) {
-            [db executeUpdate:@"INSERT INTO LoRaWAN-BTable (year, month, day, hour, minute, second, macAddress, rawData, rssi) VALUES (?,?,?,?,?,?,?,?,?)",SafeStr(dic[@"dateDic"][@"year"]),SafeStr(dic[@"dateDic"][@"month"]),SafeStr(dic[@"dateDic"][@"day"]),SafeStr(dic[@"dateDic"][@"hour"]),SafeStr(dic[@"dateDic"][@"minute"]),SafeStr(dic[@"dateDic"][@"second"]),SafeStr(dic[@"macAddress"]),SafeStr(dic[@"rawData"]),SafeStr(dic[@"rssi"])];
+            [db executeUpdate:@"INSERT INTO LoRaWANBTable (year, month, day, hour, minute, second, macAddress, rawData, rssi) VALUES (?,?,?,?,?,?,?,?,?)",SafeStr(dic[@"dateDic"][@"year"]),SafeStr(dic[@"dateDic"][@"month"]),SafeStr(dic[@"dateDic"][@"day"]),SafeStr(dic[@"dateDic"][@"hour"]),SafeStr(dic[@"dateDic"][@"minute"]),SafeStr(dic[@"dateDic"][@"second"]),SafeStr(dic[@"macAddress"]),SafeStr(dic[@"rawData"]),SafeStr(dic[@"rssi"])];
         }
         if (sucBlock) {
             moko_dispatch_main_safe(^{
@@ -62,14 +62,14 @@
 
 + (void)readDataListWithSucBlock:(void (^)(NSArray <NSDictionary *>*dataList))sucBlock
                      failedBlock:(void (^)(NSError *error))failedBlock {
-    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWAN-B-DB")];
+    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWANBDB")];
     if (![db open]) {
         [self operationGetDataFailedBlock:failedBlock];
         return;
     }
-    [[FMDatabaseQueue databaseQueueWithPath:kFilePath(@"LoRaWAN-B-DB")] inDatabase:^(FMDatabase *db) {
+    [[FMDatabaseQueue databaseQueueWithPath:kFilePath(@"LoRaWANBDB")] inDatabase:^(FMDatabase *db) {
         NSMutableArray *tempDataList = [NSMutableArray array];
-        FMResultSet * result = [db executeQuery:@"SELECT * FROM LoRaWAN-BTable"];
+        FMResultSet * result = [db executeQuery:@"SELECT * FROM LoRaWANBTable"];
         while ([result next]) {
             NSDictionary *dateDic = @{
                                   @"year":[result stringForColumn:@"year"],
@@ -97,9 +97,9 @@
 }
 
 + (BOOL)clearDataTable {
-    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWAN-B-DB")];
+    FMDatabase* db = [FMDatabase databaseWithPath:kFilePath(@"LoRaWANBDB")];
     if ([db open]) {
-        BOOL success = [db executeUpdate:@"DELETE FROM LoRaWAN-BTable"];
+        BOOL success = [db executeUpdate:@"DELETE FROM LoRaWANBTable"];
         [db close];
         return success;
     }

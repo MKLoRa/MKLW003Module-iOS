@@ -77,8 +77,8 @@
     WS(weakSelf);
     [self dismissViewControllerAnimated:YES completion:^{
         __strong typeof(self) sself = weakSelf;
-        if ([sself.delegate respondsToSelector:@selector(mk_needResetScanDelegate:)]) {
-            [sself.delegate mk_needResetScanDelegate:NO];
+        if ([sself.delegate respondsToSelector:@selector(mk_lb_needResetScanDelegate:)]) {
+            [sself.delegate mk_lb_needResetScanDelegate:NO];
         }
     }];
 }
@@ -87,8 +87,8 @@
     WS(weakSelf);
     [self dismissViewControllerAnimated:YES completion:^{
         __strong typeof(self) sself = weakSelf;
-        if ([sself.delegate respondsToSelector:@selector(mk_needResetScanDelegate:)]) {
-            [sself.delegate mk_needResetScanDelegate:YES];
+        if ([sself.delegate respondsToSelector:@selector(mk_lb_needResetScanDelegate:)]) {
+            [sself.delegate mk_lb_needResetScanDelegate:YES];
         }
     }];
 }
@@ -108,7 +108,7 @@
         return;
     }
     if ([type isEqualToString:@"04"]) {
-        [self showAlertWithMsg:@"The device is disconnected." title:@"Dismiss"];
+        [self showAlertWithMsg:@"Factry reset successfully!Please reconnect the device." title:@"Dismiss"];
         return;
     }
 }
@@ -117,7 +117,7 @@
     if (self.disconnectType) {
         return;
     }
-    if ([MKLBCentralManager shared].centralStatus != MKCentralManagerStateEnable) {
+    if ([MKLBCentralManager shared].centralStatus != mk_lb_centralManagerStatusEnable) {
         [self showAlertWithMsg:@"The current system of bluetooth is not available!" title:@"Dismiss"];
     }
 }

@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, assign)BOOL scanStatus;
 
-@property (nonatomic, copy)NSString *scanInterval;
-
 @property (nonatomic, copy)NSString *scanWindow;
 
 @property (nonatomic, assign)BOOL overLimitStatus;

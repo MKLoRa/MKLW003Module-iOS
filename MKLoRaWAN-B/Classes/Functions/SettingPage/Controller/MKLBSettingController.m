@@ -42,14 +42,16 @@ MKTextButtonCellDelegate>
 
 @property (nonatomic, strong)MKLBSettingDataModel *dataModel;
 
-@property (nonatomic, strong)UITextField *passwordField;
-
 @property (nonatomic, strong)UITextField *passwordTextField;
 
 @property (nonatomic, strong)UITextField *confirmTextField;
 
 /// 当前present的alert
 @property (nonatomic, strong)UIAlertController *currentAlert;
+
+@property (nonatomic, copy)NSString *passwordAsciiStr;
+
+@property (nonatomic, copy)NSString *confirmAsciiStr;
 
 @end
 
@@ -191,6 +193,7 @@ MKTextButtonCellDelegate>
     [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         weakSelf.passwordTextField = nil;
         weakSelf.passwordTextField = textField;
+        weakSelf.passwordAsciiStr = @"";
         [weakSelf.passwordTextField setPlaceholder:@"Enter new password"];
         [weakSelf.passwordTextField addTarget:weakSelf
                                        action:@selector(passwordTextFieldValueChanged:)
@@ -199,6 +202,7 @@ MKTextButtonCellDelegate>
     [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         weakSelf.confirmTextField = nil;
         weakSelf.confirmTextField = textField;
+        weakSelf.confirmAsciiStr = @"";
         [weakSelf.confirmTextField setPlaceholder:@"Enter new password again"];
         [weakSelf.confirmTextField addTarget:weakSelf
                                       action:@selector(passwordTextFieldValueChanged:)
@@ -215,12 +219,44 @@ MKTextButtonCellDelegate>
 }
 
 - (void)passwordTextFieldValueChanged:(UITextField *)textField{
-    NSString *tempInputString = textField.text;
-    if (!ValidStr(tempInputString)) {
+    NSString *inputValue = textField.text;
+    if (!ValidStr(inputValue)) {
         textField.text = @"";
+        if (textField == self.passwordTextField) {
+            self.passwordAsciiStr = @"";
+        }else if (textField == self.confirmTextField) {
+            self.confirmAsciiStr = @"";
+        }
         return;
     }
-    textField.text = (tempInputString.length > 8 ? [tempInputString substringToIndex:8] : tempInputString);
+    NSInteger strLen = inputValue.length;
+    NSInteger dataLen = [inputValue dataUsingEncoding:NSUTF8StringEncoding].length;
+    
+    NSString *currentStr = @"";
+    if (textField == self.passwordTextField) {
+        currentStr = self.passwordAsciiStr;
+    }else {
+        currentStr = self.confirmAsciiStr;
+    }
+    if (dataLen == strLen) {
+        //当前输入是ascii字符
+        currentStr = inputValue;
+    }
+    if (currentStr.length > 8) {
+        textField.text = [currentStr substringToIndex:8];
+        if (textField == self.passwordTextField) {
+            self.passwordAsciiStr = [currentStr substringToIndex:8];
+        }else {
+            self.confirmAsciiStr = [currentStr substringToIndex:8];
+        }
+    }else {
+        textField.text = currentStr;
+        if (textField == self.passwordTextField) {
+            self.passwordAsciiStr = currentStr;
+        }else {
+            self.confirmAsciiStr = currentStr;
+        }
+    }
 }
 
 - (void)setPasswordToDevice{
@@ -302,12 +338,12 @@ MKTextButtonCellDelegate>
         buttonIndex = 2;
     }
     
-    MKNormalTextCellModel *tamperModel = self.section0List[3];
-    if (self.dataModel.sensitivity == 0) {
-        tamperModel.rightMsg = @"off";
-    }else {
-        tamperModel.rightMsg = [NSString stringWithFormat:@"%ld",(long)self.dataModel.sensitivity];
-    }
+//    MKNormalTextCellModel *tamperModel = self.section0List[3];
+//    if (self.dataModel.sensitivity == 0) {
+//        tamperModel.rightMsg = @"off";
+//    }else {
+//        tamperModel.rightMsg = [NSString stringWithFormat:@"%ld",(long)self.dataModel.sensitivity];
+//    }
     
     MKTextButtonCellModel *cellModel = self.section1List[0];
     cellModel.dataListIndex = buttonIndex;
@@ -339,10 +375,10 @@ MKTextButtonCellDelegate>
     cellModel3.showRightIcon = YES;
     [self.section0List addObject:cellModel3];
     
-    MKNormalTextCellModel *cellModel4 = [[MKNormalTextCellModel alloc] init];
-    cellModel4.leftMsg = @"Tamper Detection";
-    cellModel4.showRightIcon = YES;
-    [self.section0List addObject:cellModel4];
+//    MKNormalTextCellModel *cellModel4 = [[MKNormalTextCellModel alloc] init];
+//    cellModel4.leftMsg = @"Tamper Detection";
+//    cellModel4.showRightIcon = YES;
+//    [self.section0List addObject:cellModel4];
 }
 
 - (void)loadSection1Datas {

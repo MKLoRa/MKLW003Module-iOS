@@ -418,14 +418,12 @@ typedef NS_ENUM(NSInteger, mk_lb_defaultPowerStatus) {
                 failedBlock:(void (^)(NSError *error))failedBlock;
 
 /// Configure device scan parameters.
-/// @param scanInterval 1 ~ 20,unit:5ms.
-/// @param scanWindow 1 ~ 20,unit:5ms. scanWindow <= scanInterval
+/// @param scanWindow 1 ~ 16,unit:5ms.
 /// @param sucBlock Success callback
 /// @param failedBlock Failure callback
-+ (void)lb_configScanInterval:(NSInteger)scanInterval
-                   scanWindow:(NSInteger)scanWindow
-                     sucBlock:(void (^)(void))sucBlock
-                  failedBlock:(void (^)(NSError *error))failedBlock;
++ (void)lb_configScanWindow:(NSInteger)scanWindow
+                   sucBlock:(void (^)(void))sucBlock
+                failedBlock:(void (^)(NSError *error))failedBlock;
 
 #pragma mark ****************************************蓝牙过滤规则************************************************
 

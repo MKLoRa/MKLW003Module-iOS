@@ -36,7 +36,7 @@ static dispatch_once_t onceToken;
 
 @property (nonatomic, copy)void (^failedBlock)(NSError *error);
 
-@property (nonatomic, assign)mk_lb_bleCentralConnectStatus connectStatus;
+@property (nonatomic, assign)mk_lb_centralConnectStatus connectStatus;
 
 @end
 
@@ -109,13 +109,13 @@ static dispatch_once_t onceToken;
 - (void)MKBLEBasePeripheralConnectStateChanged:(MKPeripheralConnectState)connectState {
     //连接成功的判断必须是发送密码成功之后
     if (connectState == MKPeripheralConnectStateUnknow) {
-        self.connectStatus = mk_lb_bleCentralConnectStatusUnknow;
+        self.connectStatus = mk_lb_centralConnectStatusUnknow;
     }else if (connectState == MKPeripheralConnectStateConnecting) {
-        self.connectStatus = mk_lb_bleCentralConnectStatusConnecting;
+        self.connectStatus = mk_lb_centralConnectStatusConnecting;
     }else if (connectState == MKPeripheralConnectStateConnectedFailed) {
-        self.connectStatus = mk_lb_bleCentralConnectStatusConnectedFailed;
+        self.connectStatus = mk_lb_centralConnectStatusConnectedFailed;
     }else if (connectState == MKPeripheralConnectStateDisconnect) {
-        self.connectStatus = mk_lb_bleCentralConnectStatusDisconnect;
+        self.connectStatus = mk_lb_centralConnectStatusDisconnect;
     }
     NSLog(@"当前连接状态发生改变了:%@",@(connectState));
     [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
@@ -132,7 +132,7 @@ static dispatch_once_t onceToken;
         NSString *content = [MKBLEBaseSDKAdopter hexStringFromData:characteristic.value];
         [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_deviceDisconnectTypeNotification
                                                             object:nil
-                                                          userInfo:@{@"type":content}];
+                                                          userInfo:@{@"type":[content substringWithRange:NSMakeRange(8, 2)]}];
         return;
     }
     if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:@"AA03"]]) {
@@ -161,8 +161,10 @@ static dispatch_once_t onceToken;
     return [MKBLEBaseCentralManager shared].peripheral;
 }
 
-- (MKCentralManagerState )centralStatus {
-    return [MKBLEBaseCentralManager shared].centralStatus;
+- (mk_lb_centralManagerStatus )centralStatus {
+    return ([MKBLEBaseCentralManager shared].centralStatus == MKCentralManagerStateEnable)
+    ? mk_lb_centralManagerStatusEnable
+    : mk_lb_centralManagerStatusUnable;
 }
 
 - (void)startScan {
@@ -210,7 +212,7 @@ static dispatch_once_t onceToken;
 }
 
 - (BOOL)notifyStorageDataData:(BOOL)notify {
-    if (self.connectStatus != mk_lb_bleCentralConnectStatusConnected || [MKBLEBaseCentralManager shared].peripheral == nil || [MKBLEBaseCentralManager shared].peripheral.lb_storageData == nil) {
+    if (self.connectStatus != mk_lb_centralConnectStatusConnected || [MKBLEBaseCentralManager shared].peripheral == nil || [MKBLEBaseCentralManager shared].peripheral.lb_storageData == nil) {
         return NO;
     }
     [[MKBLEBaseCentralManager shared].peripheral setNotifyValue:notify
@@ -282,7 +284,7 @@ static dispatch_once_t onceToken;
         }
         //密码正确
         MKBLEBase_main_safe(^{
-            self.connectStatus = mk_lb_bleCentralConnectStatusConnected;
+            self.connectStatus = mk_lb_centralConnectStatusConnected;
             [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
             if (self.sucBlock) {
                 self.sucBlock([MKBLEBaseCentralManager shared].peripheral);
@@ -450,8 +452,10 @@ static dispatch_once_t onceToken;
     [tempMac substringWithRange:NSMakeRange(10, 2)]];
     
     NSString *batteryPercentage = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(12, 2)];
-    NSNumber *temperature = [MKBLEBaseSDKAdopter signedHexTurnString:[content substringWithRange:NSMakeRange(14, 4)]];
-    NSNumber *humidity = @([MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(18, 4)]);
+    CGFloat temperatureValue = [[MKBLEBaseSDKAdopter signedHexTurnString:[content substringWithRange:NSMakeRange(14, 4)]] integerValue] * 0.01;
+    NSString *temperature = [NSString stringWithFormat:@"%.2f",temperatureValue];
+    CGFloat humidityValue = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(18, 4)] * 0.01;
+    NSString *humidity = [NSString stringWithFormat:@"%.2f",humidityValue];
     
     return @{
         @"rssi":rssi,

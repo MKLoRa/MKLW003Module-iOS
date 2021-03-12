@@ -378,7 +378,7 @@
         }
     }
     if (self.uuidIson) {
-        if (![self.uuidValue isUUIDNumber]) {
+        if (![self.uuidValue regularExpressions:isHexadecimal] || self.uuidValue.length % 2 != 0) {
             return NO;
         }
     }

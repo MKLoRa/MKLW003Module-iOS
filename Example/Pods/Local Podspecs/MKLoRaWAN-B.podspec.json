@@ -64,7 +64,12 @@
     },
     {
       "name": "SDK-LB",
-      "source_files": "MKLoRaWAN-B/Classes/SDK-LB/**"
+      "source_files": "MKLoRaWAN-B/Classes/SDK-LB/**",
+      "dependencies": {
+        "MKBaseBleModule": [
+
+        ]
+      }
     },
     {
       "name": "Target",
