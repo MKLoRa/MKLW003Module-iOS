@@ -13,6 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @class CBPeripheral;
 @interface MKLBConnectModel : NSObject
 
++ (MKLBConnectModel *)shared;
+
 /// 连接设备
 /// @param peripheral 设备
 /// @param password 密码

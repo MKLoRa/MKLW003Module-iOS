@@ -12,6 +12,7 @@
 
 #import "MKLBApplicationModule.h"
 #import "CTMediator+MKLBAdd.h"
+#import "MKLBConnectModel.h"
 #import "MKLBDatabaseManager.h"
 #import "MKLBAdvertiserController.h"
 #import "MKLBAdvertiserDataModel.h"
@@ -34,7 +35,6 @@
 #import "MKLBUplinkPayloadController.h"
 #import "MKLBUplinkPayloadModel.h"
 #import "MKLBScanController.h"
-#import "MKLBConnectModel.h"
 #import "MKLBScanPageModel.h"
 #import "MKLBScanPageCell.h"
 #import "MKLBScannerController.h"

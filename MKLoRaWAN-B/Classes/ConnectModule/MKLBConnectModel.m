@@ -25,6 +25,17 @@
 
 @implementation MKLBConnectModel
 
++ (MKLBConnectModel *)shared {
+    static MKLBConnectModel *connectModel = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        if (!connectModel) {
+            connectModel = [MKLBConnectModel new];
+        }
+    });
+    return connectModel;
+}
+
 - (void)connectDevice:(CBPeripheral *)peripheral
              password:(NSString *)password
              sucBlock:(void (^)(void))sucBlock
@@ -37,6 +48,7 @@
         }
         if (![self configDate]) {
             [self operationFailedMsg:@"Config Date Error" completeBlock:failedBlock];
+            return;
         }
         moko_dispatch_main_safe(^{
             if (sucBlock) {

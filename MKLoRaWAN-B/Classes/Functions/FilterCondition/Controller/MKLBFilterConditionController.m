@@ -84,18 +84,20 @@ MKFilterRawAdvDataCellDelegate>
 #pragma mark - super method
 - (void)rightButtonMethod {
     NSMutableArray *list = [NSMutableArray array];
-    for (NSInteger i = 0; i < self.section3List.count; i ++) {
-        MKFilterRawAdvDataCellModel *cellModel = self.section3List[i];
-        if (![cellModel validParamsSuccess]) {
-            [self.view showCentralToast:@"Filter by Raw Adv Data Params Error"];
-            return;
+    if (self.dataModel.rawDataIson) {
+        for (NSInteger i = 0; i < self.section3List.count; i ++) {
+            MKFilterRawAdvDataCellModel *cellModel = self.section3List[i];
+            if (![cellModel validParamsSuccess]) {
+                [self.view showCentralToast:@"Filter by Raw Adv Data Params Error"];
+                return;
+            }
+            MKLBFilterRawAdvDataModel *model = [[MKLBFilterRawAdvDataModel alloc] init];
+            model.dataType = cellModel.dataType;
+            model.maxIndex = [cellModel.maxIndex integerValue];
+            model.minIndex = [cellModel.minIndex integerValue];
+            model.rawData = cellModel.rawData;
+            [list addObject:model];
         }
-        MKLBFilterRawAdvDataModel *model = [[MKLBFilterRawAdvDataModel alloc] init];
-        model.dataType = cellModel.dataType;
-        model.maxIndex = [cellModel.maxIndex integerValue];
-        model.minIndex = [cellModel.minIndex integerValue];
-        model.rawData = cellModel.rawData;
-        [list addObject:model];
     }
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     WS(weakSelf);
@@ -475,8 +477,8 @@ MKFilterRawAdvDataCellDelegate>
 - (void)loadSection2Datas {
     MKRawAdvDataOperationCellModel *cellModel = [[MKRawAdvDataOperationCellModel alloc] init];
     cellModel.msg = @"Filter by Raw Adv Data";
-    cellModel.selected = self.dataModel.rawDataIson;
-    cellModel.isOn = self.dataModel.rawDataWhiteListIson;
+    cellModel.isOn = self.dataModel.rawDataIson;
+    cellModel.selected = self.dataModel.rawDataWhiteListIson;
     [self.section2List addObject:cellModel];
 }
 

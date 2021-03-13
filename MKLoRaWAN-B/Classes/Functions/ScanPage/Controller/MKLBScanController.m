@@ -28,6 +28,7 @@
 #import "MKLBDatabaseManager.h"
 
 #import "MKLBConnectModel.h"
+
 #import "MKLBScanPageModel.h"
 #import "MKLBScanPageCell.h"
 
@@ -100,8 +101,6 @@ MKLBTabBarControllerDelegate>
 @property (nonatomic, assign)BOOL isNeedRefresh;
 
 @property (nonatomic, strong)UITextField *passwordField;
-
-@property (nonatomic, strong)MKLBConnectModel *connectModel;
 
 /// 保存当前密码输入框ascii字符部分
 @property (nonatomic, copy)NSString *asciiText;
@@ -432,7 +431,7 @@ MKLBTabBarControllerDelegate>
     }
     [[MKHudManager share] showHUDWithTitle:@"Connecting..." inView:self.view isPenetration:NO];
     WS(weakSelf);
-    [self.connectModel connectDevice:trackerModel.peripheral password:password sucBlock:^{
+    [[MKLBConnectModel shared] connectDevice:trackerModel.peripheral password:password sucBlock:^{
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:localPasswordKey];
         [[MKHudManager share] hide];
         [weakSelf.view showCentralToast:@"Time sync completed!"];
@@ -588,13 +587,6 @@ MKLBTabBarControllerDelegate>
         _dataList = [NSMutableArray array];
     }
     return _dataList;
-}
-
-- (MKLBConnectModel *)connectModel {
-    if (!_connectModel) {
-        _connectModel = [[MKLBConnectModel alloc] init];
-    }
-    return _connectModel;
 }
 
 @end

@@ -309,6 +309,7 @@ PODS:
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ApplicationModule (= 0.0.2)
+    - MKLoRaWAN-B/ConnectModule (= 0.0.2)
     - MKLoRaWAN-B/CTMediator (= 0.0.2)
     - MKLoRaWAN-B/DatabaseManager (= 0.0.2)
     - MKLoRaWAN-B/Functions (= 0.0.2)
@@ -323,6 +324,16 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MLInputDodger
+  - MKLoRaWAN-B/ConnectModule (0.0.2):
+    - CTMediator
+    - FMDB
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseBleModule
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
   - MKLoRaWAN-B/CTMediator (0.0.2):
     - CTMediator
@@ -350,6 +361,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/AdvertiserPage (= 0.0.2)
@@ -377,6 +389,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (= 0.0.2)
@@ -391,6 +404,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/AdvertiserPage/Model
@@ -404,6 +418,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -416,6 +431,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/DevicePage/Controller (= 0.0.2)
@@ -431,6 +447,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/DevicePage/Model
@@ -446,6 +463,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -458,6 +476,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -470,6 +489,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/FilterCondition/Controller (= 0.0.2)
@@ -484,6 +504,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/FilterCondition/Model
@@ -497,6 +518,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -509,6 +531,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/FilterOptions/Controller (= 0.0.2)
@@ -524,6 +547,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/FilterCondition/Controller
@@ -539,6 +563,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -551,6 +576,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -563,6 +589,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/LoRaPage/Controller (= 0.0.2)
@@ -577,6 +604,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/LoRaPage/Model
@@ -594,6 +622,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -606,6 +635,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (= 0.0.2)
@@ -620,6 +650,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/LoRaSettingPage/Model
@@ -633,6 +664,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -645,6 +677,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/MulticastGroup/Controller (= 0.0.2)
@@ -659,6 +692,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/MulticastGroup/Model
@@ -672,6 +706,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -684,6 +719,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/NetworkCheck/Controller (= 0.0.2)
@@ -698,6 +734,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/NetworkCheck/Model
@@ -711,6 +748,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -723,6 +761,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/PayloadPage/Controller (= 0.0.2)
@@ -737,6 +776,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/PayloadPage/Model
@@ -750,6 +790,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -762,6 +803,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/ScannerPage/Controller (= 0.0.2)
@@ -777,6 +819,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/FilterOptions/Controller
@@ -792,6 +835,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -804,6 +848,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -816,6 +861,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/ScanPage/Controller (= 0.0.2)
@@ -831,6 +877,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/ScanPage/Model
@@ -846,6 +893,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -858,6 +906,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/ScanPage/Model
@@ -871,6 +920,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/SettingPage/Controller (= 0.0.2)
@@ -886,6 +936,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/AdvertiserPage/Controller
@@ -902,6 +953,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -914,6 +966,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -926,6 +979,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/SynDataPage/Controller (= 0.0.2)
@@ -941,6 +995,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/SynDataPage/Parser
@@ -955,6 +1010,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -967,6 +1023,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -979,6 +1036,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/TabBarPage/Controller (= 0.0.2)
@@ -992,6 +1050,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/DevicePage/Controller
@@ -1008,6 +1067,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/UpdatePage/Controller (= 0.0.2)
@@ -1022,6 +1082,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/UpdatePage/Model
@@ -1035,6 +1096,7 @@ PODS:
     - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
@@ -1098,7 +1160,7 @@ SPEC CHECKSUMS:
   MKBaseBleModule: 553e5ac68fd89acd0642ae7fc0ba7a5f2ce25950
   MKBaseModuleLibrary: 7fb73829fe9bef794deeb4484ec80256c03a95e6
   MKCustomUIModule: f63341f8169460823a7cf6ea57b1e250931f8be5
-  MKLoRaWAN-B: d2524a496d0cbcc3bf025aab10b36ea7d0a04143
+  MKLoRaWAN-B: 5a362481a8774daf5e73751f5a88a9c8bbed467f
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef

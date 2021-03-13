@@ -43,9 +43,11 @@
 
 - (void)configDataWithSucBlock:(void (^)(void))sucBlock failedBlock:(void (^)(NSError * error))failedBlock {
     dispatch_async(self.readQueue, ^{
-        if (![self checkParams]) {
-            [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
-            return;
+        if (self.checkStatus) {
+            if (!ValidStr(self.checkInterval) || [self.checkInterval integerValue] < 0 || [self.checkInterval integerValue] > 720) {
+                [self operationFailedBlockWithMsg:@"Opps！Save failed. Please check the input characters and try again." block:failedBlock];
+                return;
+            }
         }
         if (![self configNetworkCheckInterval]) {
             [self operationFailedBlockWithMsg:@"Config network check interval error" block:failedBlock];
@@ -121,13 +123,6 @@
                                                 userInfo:@{@"errorInfo":msg}];
         block(error);
     })
-}
-
-- (BOOL)checkParams {
-    if (self.checkStatus && !ValidStr(self.checkInterval)) {
-        return NO;
-    }
-    return YES;
 }
 
 #pragma mark - getter

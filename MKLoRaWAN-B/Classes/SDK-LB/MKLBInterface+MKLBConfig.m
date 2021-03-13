@@ -898,7 +898,7 @@
                        failedBlock:failedBlock];
         return;
     }
-    if (![MKBLEBaseSDKAdopter checkHexCharacter:uuid] || uuid.length % 2 != 0) {
+    if (![MKBLEBaseSDKAdopter checkHexCharacter:uuid] || uuid.length > 32 || uuid.length % 2 != 0) {
         [self operationParamsErrorBlock:failedBlock];
         return;
     }

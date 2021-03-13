@@ -64,9 +64,6 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 /// 为65535时，最近的数据在最上面；为1时，最早的数据在最上面；
 @property (nonatomic, assign)BOOL isMaxCount;
 
-/// 为了解决数据缓存解析时间过长导致长时间不通信设备断开连接的问题，定时向设备发送命令保证通讯
-@property (nonatomic, strong)dispatch_source_t heartBitTimer;
-
 @end
 
 @implementation MKLBSynDataController
@@ -79,9 +76,6 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     }
     if (self.backTimer) {
         dispatch_cancel(self.backTimer);
-    }
-    if (self.heartBitTimer) {
-        dispatch_cancel(self.heartBitTimer);
     }
 }
 
@@ -199,7 +193,6 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
         self.isMaxCount = ([self.headerView.textField.text integerValue] == 65535);
         [[MKHudManager share] hide];
         [self startButtonMethod];
-        [self addDataHeartBitTimer];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
         [self.view showCentralToast:error.userInfo[@"errorInfo"]];
@@ -486,28 +479,6 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     }
     self.headerView.countLabel.text = [NSString stringWithFormat:@"Count: %ld",(long)self.dataList.count];
     [self.tableView reloadData];
-}
-
-#pragma mark - 心跳
-- (void)addDataHeartBitTimer {
-    self.heartBitTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,dispatch_get_global_queue(0, 0));
-    dispatch_source_set_timer(self.heartBitTimer, dispatch_time(DISPATCH_TIME_NOW, 20 * NSEC_PER_SEC),  20 * NSEC_PER_SEC, 0);
-    __weak typeof(self) weakSelf = self;
-    dispatch_source_set_event_handler(self.heartBitTimer, ^{
-        __strong typeof(self) sself = weakSelf;
-        moko_dispatch_main_safe(^{
-            [sself sendHeartBitToDevice];
-        });
-    });
-    dispatch_resume(self.heartBitTimer);
-}
-
-- (void)sendHeartBitToDevice {
-    [MKLBInterface lb_readBatteryPowerWithSucBlock:^(id  _Nonnull returnData) {
-        NSLog(@"读取成功");
-    } failedBlock:^(NSError * _Nonnull error) {
-        NSLog(@"读取失败");
-    }];
 }
 
 #pragma mark - UI

@@ -81,6 +81,15 @@
       }
     },
     {
+      "name": "ConnectModule",
+      "source_files": "MKLoRaWAN-B/Classes/ConnectModule/**",
+      "dependencies": {
+        "MKLoRaWAN-B/SDK-LB": [
+
+        ]
+      }
+    },
+    {
       "name": "Functions",
       "dependencies": {
         "MKLoRaWAN-B/SDK-LB": [
@@ -90,6 +99,9 @@
 
         ],
         "MKLoRaWAN-B/CTMediator": [
+
+        ],
+        "MKLoRaWAN-B/ConnectModule": [
 
         ]
       },
