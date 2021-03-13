@@ -192,9 +192,7 @@ static CGFloat const buttonSpace = 10.f;
 
 - (MKTextField *)textField {
     if (!_textField) {
-        _textField = [[MKTextField alloc] initWithTextFieldType:mk_realNumberOnly textChangedBlock:^(NSString * _Nonnull text) {
-            
-        }];
+        _textField = [[MKTextField alloc] initWithTextFieldType:mk_realNumberOnly];
         _textField.borderStyle = UITextBorderStyleLine;
         _textField.maxLength = 5;
         _textField.placeholder = @"1~65535";
