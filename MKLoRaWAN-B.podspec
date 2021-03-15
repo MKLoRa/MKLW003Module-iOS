@@ -43,6 +43,8 @@ TODO: Add long description of the pod here.
   s.subspec 'CTMediator' do |ss|
     ss.source_files = 'MKLoRaWAN-B/Classes/CTMediator/**'
     
+    ss.dependency 'MKBaseModuleLibrary'
+    
     ss.dependency 'CTMediator'
   end
   
