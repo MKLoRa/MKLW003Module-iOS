@@ -51,6 +51,8 @@ TODO: Add long description of the pod here.
   s.subspec 'DatabaseManager' do |ss|
     ss.source_files = 'MKLoRaWAN-B/Classes/DatabaseManager/**'
     
+    ss.dependency 'MKBaseModuleLibrary'
+    
     ss.dependency 'FMDB'
   end
   
