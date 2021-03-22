@@ -133,7 +133,7 @@ MKLBTabBarControllerDelegate>
     MKLBAboutPageModel *model = [[MKLBAboutPageModel alloc] init];
     model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_aboutIcon.png");
     model.appName = @"LW003";
-    model.appVersion = @"1.0.0";
+    model.appVersion = @"1.0";
     MKTrackerAboutController *vc = [[MKTrackerAboutController alloc] initWithProtocol:model];
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -430,19 +430,27 @@ MKLBTabBarControllerDelegate>
         return;
     }
     [[MKHudManager share] showHUDWithTitle:@"Connecting..." inView:self.view isPenetration:NO];
-    WS(weakSelf);
     [[MKLBConnectModel shared] connectDevice:trackerModel.peripheral password:password sucBlock:^{
         [[NSUserDefaults standardUserDefaults] setObject:password forKey:localPasswordKey];
         [[MKHudManager share] hide];
-        [weakSelf.view showCentralToast:@"Time sync completed!"];
-        [MKLBDatabaseManager clearDataTable];
-        [MKLBDatabaseManager initDataBase];
-        [weakSelf performSelector:@selector(pushTabBarPage) withObject:nil afterDelay:0.6f];
+        [self.view showCentralToast:@"Time sync completed!"];
+        [self configParams];
+        [self performSelector:@selector(pushTabBarPage) withObject:nil afterDelay:0.6f];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
-        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
-        [weakSelf connectFailed];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
+        [self connectFailed];
     }];
+}
+
+- (void)configParams {
+    //读取设备存储的扫描信息页面，左上角输入框显示的用户输入的读取多少天的数据
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"lb_readRecordDataDayNumKey"];
+    //读取设备存储的扫描信息页面，显示的设备总共存储了多少条的扫描数据
+    [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"lb_recordDataTotalSumKey"];
+    
+    [MKLBDatabaseManager clearDataTable];
+    [MKLBDatabaseManager initDataBase];
 }
 
 - (void)pushTabBarPage {

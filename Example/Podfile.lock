@@ -299,108 +299,65 @@ PODS:
     - MBProgressHUD
     - MJRefresh
     - MKBaseModuleLibrary
-  - MKLoRaWAN-B (0.0.2):
-    - CTMediator
-    - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
+  - MKLoRaWAN-B (0.0.3):
+    - MKLoRaWAN-B/ApplicationModule (= 0.0.3)
+    - MKLoRaWAN-B/ConnectModule (= 0.0.3)
+    - MKLoRaWAN-B/CTMediator (= 0.0.3)
+    - MKLoRaWAN-B/DatabaseManager (= 0.0.3)
+    - MKLoRaWAN-B/Functions (= 0.0.3)
+    - MKLoRaWAN-B/SDK-LB (= 0.0.3)
+    - MKLoRaWAN-B/Target (= 0.0.3)
+  - MKLoRaWAN-B/ApplicationModule (0.0.3):
     - MKBaseModuleLibrary
-    - MKCustomUIModule
-    - MKLoRaWAN-B/ApplicationModule (= 0.0.2)
-    - MKLoRaWAN-B/ConnectModule (= 0.0.2)
-    - MKLoRaWAN-B/CTMediator (= 0.0.2)
-    - MKLoRaWAN-B/DatabaseManager (= 0.0.2)
-    - MKLoRaWAN-B/Functions (= 0.0.2)
-    - MKLoRaWAN-B/SDK-LB (= 0.0.2)
-    - MKLoRaWAN-B/Target (= 0.0.2)
-    - MLInputDodger
-  - MKLoRaWAN-B/ApplicationModule (0.0.2):
-    - CTMediator
-    - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
+  - MKLoRaWAN-B/ConnectModule (0.0.3):
     - MKBaseModuleLibrary
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKLoRaWAN-B/ConnectModule (0.0.2):
-    - CTMediator
-    - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
-    - MKBaseModuleLibrary
-    - MKCustomUIModule
     - MKLoRaWAN-B/SDK-LB
-    - MLInputDodger
-  - MKLoRaWAN-B/CTMediator (0.0.2):
+  - MKLoRaWAN-B/CTMediator (0.0.3):
     - CTMediator
-    - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKLoRaWAN-B/DatabaseManager (0.0.2):
-    - CTMediator
+  - MKLoRaWAN-B/DatabaseManager (0.0.3):
     - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKLoRaWAN-B/Functions (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/AdvertiserPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/DevicePage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/FilterCondition (= 0.0.2)
-    - MKLoRaWAN-B/Functions/FilterOptions (= 0.0.2)
-    - MKLoRaWAN-B/Functions/LoRaPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/LoRaSettingPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/MulticastGroup (= 0.0.2)
-    - MKLoRaWAN-B/Functions/NetworkCheck (= 0.0.2)
-    - MKLoRaWAN-B/Functions/PayloadPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/ScannerPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/ScanPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/SettingPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/SynDataPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/TabBarPage (= 0.0.2)
-    - MKLoRaWAN-B/Functions/UpdatePage (= 0.0.2)
+    - MKLoRaWAN-B/Functions/AdvertiserPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/DevicePage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/FilterCondition (= 0.0.3)
+    - MKLoRaWAN-B/Functions/FilterOptions (= 0.0.3)
+    - MKLoRaWAN-B/Functions/LoRaPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/LoRaSettingPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/MulticastGroup (= 0.0.3)
+    - MKLoRaWAN-B/Functions/NetworkCheck (= 0.0.3)
+    - MKLoRaWAN-B/Functions/PayloadPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/ScannerPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/ScanPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/SettingPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/SynDataPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/TabBarPage (= 0.0.3)
+    - MKLoRaWAN-B/Functions/UpdatePage (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/AdvertiserPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/AdvertiserPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/AdvertiserPage/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/AdvertiserPage/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/AdvertiserPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -409,12 +366,9 @@ PODS:
     - MKLoRaWAN-B/Functions/AdvertiserPage/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/AdvertiserPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/AdvertiserPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -422,28 +376,22 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/DevicePage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/DevicePage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/DevicePage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/DevicePage/Model (= 0.0.2)
-    - MKLoRaWAN-B/Functions/DevicePage/View (= 0.0.2)
+    - MKLoRaWAN-B/Functions/DevicePage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/DevicePage/Model (= 0.0.3)
+    - MKLoRaWAN-B/Functions/DevicePage/View (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/DevicePage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/DevicePage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -454,12 +402,9 @@ PODS:
     - MKLoRaWAN-B/Functions/UpdatePage/Controller
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/DevicePage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/DevicePage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -467,12 +412,9 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/DevicePage/View (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/DevicePage/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -480,27 +422,21 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterCondition (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterCondition (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/FilterCondition/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/FilterCondition/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/FilterCondition/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/FilterCondition/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterCondition/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterCondition/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -509,12 +445,9 @@ PODS:
     - MKLoRaWAN-B/Functions/FilterCondition/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterCondition/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterCondition/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -522,28 +455,22 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterOptions (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterOptions (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/FilterOptions/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/FilterOptions/Model (= 0.0.2)
-    - MKLoRaWAN-B/Functions/FilterOptions/View (= 0.0.2)
+    - MKLoRaWAN-B/Functions/FilterOptions/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/FilterOptions/Model (= 0.0.3)
+    - MKLoRaWAN-B/Functions/FilterOptions/View (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterOptions/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterOptions/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -554,12 +481,9 @@ PODS:
     - MKLoRaWAN-B/Functions/FilterOptions/View
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterOptions/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterOptions/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -567,12 +491,9 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/FilterOptions/View (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/FilterOptions/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -580,27 +501,21 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/LoRaPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/LoRaPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/LoRaPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/LoRaPage/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/LoRaPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/LoRaPage/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/LoRaPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/LoRaPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -613,12 +528,9 @@ PODS:
     - MKLoRaWAN-B/Functions/PayloadPage/Controller
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/LoRaPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/LoRaPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -626,27 +538,21 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/LoRaSettingPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/LoRaSettingPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/LoRaSettingPage/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/LoRaSettingPage/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/LoRaSettingPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -655,12 +561,9 @@ PODS:
     - MKLoRaWAN-B/Functions/LoRaSettingPage/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/LoRaSettingPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/LoRaSettingPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -668,27 +571,21 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/MulticastGroup (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/MulticastGroup (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/MulticastGroup/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/MulticastGroup/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/MulticastGroup/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/MulticastGroup/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/MulticastGroup/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/MulticastGroup/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -697,12 +594,9 @@ PODS:
     - MKLoRaWAN-B/Functions/MulticastGroup/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/MulticastGroup/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/MulticastGroup/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -710,27 +604,21 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/NetworkCheck (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/NetworkCheck (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/NetworkCheck/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/NetworkCheck/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/NetworkCheck/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/NetworkCheck/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/NetworkCheck/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/NetworkCheck/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -739,12 +627,9 @@ PODS:
     - MKLoRaWAN-B/Functions/NetworkCheck/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/NetworkCheck/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/NetworkCheck/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -752,27 +637,21 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/PayloadPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/PayloadPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/PayloadPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/PayloadPage/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/PayloadPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/PayloadPage/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/PayloadPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/PayloadPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -781,12 +660,9 @@ PODS:
     - MKLoRaWAN-B/Functions/PayloadPage/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/PayloadPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/PayloadPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -794,28 +670,22 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScannerPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScannerPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/ScannerPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/ScannerPage/Model (= 0.0.2)
-    - MKLoRaWAN-B/Functions/ScannerPage/View (= 0.0.2)
+    - MKLoRaWAN-B/Functions/ScannerPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/ScannerPage/Model (= 0.0.3)
+    - MKLoRaWAN-B/Functions/ScannerPage/View (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScannerPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScannerPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -826,12 +696,9 @@ PODS:
     - MKLoRaWAN-B/Functions/ScannerPage/View
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScannerPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScannerPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -839,12 +706,9 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScannerPage/View (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScannerPage/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -852,28 +716,22 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScanPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScanPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/ScanPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/ScanPage/Model (= 0.0.2)
-    - MKLoRaWAN-B/Functions/ScanPage/View (= 0.0.2)
+    - MKLoRaWAN-B/Functions/ScanPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/ScanPage/Model (= 0.0.3)
+    - MKLoRaWAN-B/Functions/ScanPage/View (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScanPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScanPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -884,12 +742,9 @@ PODS:
     - MKLoRaWAN-B/Functions/TabBarPage/Controller
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScanPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScanPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -897,12 +752,9 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/ScanPage/View (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/ScanPage/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -911,28 +763,22 @@ PODS:
     - MKLoRaWAN-B/Functions/ScanPage/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SettingPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SettingPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/SettingPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/SettingPage/Model (= 0.0.2)
-    - MKLoRaWAN-B/Functions/SettingPage/View (= 0.0.2)
+    - MKLoRaWAN-B/Functions/SettingPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/SettingPage/Model (= 0.0.3)
+    - MKLoRaWAN-B/Functions/SettingPage/View (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SettingPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SettingPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -944,12 +790,9 @@ PODS:
     - MKLoRaWAN-B/Functions/SynDataPage/Controller
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SettingPage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SettingPage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -957,12 +800,9 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SettingPage/View (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SettingPage/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -970,28 +810,22 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SynDataPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SynDataPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/SynDataPage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/SynDataPage/Parser (= 0.0.2)
-    - MKLoRaWAN-B/Functions/SynDataPage/View (= 0.0.2)
+    - MKLoRaWAN-B/Functions/SynDataPage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/SynDataPage/Parser (= 0.0.3)
+    - MKLoRaWAN-B/Functions/SynDataPage/View (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SynDataPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SynDataPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -1001,12 +835,9 @@ PODS:
     - MKLoRaWAN-B/Functions/SynDataPage/View
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SynDataPage/Parser (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SynDataPage/Parser (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -1014,12 +845,9 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/SynDataPage/View (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/SynDataPage/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -1027,26 +855,20 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/TabBarPage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/TabBarPage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/TabBarPage/Controller (= 0.0.2)
+    - MKLoRaWAN-B/Functions/TabBarPage/Controller (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/TabBarPage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/TabBarPage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -1058,27 +880,21 @@ PODS:
     - MKLoRaWAN-B/Functions/SettingPage/Controller
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/UpdatePage (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/UpdatePage (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
-    - MKLoRaWAN-B/Functions/UpdatePage/Controller (= 0.0.2)
-    - MKLoRaWAN-B/Functions/UpdatePage/Model (= 0.0.2)
+    - MKLoRaWAN-B/Functions/UpdatePage/Controller (= 0.0.3)
+    - MKLoRaWAN-B/Functions/UpdatePage/Model (= 0.0.3)
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/UpdatePage/Controller (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/UpdatePage/Controller (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -1087,12 +903,9 @@ PODS:
     - MKLoRaWAN-B/Functions/UpdatePage/Model
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/Functions/UpdatePage/Model (0.0.2):
-    - CTMediator
-    - FMDB
+  - MKLoRaWAN-B/Functions/UpdatePage/Model (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
     - MKBaseModuleLibrary
     - MKCustomUIModule
     - MKLoRaWAN-B/ConnectModule
@@ -1100,25 +913,10 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/SDK-LB
     - MLInputDodger
-  - MKLoRaWAN-B/SDK-LB (0.0.2):
-    - CTMediator
-    - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
+  - MKLoRaWAN-B/SDK-LB (0.0.3):
     - MKBaseBleModule
-    - MKBaseModuleLibrary
-    - MKCustomUIModule
-    - MLInputDodger
-  - MKLoRaWAN-B/Target (0.0.2):
-    - CTMediator
-    - FMDB
-    - HHTransition
-    - iOSDFULibrary (= 4.6.1)
-    - MKBaseBleModule
-    - MKBaseModuleLibrary
-    - MKCustomUIModule
+  - MKLoRaWAN-B/Target (0.0.3):
     - MKLoRaWAN-B/Functions
-    - MLInputDodger
   - MLInputDodger (1.5.2)
   - Toast (4.0.0)
   - ZIPFoundation (0.9.9)
@@ -1159,7 +957,7 @@ SPEC CHECKSUMS:
   MKBaseBleModule: 553e5ac68fd89acd0642ae7fc0ba7a5f2ce25950
   MKBaseModuleLibrary: 7fb73829fe9bef794deeb4484ec80256c03a95e6
   MKCustomUIModule: 9b0954210ca32870a83ba4fc221aa77ff59baf6c
-  MKLoRaWAN-B: 5a362481a8774daf5e73751f5a88a9c8bbed467f
+  MKLoRaWAN-B: 4352ce74116834615bb4c79beeff216f3dd710f5
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef

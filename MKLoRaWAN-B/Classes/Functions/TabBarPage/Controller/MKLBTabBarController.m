@@ -123,7 +123,7 @@
 }
 
 - (void)deviceConnectStateChanged {
-    if (self.disconnectType) {
+     if (self.disconnectType) {
         return;
     }
     [self showAlertWithMsg:@"The device is disconnected." title:@"Dismiss"];

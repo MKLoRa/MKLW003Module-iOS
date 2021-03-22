@@ -64,6 +64,9 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 /// 为65535时，最近的数据在最上面；为1时，最早的数据在最上面；
 @property (nonatomic, assign)BOOL isMaxCount;
 
+/// 最新业务需求，当用户点击返回按钮时，如果接收到了存储数据的总条数，则需要存储总条数到本地，断开连接会清除本地缓存的这个记录
+@property (nonatomic, copy)NSString *totalSum;
+
 @end
 
 @implementation MKLBSynDataController
@@ -174,7 +177,8 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     NSInteger number = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(8, 2)];
     if (number == 0) {
         //最后一条数据
-        self.headerView.sumLabel.text = [NSString stringWithFormat:@"Sum:%@",[MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)]];
+        self.totalSum = [MKBLEBaseSDKAdopter getDecimalStringWithHex:content range:NSMakeRange(10, 4)];
+        self.headerView.sumLabel.text = [NSString stringWithFormat:@"Sum:%@",self.totalSum];
         return;
     }
     [self.contentList addObject:content];
@@ -191,6 +195,7 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
     [MKLBInterface lb_readNumberOfDaysStoredData:[self.headerView.textField.text integerValue] sucBlock:^{
         self.isMaxCount = ([self.headerView.textField.text integerValue] == 65535);
+        [[NSUserDefaults standardUserDefaults] setValue:self.headerView.textField.text forKey:@"lb_readRecordDataDayNumKey"];
         [[MKHudManager share] hide];
         [self startButtonMethod];
     } failedBlock:^(NSError * _Nonnull error) {
@@ -305,6 +310,11 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 
 - (void)processStatus {
     self.headerView.countLabel.text = [NSString stringWithFormat:@"%@ %ld",@"Count:",(long)self.dataList.count];
+    self.headerView.textField.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"lb_readRecordDataDayNumKey"];
+    self.totalSum = [[NSUserDefaults standardUserDefaults] objectForKey:@"lb_recordDataTotalSumKey"];
+    if (ValidStr(self.totalSum)) {
+        self.headerView.sumLabel.text = [NSString stringWithFormat:@"Sum:%@",self.totalSum];
+    }
     
     if (self.dataList.count > 0) {
         //如果本地有数据存储，则start按钮不可用,sync按钮和empty、export按钮可用
@@ -425,6 +435,9 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 
 - (void)saveDataToLocal {
     [MKLBDatabaseManager clearDataTable];
+    if (ValidStr(self.totalSum)) {
+        [[NSUserDefaults standardUserDefaults] setValue:self.totalSum forKey:@"lb_recordDataTotalSumKey"];
+    }
     if (self.dataList.count == 0) {
         [[MKHudManager share] hide];
         [super leftButtonMethod];

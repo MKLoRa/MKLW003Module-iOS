@@ -13,9 +13,6 @@
 @implementation MKLBSynDataParser
 
 + (NSArray *)parseScannerTrackedData:(NSString *)content {
-    
-    NSLog(@"当前解析的数据:%@++++++++++%@",content,@(content.length / 2));
-    
     content = [content substringFromIndex:10];
     
     NSInteger index = 0;
@@ -26,6 +23,9 @@
         }
         NSInteger subLen = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(index, 2)];
         index += 2;
+        if (content.length < (index + subLen * 2 + 1)) {
+            break;
+        }
         NSString *subContent = [content substringWithRange:NSMakeRange(index, subLen * 2)];
         NSDictionary *dateDic = [self parseDateString:[subContent substringWithRange:NSMakeRange(0, 14)]];
         NSString *tempMac = [[subContent substringWithRange:NSMakeRange(14, 12)] uppercaseString];

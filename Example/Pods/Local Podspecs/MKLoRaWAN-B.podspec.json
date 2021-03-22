@@ -1,6 +1,6 @@
 {
   "name": "MKLoRaWAN-B",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "summary": "MOKO LW003.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/MKLoRa/MKLW003Module-iOS",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/MKLoRa/MKLW003Module-iOS.git",
-    "tag": "0.0.2"
+    "tag": "0.0.3"
   },
   "platforms": {
     "ios": "12.0"
@@ -23,44 +23,39 @@
       "MKLoRaWAN-B/Assets/*.png"
     ]
   },
-  "dependencies": {
-    "MKBaseBleModule": [
-
-    ],
-    "MKBaseModuleLibrary": [
-
-    ],
-    "MKCustomUIModule": [
-
-    ],
-    "HHTransition": [
-
-    ],
-    "FMDB": [
-
-    ],
-    "MLInputDodger": [
-
-    ],
-    "iOSDFULibrary": [
-      "4.6.1"
-    ],
-    "CTMediator": [
-
-    ]
-  },
   "subspecs": [
     {
       "name": "ApplicationModule",
-      "source_files": "MKLoRaWAN-B/Classes/ApplicationModule/**"
+      "source_files": "MKLoRaWAN-B/Classes/ApplicationModule/**",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
+
+        ]
+      }
     },
     {
       "name": "CTMediator",
-      "source_files": "MKLoRaWAN-B/Classes/CTMediator/**"
+      "source_files": "MKLoRaWAN-B/Classes/CTMediator/**",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
+
+        ],
+        "CTMediator": [
+
+        ]
+      }
     },
     {
       "name": "DatabaseManager",
-      "source_files": "MKLoRaWAN-B/Classes/DatabaseManager/**"
+      "source_files": "MKLoRaWAN-B/Classes/DatabaseManager/**",
+      "dependencies": {
+        "MKBaseModuleLibrary": [
+
+        ],
+        "FMDB": [
+
+        ]
+      }
     },
     {
       "name": "SDK-LB",
@@ -86,6 +81,9 @@
       "dependencies": {
         "MKLoRaWAN-B/SDK-LB": [
 
+        ],
+        "MKBaseModuleLibrary": [
+
         ]
       }
     },
@@ -103,6 +101,21 @@
         ],
         "MKLoRaWAN-B/ConnectModule": [
 
+        ],
+        "MKBaseModuleLibrary": [
+
+        ],
+        "MKCustomUIModule": [
+
+        ],
+        "HHTransition": [
+
+        ],
+        "MLInputDodger": [
+
+        ],
+        "iOSDFULibrary": [
+          "4.6.1"
         ]
       },
       "subspecs": [

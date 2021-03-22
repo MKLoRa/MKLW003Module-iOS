@@ -59,6 +59,15 @@
             [self operationFailedBlockWithMsg:@"Config Multicast Status Error" block:failedBlock];
             return;
         }
+        if (!self.isOn) {
+            //关闭状态
+            moko_dispatch_main_safe(^{
+                if (sucBlock) {
+                    sucBlock();
+                }
+            });
+            return;
+        }
         if (![self configAddr]) {
             [self operationFailedBlockWithMsg:@"Config Multicast Address Error" block:failedBlock];
             return;
