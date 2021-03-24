@@ -56,8 +56,8 @@ TODO: Add long description of the pod here.
     ss.dependency 'FMDB'
   end
   
-  s.subspec 'SDK-LB' do |ss|
-    ss.source_files = 'MKLoRaWAN-B/Classes/SDK-LB/**'
+  s.subspec 'SDK' do |ss|
+    ss.source_files = 'MKLoRaWAN-B/Classes/SDK/**'
     
     ss.dependency 'MKBaseBleModule'
   end
@@ -70,12 +70,18 @@ TODO: Add long description of the pod here.
   s.subspec 'ConnectModule' do |ss|
     ss.source_files = 'MKLoRaWAN-B/Classes/ConnectModule/**'
     
-    ss.dependency 'MKLoRaWAN-B/SDK-LB'
+    ss.dependency 'MKLoRaWAN-B/SDK'
     
     ss.dependency 'MKBaseModuleLibrary'
   end
   
   s.subspec 'Functions' do |ss|
+    
+    ss.subspec 'AboutPage' do |sss|
+      sss.subspec 'Controller' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/AboutPage/Controller/**'
+      end
+    end
     
     ss.subspec 'AdvertiserPage' do |sss|
       sss.subspec 'Controller' do |ssss|
@@ -207,6 +213,7 @@ TODO: Add long description of the pod here.
         ssss.dependency 'MKLoRaWAN-B/Functions/ScanPage/View'
         
         ssss.dependency 'MKLoRaWAN-B/Functions/TabBarPage/Controller'
+        ssss.dependency 'MKLoRaWAN-B/Functions/AboutPage/Controller'
       end
       sss.subspec 'Model' do |ssss|
         ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScanPage/Model/**'
@@ -269,7 +276,7 @@ TODO: Add long description of the pod here.
       end
     end
     
-    ss.dependency 'MKLoRaWAN-B/SDK-LB'
+    ss.dependency 'MKLoRaWAN-B/SDK'
     ss.dependency 'MKLoRaWAN-B/DatabaseManager'
     ss.dependency 'MKLoRaWAN-B/CTMediator'
     ss.dependency 'MKLoRaWAN-B/ConnectModule'

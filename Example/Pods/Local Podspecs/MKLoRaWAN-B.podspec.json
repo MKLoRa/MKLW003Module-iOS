@@ -58,8 +58,8 @@
       }
     },
     {
-      "name": "SDK-LB",
-      "source_files": "MKLoRaWAN-B/Classes/SDK-LB/**",
+      "name": "SDK",
+      "source_files": "MKLoRaWAN-B/Classes/SDK/**",
       "dependencies": {
         "MKBaseBleModule": [
 
@@ -79,7 +79,7 @@
       "name": "ConnectModule",
       "source_files": "MKLoRaWAN-B/Classes/ConnectModule/**",
       "dependencies": {
-        "MKLoRaWAN-B/SDK-LB": [
+        "MKLoRaWAN-B/SDK": [
 
         ],
         "MKBaseModuleLibrary": [
@@ -90,7 +90,7 @@
     {
       "name": "Functions",
       "dependencies": {
-        "MKLoRaWAN-B/SDK-LB": [
+        "MKLoRaWAN-B/SDK": [
 
         ],
         "MKLoRaWAN-B/DatabaseManager": [
@@ -119,6 +119,15 @@
         ]
       },
       "subspecs": [
+        {
+          "name": "AboutPage",
+          "subspecs": [
+            {
+              "name": "Controller",
+              "source_files": "MKLoRaWAN-B/Classes/Functions/AboutPage/Controller/**"
+            }
+          ]
+        },
         {
           "name": "AdvertiserPage",
           "subspecs": [
@@ -355,6 +364,9 @@
 
                 ],
                 "MKLoRaWAN-B/Functions/TabBarPage/Controller": [
+
+                ],
+                "MKLoRaWAN-B/Functions/AboutPage/Controller": [
 
                 ]
               }

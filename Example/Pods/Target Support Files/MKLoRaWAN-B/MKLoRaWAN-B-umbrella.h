@@ -14,6 +14,7 @@
 #import "CTMediator+MKLBAdd.h"
 #import "MKLBConnectModel.h"
 #import "MKLBDatabaseManager.h"
+#import "MKLBAboutController.h"
 #import "MKLBAdvertiserController.h"
 #import "MKLBAdvertiserDataModel.h"
 #import "MKLBDeviceInfoController.h"

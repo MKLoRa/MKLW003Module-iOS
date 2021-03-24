@@ -21,7 +21,6 @@
 #import "MKSearchButton.h"
 #import "MKSearchConditionsView.h"
 #import "MKCustomUIAdopter.h"
-#import "MKTrackerAboutController.h"
 
 #import "MKLBSDK.h"
 
@@ -33,36 +32,9 @@
 #import "MKLBScanPageCell.h"
 
 #import "MKLBTabBarController.h"
+#import "MKLBAboutController.h"
 
 static NSString *const localPasswordKey = @"mk_lb_passwordKey";
-
-@interface MKLBAboutPageModel : NSObject<MKTrackerAboutParamsProtocol>
-
-/// 导航栏标题,默认@"ABOUT"
-@property (nonatomic, copy)NSString *title;
-
-/// 导航栏title颜色，默认白色
-@property (nonatomic, strong)UIColor *titleColor;
-
-/// 顶部导航栏背景颜色，默认蓝色
-@property (nonatomic, strong)UIColor *titleBarColor;
-
-/// 最上面那个关于的icon
-@property (nonatomic, strong)UIImage *aboutIcon;
-
-/// 底部背景图片
-@property (nonatomic, strong)UIImage *bottomBackIcon;
-
-/// 要显示的app名字，如果不填，则默认显示当前工程的app名称
-@property (nonatomic, copy)NSString *appName;
-
-/// app当前版本，如果不填，则默认取当前工程的版本号
-@property (nonatomic, copy)NSString *appVersion;
-
-@end
-
-@implementation MKLBAboutPageModel
-@end
 
 static CGFloat const searchButtonHeight = 40.f;
 
@@ -130,11 +102,7 @@ MKLBTabBarControllerDelegate>
 #pragma mark - super method
 
 - (void)rightButtonMethod {
-    MKLBAboutPageModel *model = [[MKLBAboutPageModel alloc] init];
-    model.aboutIcon = LOADICON(@"MKLoRaWAN-B", @"MKLBScanController", @"lb_aboutIcon.png");
-    model.appName = @"LW003";
-    model.appVersion = @"1.0";
-    MKTrackerAboutController *vc = [[MKTrackerAboutController alloc] initWithProtocol:model];
+    MKLBAboutController *vc = [[MKLBAboutController alloc] init];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
