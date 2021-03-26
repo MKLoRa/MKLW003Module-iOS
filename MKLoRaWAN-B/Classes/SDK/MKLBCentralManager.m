@@ -75,7 +75,6 @@ static dispatch_once_t onceToken;
                                 advertisementData:(NSDictionary<NSString *,id> *)advertisementData
                                              RSSI:(NSNumber *)RSSI {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        NSLog(@"%@,%@",advertisementData,RSSI);
         NSDictionary *dataModel = [self parseModelWithRssi:RSSI advDic:advertisementData peripheral:peripheral];
         if (!dataModel) {
             return ;
@@ -436,7 +435,6 @@ static dispatch_once_t onceToken;
         return nil;
     }
     NSString *header = [[MKBLEBaseSDKAdopter hexStringFromData:manufacturerData] substringWithRange:NSMakeRange(0, 4)];
-    NSLog(@"接收到的数据头:%@",header);
     if (![[header uppercaseString] isEqualToString:@"00AA"]) {
         return nil;
     }

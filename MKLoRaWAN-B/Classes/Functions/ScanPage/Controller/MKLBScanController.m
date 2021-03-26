@@ -237,10 +237,11 @@ MKLBTabBarControllerDelegate>
     //间隔时间
     uint64_t interval = 60 * NSEC_PER_SEC;
     dispatch_source_set_timer(self.scanTimer, start, interval, 0);
-    WS(weakSelf);
+    @weakify(self);
     dispatch_source_set_event_handler(self.scanTimer, ^{
+        @strongify(self);
         [[MKLBCentralManager shared] stopScan];
-        [weakSelf needRefreshList];
+        [self needRefreshList];
     });
     dispatch_resume(self.scanTimer);
 }
@@ -253,9 +254,10 @@ MKLBTabBarControllerDelegate>
 }
 
 - (void)runloopObserver {
-    WS(weakSelf);
+    @weakify(self);
     __block NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
     self.observerRef = CFRunLoopObserverCreateWithHandler(CFAllocatorGetDefault(), kCFRunLoopAllActivities, YES, 0, ^(CFRunLoopObserverRef observer, CFRunLoopActivity activity) {
+        @strongify(self);
         if (activity == kCFRunLoopBeforeWaiting) {
             //runloop空闲的时候刷新需要处理的列表,但是需要控制刷新频率
             NSTimeInterval currentInterval = [[NSDate date] timeIntervalSince1970];
@@ -263,10 +265,10 @@ MKLBTabBarControllerDelegate>
                 return;
             }
             timeInterval = currentInterval;
-            if (weakSelf.isNeedRefresh) {
-                [weakSelf.tableView reloadData];
-                [weakSelf.titleLabel setText:[NSString stringWithFormat:@"DEVICE(%@)",[NSString stringWithFormat:@"%ld",(long)weakSelf.dataList.count]]];
-                weakSelf.isNeedRefresh = NO;
+            if (self.isNeedRefresh) {
+                [self.tableView reloadData];
+                [self.titleLabel setText:[NSString stringWithFormat:@"DEVICE(%@)",[NSString stringWithFormat:@"%ld",(long)self.dataList.count]]];
+                self.isNeedRefresh = NO;
             }
         }
     });
@@ -300,7 +302,7 @@ MKLBTabBarControllerDelegate>
         return;
     }
     if ([[trackerModel.deviceName uppercaseString] containsString:[self.buttonModel.searchKey uppercaseString]]
-        || [[trackerModel.macAddress uppercaseString] containsString:[self.buttonModel.searchKey uppercaseString]]) {
+        || [[[trackerModel.macAddress stringByReplacingOccurrencesOfString:@":" withString:@""] uppercaseString] containsString:[self.buttonModel.searchKey uppercaseString]]) {
         //如果mac地址和设备名称包含搜索条件，则加入
         [self processTrackerData:trackerModel];
     }
@@ -367,24 +369,27 @@ MKLBTabBarControllerDelegate>
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Enter password"
                                                                              message:msg
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    WS(weakSelf);
+    @weakify(self);
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        weakSelf.passwordField = nil;
-        weakSelf.passwordField = textField;
+        @strongify(self);
+        self.passwordField = nil;
+        self.passwordField = textField;
         NSString *localPassword = [[NSUserDefaults standardUserDefaults] objectForKey:localPasswordKey];
         textField.text = localPassword;
-        weakSelf.asciiText = localPassword;
-        weakSelf.passwordField.placeholder = @"The password is 8 characters.";
+        self.asciiText = localPassword;
+        self.passwordField.placeholder = @"The password is 8 characters.";
         [textField addTarget:self action:@selector(passwordInput) forControlEvents:UIControlEventEditingChanged];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-        weakSelf.refreshButton.selected = NO;
-        weakSelf.currentScanStatus = NO;
-        [weakSelf refreshButtonPressed];
+        @strongify(self);
+        self.refreshButton.selected = NO;
+        self.currentScanStatus = NO;
+        [self refreshButtonPressed];
     }];
     [alertController addAction:cancelAction];
     UIAlertAction *moreAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [weakSelf connectDeviceWithTrackerModel:trackerModel];
+        @strongify(self);
+        [self connectDeviceWithTrackerModel:trackerModel];
     }];
     [alertController addAction:moreAction];
     
@@ -424,10 +429,10 @@ MKLBTabBarControllerDelegate>
 - (void)pushTabBarPage {
     MKLBTabBarController *vc = [[MKLBTabBarController alloc] init];
     vc.modalPresentationStyle = UIModalPresentationFullScreen;
-    WS(weakSelf);
+    @weakify(self);
     [self hh_presentViewController:vc presentStyle:HHPresentStyleErected completion:^{
-        __strong typeof(self) sself = weakSelf;
-        vc.delegate = sself;
+        @strongify(self);
+        vc.delegate = self;
     }];
 }
 

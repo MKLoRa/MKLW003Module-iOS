@@ -74,21 +74,21 @@
 
 #pragma mark - notes
 - (void)gotoScanPage {
-    WS(weakSelf);
+    @weakify(self);
     [self dismissViewControllerAnimated:YES completion:^{
-        __strong typeof(self) sself = weakSelf;
-        if ([sself.delegate respondsToSelector:@selector(mk_lb_needResetScanDelegate:)]) {
-            [sself.delegate mk_lb_needResetScanDelegate:NO];
+        @strongify(self);
+        if ([self.delegate respondsToSelector:@selector(mk_lb_needResetScanDelegate:)]) {
+            [self.delegate mk_lb_needResetScanDelegate:NO];
         }
     }];
 }
 
 - (void)dfuUpdateComplete {
-    WS(weakSelf);
+    @weakify(self);
     [self dismissViewControllerAnimated:YES completion:^{
-        __strong typeof(self) sself = weakSelf;
-        if ([sself.delegate respondsToSelector:@selector(mk_lb_needResetScanDelegate:)]) {
-            [sself.delegate mk_lb_needResetScanDelegate:YES];
+        @strongify(self);
+        if ([self.delegate respondsToSelector:@selector(mk_lb_needResetScanDelegate:)]) {
+            [self.delegate mk_lb_needResetScanDelegate:YES];
         }
     }];
 }
@@ -135,9 +135,10 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
                                                                              message:msg
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    WS(weakSelf);
+    @weakify(self);
     UIAlertAction *moreAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [weakSelf gotoScanPage];
+        @strongify(self);
+        [self gotoScanPage];
     }];
     [alertController addAction:moreAction];
     

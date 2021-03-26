@@ -324,7 +324,7 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
         
     }else {
         //本地没有存储数据，则start、empty、sync不可用
-        [self.headerView.startButton setBackgroundColor:UIColorFromRGB(0x2F84D0)];
+        [self.headerView.startButton setBackgroundColor:NAVBAR_COLOR_MACROS];
         [self.headerView.startButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
         
         self.headerView.synButton.enabled = NO;
@@ -400,7 +400,7 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 
 - (void)emptyButtonMethod {
     
-    [self.headerView.startButton setBackgroundColor:UIColorFromRGB(0x2F84D0)];
+    [self.headerView.startButton setBackgroundColor:NAVBAR_COLOR_MACROS];
     [self.headerView.startButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
     self.headerView.startButton.enabled = YES;
     

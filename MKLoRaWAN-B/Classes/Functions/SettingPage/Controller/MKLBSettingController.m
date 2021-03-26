@@ -184,34 +184,37 @@ MKTextButtonCellDelegate>
 
 #pragma mark - 设置密码
 - (void)configPassword{
-    WS(weakSelf);
+    @weakify(self);
     self.currentAlert = nil;
     NSString *msg = @"Note:The password should be 8 characters.";
     self.currentAlert = [UIAlertController alertControllerWithTitle:@"Change Password"
                                                             message:msg
                                                      preferredStyle:UIAlertControllerStyleAlert];
     [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        weakSelf.passwordTextField = nil;
-        weakSelf.passwordTextField = textField;
-        weakSelf.passwordAsciiStr = @"";
-        [weakSelf.passwordTextField setPlaceholder:@"Enter new password"];
-        [weakSelf.passwordTextField addTarget:weakSelf
-                                       action:@selector(passwordTextFieldValueChanged:)
-                             forControlEvents:UIControlEventEditingChanged];
+        @strongify(self);
+        self.passwordTextField = nil;
+        self.passwordTextField = textField;
+        self.passwordAsciiStr = @"";
+        [self.passwordTextField setPlaceholder:@"Enter new password"];
+        [self.passwordTextField addTarget:self
+                                   action:@selector(passwordTextFieldValueChanged:)
+                         forControlEvents:UIControlEventEditingChanged];
     }];
     [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-        weakSelf.confirmTextField = nil;
-        weakSelf.confirmTextField = textField;
-        weakSelf.confirmAsciiStr = @"";
-        [weakSelf.confirmTextField setPlaceholder:@"Enter new password again"];
-        [weakSelf.confirmTextField addTarget:weakSelf
-                                      action:@selector(passwordTextFieldValueChanged:)
-                            forControlEvents:UIControlEventEditingChanged];
+        @strongify(self);
+        self.confirmTextField = nil;
+        self.confirmTextField = textField;
+        self.confirmAsciiStr = @"";
+        [self.confirmTextField setPlaceholder:@"Enter new password again"];
+        [self.confirmTextField addTarget:self
+                                  action:@selector(passwordTextFieldValueChanged:)
+                        forControlEvents:UIControlEventEditingChanged];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
     [self.currentAlert addAction:cancelAction];
     UIAlertAction *moreAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [weakSelf setPasswordToDevice];
+        @strongify(self);
+        [self setPasswordToDevice];
     }];
     [self.currentAlert addAction:moreAction];
     
@@ -315,13 +318,14 @@ MKTextButtonCellDelegate>
 #pragma mark - interface
 - (void)readDataFromDevice {
     [[MKHudManager share] showHUDWithTitle:@"Reading..." inView:self.view isPenetration:NO];
-    WS(weakSelf);
+    @weakify(self);
     [self.dataModel readWithSucBlock:^{
+        @strongify(self);
         [[MKHudManager share] hide];
-        [weakSelf updateCellState];
+        [self updateCellState];
     } failedBlock:^(NSError * _Nonnull error) {
         [[MKHudManager share] hide];
-        [weakSelf.view showCentralToast:error.userInfo[@"errorInfo"]];
+        [self.view showCentralToast:error.userInfo[@"errorInfo"]];
     }];
 }
 

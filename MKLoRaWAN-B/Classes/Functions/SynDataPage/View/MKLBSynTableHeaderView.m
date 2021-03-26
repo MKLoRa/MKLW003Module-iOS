@@ -219,7 +219,7 @@ static CGFloat const buttonSpace = 10.f;
         _startButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [_startButton setTitle:@"Start" forState:UIControlStateNormal];
         [_startButton setTitleColor:COLOR_WHITE_MACROS forState:UIControlStateNormal];
-        [_startButton setBackgroundColor:UIColorFromRGB(0x2F84D0)];
+        [_startButton setBackgroundColor:NAVBAR_COLOR_MACROS];
         [_startButton.layer setMasksToBounds:YES];
         [_startButton.layer setCornerRadius:6.f];
         _startButton.titleLabel.font = MKFont(13.f);
