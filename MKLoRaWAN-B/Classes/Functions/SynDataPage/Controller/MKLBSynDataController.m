@@ -417,15 +417,15 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 - (void)startBackTimer {
     self.backTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,dispatch_get_global_queue(0, 0));
     dispatch_source_set_timer(self.backTimer, dispatch_time(DISPATCH_TIME_NOW, 0.5 * NSEC_PER_SEC),  0.5 * NSEC_PER_SEC, 0);
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     dispatch_source_set_event_handler(self.backTimer, ^{
-        __strong typeof(self) sself = weakSelf;
-        sself.backCount ++;
-        if (sself.backCount == 4) {
+        @strongify(self);
+        self.backCount ++;
+        if (self.backCount == 4) {
             //数据全部解析完成,把所有数据缓存到本地
             moko_dispatch_main_safe(^{
-                dispatch_cancel(sself.backTimer);
-                [sself saveDataToLocal];
+                dispatch_cancel(self.backTimer);
+                [self saveDataToLocal];
             });
             return;
         }
@@ -456,11 +456,11 @@ static NSString *synIconAnimationKey = @"synIconAnimationKey";
 - (void)addTimerForRefresh {
     self.parseTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0,dispatch_get_global_queue(0, 0));
     dispatch_source_set_timer(self.parseTimer, dispatch_time(DISPATCH_TIME_NOW, parseDataInterval * NSEC_PER_SEC),  parseDataInterval * NSEC_PER_SEC, 0);
-    __weak typeof(self) weakSelf = self;
+    @weakify(self);
     dispatch_source_set_event_handler(self.parseTimer, ^{
-        __strong typeof(self) sself = weakSelf;
+        @strongify(self);
         moko_dispatch_main_safe(^{
-            [sself parseContentDatas];
+            [self parseContentDatas];
         });
     });
     dispatch_resume(self.parseTimer);

@@ -24,6 +24,8 @@
 
 #import "MKLBSDK.h"
 
+#import "CTMediator+MKLBAdd.h"
+
 #import "MKLBDatabaseManager.h"
 
 #import "MKLBConnectModel.h"
@@ -102,7 +104,7 @@ MKLBTabBarControllerDelegate>
 #pragma mark - super method
 
 - (void)rightButtonMethod {
-    MKLBAboutController *vc = [[MKLBAboutController alloc] init];
+    UIViewController *vc = [[CTMediator sharedInstance] CTMediator_LORAWAN_B_AboutPage];
     [self.navigationController pushViewController:vc animated:YES];
 }
 

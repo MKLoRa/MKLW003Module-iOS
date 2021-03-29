@@ -12,6 +12,7 @@
 
 #import "MKLBApplicationModule.h"
 #import "CTMediator+MKLBAdd.h"
+#import "MKLoRaWANBModuleKey.h"
 #import "MKLBConnectModel.h"
 #import "MKLBDatabaseManager.h"
 #import "MKLBAboutController.h"
