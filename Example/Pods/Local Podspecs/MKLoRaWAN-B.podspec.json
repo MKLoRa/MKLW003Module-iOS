@@ -313,12 +313,19 @@
               "dependencies": {
                 "MKLoRaWAN-B/Functions/PayloadPage/Model": [
 
+                ],
+                "MKLoRaWAN-B/Functions/PayloadPage/View": [
+
                 ]
               }
             },
             {
               "name": "Model",
               "source_files": "MKLoRaWAN-B/Classes/Functions/PayloadPage/Model/**"
+            },
+            {
+              "name": "View",
+              "source_files": "MKLoRaWAN-B/Classes/Functions/PayloadPage/View/**"
             }
           ]
         },

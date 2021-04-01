@@ -36,6 +36,7 @@
 #import "MKLBNetworkCheckModel.h"
 #import "MKLBUplinkPayloadController.h"
 #import "MKLBUplinkPayloadModel.h"
+#import "MKLBUplinkSectionHeader.h"
 #import "MKLBScanController.h"
 #import "MKLBScanPageModel.h"
 #import "MKLBScanPageCell.h"

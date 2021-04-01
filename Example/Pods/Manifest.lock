@@ -669,6 +669,7 @@ PODS:
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/PayloadPage/Controller (= 0.0.3)
     - MKLoRaWAN-B/Functions/PayloadPage/Model (= 0.0.3)
+    - MKLoRaWAN-B/Functions/PayloadPage/View (= 0.0.3)
     - MKLoRaWAN-B/SDK
     - MLInputDodger
   - MKLoRaWAN-B/Functions/PayloadPage/Controller (0.0.3):
@@ -680,9 +681,20 @@ PODS:
     - MKLoRaWAN-B/CTMediator
     - MKLoRaWAN-B/DatabaseManager
     - MKLoRaWAN-B/Functions/PayloadPage/Model
+    - MKLoRaWAN-B/Functions/PayloadPage/View
     - MKLoRaWAN-B/SDK
     - MLInputDodger
   - MKLoRaWAN-B/Functions/PayloadPage/Model (0.0.3):
+    - HHTransition
+    - iOSDFULibrary (= 4.6.1)
+    - MKBaseModuleLibrary
+    - MKCustomUIModule
+    - MKLoRaWAN-B/ConnectModule
+    - MKLoRaWAN-B/CTMediator
+    - MKLoRaWAN-B/DatabaseManager
+    - MKLoRaWAN-B/SDK
+    - MLInputDodger
+  - MKLoRaWAN-B/Functions/PayloadPage/View (0.0.3):
     - HHTransition
     - iOSDFULibrary (= 4.6.1)
     - MKBaseModuleLibrary
@@ -980,7 +992,7 @@ SPEC CHECKSUMS:
   MKBaseBleModule: 2c18242ab1c5267ed7b4ec2e3521ea4f9750e93e
   MKBaseModuleLibrary: 3f6402005cd7aafb0a1564261b3ba798bd6b8ba9
   MKCustomUIModule: b203dd0d8b9dbab53f41cf0ca5718dc98d97dbe4
-  MKLoRaWAN-B: dac4c202142a0fe37135cff91cfb792edfba879f
+  MKLoRaWAN-B: da3049b6f7bfffb4bf7710230553e6d9316bb46e
   MLInputDodger: 79a0e420a80d0d3bba122bf2639603cc76609ba8
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   ZIPFoundation: 89df685c971926b0323087952320bdfee9f0b6ef

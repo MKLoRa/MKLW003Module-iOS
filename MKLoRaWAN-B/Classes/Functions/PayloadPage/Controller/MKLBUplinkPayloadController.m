@@ -24,6 +24,8 @@
 
 #import "MKLBUplinkPayloadModel.h"
 
+#import "MKLBUplinkSectionHeader.h"
+
 static CGFloat const sectionHeaderHeight = 55.f;
 
 @interface MKLBUplinkPayloadController ()
@@ -97,38 +99,18 @@ MKTextButtonCellDelegate>
     if (section == 0 || section == 1) {
         return 60.f;
     }
-    return 0.01;
+    return 0.f;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    if (section == 0 || section == 1) {
-        UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, sectionHeaderHeight)];
-        headerView.backgroundColor = RGBCOLOR(242, 242, 242);
-        
-        UILabel *msgLabel = [[UILabel alloc] initWithFrame:CGRectMake(15.f,
-                                                                      (sectionHeaderHeight - MKFont(20.f).lineHeight) / 2,
-                                                                      kViewWidth - 30.f,
-                                                                      MKFont(20.f).lineHeight)];
-        msgLabel.textColor = NAVBAR_COLOR_MACROS;
-        msgLabel.textAlignment = NSTextAlignmentLeft;
-        if (section == 0) {
-            msgLabel.text = @"Device Info Payload";
-        }else if (section == 1) {
-            msgLabel.text = @"Beacon Payload";
-        }
-        [headerView addSubview:msgLabel];
-        
-        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15.f,
-                                                                    sectionHeaderHeight - CUTTING_LINE_HEIGHT,
-                                                                    kViewWidth - 30.f,
-                                                                    CUTTING_LINE_HEIGHT)];
-        lineView.backgroundColor = CUTTING_LINE_COLOR;
-        [headerView addSubview:lineView];
-        
-        return headerView;
+    MKLBUplinkSectionHeader *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"MKLBUplinkSectionHeaderIdenty"];
+    if (section == 0) {
+        headerView.titleMsg = @"Device Info Payload";
+    }else if (section == 1) {
+        headerView.titleMsg = @"Beacon Payload";
+    }else {
+        headerView.titleMsg = @"";
     }
-    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kViewWidth, 0.01)];
-    headerView.backgroundColor = COLOR_WHITE_MACROS;
     return headerView;
 }
 
@@ -411,6 +393,8 @@ MKTextButtonCellDelegate>
         _tableView = [[MKBaseTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
         _tableView.delegate = self;
         _tableView.dataSource = self;
+        
+        [_tableView registerClass:[MKLBUplinkSectionHeader class] forHeaderFooterViewReuseIdentifier:@"MKLBUplinkSectionHeaderIdenty"];
     }
     return _tableView;
 }

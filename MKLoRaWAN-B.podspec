@@ -184,9 +184,13 @@ TODO: Add long description of the pod here.
       sss.subspec 'Controller' do |ssss|
         ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/PayloadPage/Controller/**'
         ssss.dependency 'MKLoRaWAN-B/Functions/PayloadPage/Model'
+        ssss.dependency 'MKLoRaWAN-B/Functions/PayloadPage/View'
       end
       sss.subspec 'Model' do |ssss|
         ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/PayloadPage/Model/**'
+      end
+      sss.subspec 'View' do |ssss|
+        ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/PayloadPage/View/**'
       end
     end
     
