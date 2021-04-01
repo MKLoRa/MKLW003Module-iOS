@@ -23,7 +23,7 @@
         }
         NSInteger subLen = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(index, 2)];
         index += 2;
-        if (content.length < (index + subLen * 2 + 1)) {
+        if (content.length < (index + subLen * 2)) {
             break;
         }
         NSString *subContent = [content substringWithRange:NSMakeRange(index, subLen * 2)];
