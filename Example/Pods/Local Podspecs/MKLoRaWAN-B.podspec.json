@@ -1,6 +1,6 @@
 {
   "name": "MKLoRaWAN-B",
-  "version": "0.0.3",
+  "version": "1.0.1",
   "summary": "MOKO LW003.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/MKLoRa/MKLW003Module-iOS",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/MKLoRa/MKLW003Module-iOS.git",
-    "tag": "0.0.3"
+    "tag": "1.0.1"
   },
   "platforms": {
     "ios": "12.0"
@@ -115,7 +115,7 @@
 
         ],
         "iOSDFULibrary": [
-          "4.6.1"
+
         ]
       },
       "subspecs": [

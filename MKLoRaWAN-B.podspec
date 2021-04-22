@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MKLoRaWAN-B'
-  s.version          = '1.0.0'
+  s.version          = '1.0.1'
   s.summary          = 'MOKO LW003.'
 
 # This description is used to generate tags and improve search results.
@@ -289,7 +289,7 @@ TODO: Add long description of the pod here.
     ss.dependency 'MKCustomUIModule'
     ss.dependency 'HHTransition'
     ss.dependency 'MLInputDodger'
-    ss.dependency 'iOSDFULibrary','4.6.1'
+    ss.dependency 'iOSDFULibrary'
     
   end
   

@@ -14,6 +14,7 @@
 #import "CBPeripheral+MKLBAdd.h"
 
 #define centralManager [MKLBCentralManager shared]
+#define peripheral ([MKLBCentralManager shared].peripheral)
 
 @implementation MKLBInterface
 
@@ -22,7 +23,7 @@
 + (void)lb_readBatteryPowerWithSucBlock:(void (^)(id returnData))sucBlock
                             failedBlock:(void (^)(NSError *error))failedBlock {
     [centralManager addReadTaskWithTaskID:mk_lb_taskReadBatteryPowerOperation
-                           characteristic:centralManager.peripheral.lb_batteryPower
+                           characteristic:peripheral.lb_batteryPower
                              successBlock:sucBlock
                              failureBlock:failedBlock];
 }
@@ -30,7 +31,7 @@
 + (void)lb_readDeviceModelWithSucBlock:(void (^)(id returnData))sucBlock
                            failedBlock:(void (^)(NSError *error))failedBlock {
     [centralManager addReadTaskWithTaskID:mk_lb_taskReadDeviceModelOperation
-                           characteristic:centralManager.peripheral.lb_deviceModel
+                           characteristic:peripheral.lb_deviceModel
                              successBlock:sucBlock
                              failureBlock:failedBlock];
 }
@@ -38,7 +39,7 @@
 + (void)lb_readFirmwareWithSucBlock:(void (^)(id returnData))sucBlock
                         failedBlock:(void (^)(NSError *error))failedBlock {
     [centralManager addReadTaskWithTaskID:mk_lb_taskReadFirmwareOperation
-                           characteristic:centralManager.peripheral.lb_firmware
+                           characteristic:peripheral.lb_firmware
                              successBlock:sucBlock
                              failureBlock:failedBlock];
 }
@@ -46,7 +47,7 @@
 + (void)lb_readHardwareWithSucBlock:(void (^)(id returnData))sucBlock
                         failedBlock:(void (^)(NSError *error))failedBlock {
     [centralManager addReadTaskWithTaskID:mk_lb_taskReadHardwareOperation
-                           characteristic:centralManager.peripheral.lb_hardware
+                           characteristic:peripheral.lb_hardware
                              successBlock:sucBlock
                              failureBlock:failedBlock];
 }
@@ -54,7 +55,7 @@
 + (void)lb_readSoftwareWithSucBlock:(void (^)(id returnData))sucBlock
                         failedBlock:(void (^)(NSError *error))failedBlock {
     [centralManager addReadTaskWithTaskID:mk_lb_taskReadSoftwareOperation
-                           characteristic:centralManager.peripheral.lb_sofeware
+                           characteristic:peripheral.lb_sofeware
                              successBlock:sucBlock
                              failureBlock:failedBlock];
 }
@@ -62,7 +63,7 @@
 + (void)lb_readManufacturerWithSucBlock:(void (^)(id returnData))sucBlock
                             failedBlock:(void (^)(NSError *error))failedBlock {
     [centralManager addReadTaskWithTaskID:mk_lb_taskReadManufacturerOperation
-                           characteristic:centralManager.peripheral.lb_manufacturer
+                           characteristic:peripheral.lb_manufacturer
                              successBlock:sucBlock
                              failureBlock:failedBlock];
 }
@@ -522,8 +523,7 @@
                failedBlock:(void (^)(NSError *error))failedBlock {
     NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ed00",flag,@"00"];
     [centralManager addTaskWithTaskID:taskID
-                       characteristic:centralManager.peripheral.lb_custom
-                             resetNum:NO
+                       characteristic:peripheral.lb_custom
                           commandData:commandString
                          successBlock:sucBlock
                          failureBlock:failedBlock];

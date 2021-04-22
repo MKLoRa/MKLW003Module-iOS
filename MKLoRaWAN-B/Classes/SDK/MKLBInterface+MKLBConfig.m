@@ -982,7 +982,7 @@
                         data:(NSString *)data
                     sucBlock:(void (^)(void))sucBlock
                  failedBlock:(void (^)(NSError *error))failedBlock {
-    [centralManager addTaskWithTaskID:taskID characteristic:centralManager.peripheral.lb_custom resetNum:NO commandData:data successBlock:^(id  _Nonnull returnData) {
+    [centralManager addTaskWithTaskID:taskID characteristic:centralManager.peripheral.lb_custom commandData:data successBlock:^(id  _Nonnull returnData) {
         BOOL success = [returnData[@"result"][@"success"] boolValue];
         if (!success) {
             [self operationSetParamsErrorBlock:failedBlock];

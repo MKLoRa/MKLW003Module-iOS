@@ -15,8 +15,6 @@
 
 #import "MKLBOperationID.h"
 
-NSString *const mk_lb_communicationDataNum = @"mk_lb_communicationDataNum";
-
 @implementation MKLBTaskAdopter
 
 + (NSDictionary *)parseReadDataWithCharacteristic:(CBCharacteristic *)characteristic {
