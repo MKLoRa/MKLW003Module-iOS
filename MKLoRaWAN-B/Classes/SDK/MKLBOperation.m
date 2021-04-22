@@ -57,7 +57,7 @@
 
 - (instancetype)initOperationWithID:(mk_lb_taskOperationID)operationID
                        commandBlock:(void (^)(void))commandBlock
-                      completeBlock:(void (^)(NSError * _Nullable, id _Nullable))completeBlock {
+                      completeBlock:(void (^)(NSError * _Nullable error, id _Nullable returnData))completeBlock {
     if (self = [super init]) {
         _executing = NO;
         _finished = NO;
