@@ -269,21 +269,22 @@ static dispatch_once_t onceToken;
         int asciiCode = [self.password characterAtIndex:i];
         commandData = [commandData stringByAppendingString:[NSString stringWithFormat:@"%1lx",(unsigned long)asciiCode]];
     }
-    
+    __weak typeof(self) weakSelf = self;
     MKLBOperation *operation = [[MKLBOperation alloc] initOperationWithID:mk_lb_connectPasswordOperation commandBlock:^{
         [[MKBLEBaseCentralManager shared] sendDataToPeripheral:commandData characteristic:[MKBLEBaseCentralManager shared].peripheral.lb_password type:CBCharacteristicWriteWithResponse];
-    } completeBlock:^(NSError * _Nonnull error, id  _Nonnull returnData) {
-        if (![returnData[@"state"] isEqualToString:@"01"]) {
+    } completeBlock:^(NSError * _Nullable error, id  _Nullable returnData) {
+        __strong typeof(self) sself = weakSelf;
+        if (error || !MKValidDict(returnData) || ![returnData[@"state"] isEqualToString:@"01"]) {
             //密码错误
-            [self operationFailedBlockWithMsg:@"Password Error" failedBlock:self.failedBlock];
+            [sself operationFailedBlockWithMsg:@"Password Error" failedBlock:sself.failedBlock];
             return ;
         }
         //密码正确
         MKBLEBase_main_safe(^{
-            self.connectStatus = mk_lb_centralConnectStatusConnected;
+            sself.connectStatus = mk_lb_centralConnectStatusConnected;
             [[NSNotificationCenter defaultCenter] postNotificationName:mk_lb_peripheralConnectStateChangedNotification object:nil];
-            if (self.sucBlock) {
-                self.sucBlock([MKBLEBaseCentralManager shared].peripheral);
+            if (sself.sucBlock) {
+                sself.sucBlock([MKBLEBaseCentralManager shared].peripheral);
             }
         });
     }];
@@ -311,7 +312,7 @@ static dispatch_once_t onceToken;
     __weak typeof(self) weakSelf = self;
     MKLBOperation <MKBLEBaseOperationProtocol>*operation = [[MKLBOperation alloc] initOperationWithID:operationID commandBlock:^{
         [[MKBLEBaseCentralManager shared] sendDataToPeripheral:commandData characteristic:characteristic type:CBCharacteristicWriteWithResponse];
-    } completeBlock:^(NSError * _Nonnull error, id  _Nonnull returnData) {
+    } completeBlock:^(NSError * _Nullable error, id  _Nullable returnData) {
         __strong typeof(self) sself = weakSelf;
         if (error) {
             MKBLEBase_main_safe(^{
@@ -353,7 +354,7 @@ static dispatch_once_t onceToken;
     __weak typeof(self) weakSelf = self;
     MKLBOperation <MKBLEBaseOperationProtocol>*operation = [[MKLBOperation alloc] initOperationWithID:operationID commandBlock:^{
         [[MKBLEBaseCentralManager shared].peripheral readValueForCharacteristic:characteristic];
-    } completeBlock:^(NSError * _Nonnull error, id  _Nonnull returnData) {
+    } completeBlock:^(NSError * _Nullable error, id  _Nullable returnData) {
         __strong typeof(self) sself = weakSelf;
         if (error) {
             MKBLEBase_main_safe(^{
