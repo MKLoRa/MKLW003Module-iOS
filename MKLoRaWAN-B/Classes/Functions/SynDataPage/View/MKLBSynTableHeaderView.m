@@ -19,7 +19,7 @@ static CGFloat const buttonHeight = 50.f;
 static CGFloat const offset_X = 15.f;
 static CGFloat const buttonSpace = 10.f;
 
-@implementation MKMsgIconButton
+@implementation MKLBMsgIconButton
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
@@ -80,11 +80,11 @@ static CGFloat const buttonSpace = 10.f;
 
 @property (nonatomic, strong)UIButton *startButton;
 
-@property (nonatomic, strong)MKMsgIconButton *synButton;
+@property (nonatomic, strong)MKLBMsgIconButton *synButton;
 
-@property (nonatomic, strong)MKMsgIconButton *emptyButton;
+@property (nonatomic, strong)MKLBMsgIconButton *emptyButton;
 
-@property (nonatomic, strong)MKMsgIconButton *exportButton;
+@property (nonatomic, strong)MKLBMsgIconButton *exportButton;
 
 @property (nonatomic, strong)UILabel *sumLabel;
 
@@ -227,27 +227,27 @@ static CGFloat const buttonSpace = 10.f;
     return _startButton;
 }
 
-- (MKMsgIconButton *)synButton {
+- (MKLBMsgIconButton *)synButton {
     if (!_synButton) {
-        _synButton = [[MKMsgIconButton alloc] init];
+        _synButton = [[MKLBMsgIconButton alloc] init];
         _synButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_sync_enableIcon.png");
         _synButton.msgLabel.text = @"Sync";
     }
     return _synButton;
 }
 
-- (MKMsgIconButton *)emptyButton {
+- (MKLBMsgIconButton *)emptyButton {
     if (!_emptyButton) {
-        _emptyButton = [[MKMsgIconButton alloc] init];
+        _emptyButton = [[MKLBMsgIconButton alloc] init];
         _emptyButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_delete_enableIcon.png");
         _emptyButton.msgLabel.text = @"Empty";
     }
     return _emptyButton;
 }
 
-- (MKMsgIconButton *)exportButton {
+- (MKLBMsgIconButton *)exportButton {
     if (!_exportButton) {
-        _exportButton = [[MKMsgIconButton alloc] init];
+        _exportButton = [[MKLBMsgIconButton alloc] init];
         _exportButton.topIcon.image = LOADICON(@"MKLoRaWAN-B", @"MKLBSynTableHeaderView", @"lb_export_enableIcon.png");
         _exportButton.msgLabel.text = @"Export";
     }

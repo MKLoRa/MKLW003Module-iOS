@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, mk_lb_taskOperationID) {
     mk_lb_taskReadBLEFilterBMinorOperation,         //读取蓝牙过滤规则2的过滤minor范围
     mk_lb_taskReadBLEFilterBRawDataOperation,       //读取蓝牙过滤规则2的过滤原始数据信息
     mk_lb_taskReadBLEFilterBUUIDOperation,          //读取蓝牙过滤规则2的过滤UUID信息
-    mk_lb_taskReadBLEFilterBRssiOperation,          //读取蓝牙过滤规则1的过滤rssi
+    mk_lb_taskReadBLEFilterBRssiOperation,          //读取蓝牙过滤规则2的过滤rssi
     
     
 #pragma mark - 设备系统应用信息配置

@@ -51,8 +51,8 @@ typedef NS_ENUM(NSInteger, mk_lb_filterRepeatingDataType) {
 };
 
 typedef NS_ENUM(NSInteger, mk_lb_BLELogicalRelationship) {
-    mk_lb_lLELogicalRelationshipOR,
-    mk_lb_lLELogicalRelationshipAND
+    mk_lb_BLELogicalRelationshipOR,
+    mk_lb_BLELogicalRelationshipAND
 };
 
 typedef NS_ENUM(NSInteger, mk_lb_filterRules) {

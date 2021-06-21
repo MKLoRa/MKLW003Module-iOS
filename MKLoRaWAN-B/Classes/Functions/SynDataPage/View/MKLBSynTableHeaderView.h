@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface MKMsgIconButton : UIControl
+@interface MKLBMsgIconButton : UIControl
 
 @property (nonatomic, strong)UIImageView *topIcon;
 
@@ -25,11 +25,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, strong, readonly)UIButton *startButton;
 
-@property (nonatomic, strong, readonly)MKMsgIconButton *synButton;
+@property (nonatomic, strong, readonly)MKLBMsgIconButton *synButton;
 
-@property (nonatomic, strong, readonly)MKMsgIconButton *emptyButton;
+@property (nonatomic, strong, readonly)MKLBMsgIconButton *emptyButton;
 
-@property (nonatomic, strong, readonly)MKMsgIconButton *exportButton;
+@property (nonatomic, strong, readonly)MKLBMsgIconButton *exportButton;
 
 @property (nonatomic, strong, readonly)UILabel *sumLabel;
 

@@ -15,7 +15,6 @@
 
 #import "MKLBPeripheral.h"
 #import "MKLBOperation.h"
-#import "MKLBTaskAdopter.h"
 #import "CBPeripheral+MKLBAdd.h"
 
 
@@ -425,7 +424,7 @@ static dispatch_once_t onceToken;
 }
 
 - (void)operationFailedBlockWithMsg:(NSString *)message failedBlock:(void (^)(NSError *error))failedBlock {
-    NSError *error = [[NSError alloc] initWithDomain:@"com.moko.trackerCentralManager"
+    NSError *error = [[NSError alloc] initWithDomain:@"com.moko.LBCentralManager"
                                                 code:-999
                                             userInfo:@{@"errorInfo":message}];
     MKBLEBase_main_safe(^{

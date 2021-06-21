@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MKLoRaWAN-B'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'MOKO LW003.'
 
 # This description is used to generate tags and improve search results.
@@ -217,7 +217,6 @@ TODO: Add long description of the pod here.
         ssss.dependency 'MKLoRaWAN-B/Functions/ScanPage/View'
         
         ssss.dependency 'MKLoRaWAN-B/Functions/TabBarPage/Controller'
-        ssss.dependency 'MKLoRaWAN-B/Functions/AboutPage/Controller'
       end
       sss.subspec 'Model' do |ssss|
         ssss.source_files = 'MKLoRaWAN-B/Classes/Functions/ScanPage/Model/**'

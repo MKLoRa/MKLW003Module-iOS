@@ -638,7 +638,7 @@
 + (void)lb_configBLELogicalRelationship:(mk_lb_BLELogicalRelationship)ship
                                sucBlock:(void (^)(void))sucBlock
                             failedBlock:(void (^)(NSError *error))failedBlock {
-    NSString *commandString = (ship == mk_lb_lLELogicalRelationshipAND ? @"ed01600101" : @"ed01600100");
+    NSString *commandString = (ship == mk_lb_BLELogicalRelationshipAND ? @"ed01600101" : @"ed01600100");
     [self configDataWithTaskID:mk_lb_taskConfigBLELogicalRelationshipOperation
                           data:commandString
                       sucBlock:sucBlock

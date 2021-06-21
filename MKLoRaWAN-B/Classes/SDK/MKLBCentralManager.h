@@ -45,7 +45,7 @@ extern NSString *const mk_lb_deviceDisconnectTypeNotification;
 @protocol mk_lb_centralManagerScanDelegate <NSObject>
 
 /// Scan to new device.
-/// @param trackerModel device
+/// @param deviceModel device
 - (void)mk_lb_receiveDevice:(NSDictionary *)deviceModel;
 
 @optional

@@ -168,7 +168,7 @@
 
     MKLBSettingController *setting = [[MKLBSettingController alloc] init];
     setting.tabBarItem.title = @"SETTINGS";
-    setting.tabBarItem.image = LOADICON(@"MKLoRaWAN-B", @"MKLBTabBarController", @"lb_setting_taabBarUnselected.png");
+    setting.tabBarItem.image = LOADICON(@"MKLoRaWAN-B", @"MKLBTabBarController", @"lb_setting_tabBarUnselected.png");
     setting.tabBarItem.selectedImage = LOADICON(@"MKLoRaWAN-B", @"MKLBTabBarController", @"lb_setting_tabBarSelected.png");
     MKBaseNavigationController *settingPage = [[MKBaseNavigationController alloc] initWithRootViewController:setting];
     

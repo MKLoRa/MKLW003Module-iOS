@@ -34,7 +34,6 @@
 #import "MKLBScanPageCell.h"
 
 #import "MKLBTabBarController.h"
-#import "MKLBAboutController.h"
 
 static NSString *const localPasswordKey = @"mk_lb_passwordKey";
 

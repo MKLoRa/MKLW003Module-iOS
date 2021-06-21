@@ -80,8 +80,7 @@
         }
     }
     MKPickerView *pickView = [[MKPickerView alloc] init];
-    pickView.dataList = dataList;
-    [pickView showPickViewWithIndex:index block:^(NSInteger currentRow) {
+    [pickView showPickViewWithDataList:dataList selectedRow:index block:^(NSInteger currentRow) {
         [self.centerButton setTitle:dataList[currentRow] forState:UIControlStateNormal];
         if ([self.delegate respondsToSelector:@selector(mk_filterConditionsChanged:)]) {
             [self.delegate mk_filterConditionsChanged:currentRow];

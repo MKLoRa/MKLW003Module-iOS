@@ -113,7 +113,7 @@ MKLBFilterConditionCellDelegate>
 - (void)mk_filterConditionsChanged:(NSInteger)conditionIndex {
     self.dataModel.ABIsOr = (conditionIndex == 1);
     [[MKHudManager share] showHUDWithTitle:@"Config..." inView:self.view isPenetration:NO];
-    [MKLBInterface lb_configBLELogicalRelationship:(self.dataModel.ABIsOr ? mk_lb_lLELogicalRelationshipOR : mk_lb_lLELogicalRelationshipAND) sucBlock:^{
+    [MKLBInterface lb_configBLELogicalRelationship:(self.dataModel.ABIsOr ? mk_lb_BLELogicalRelationshipOR : mk_lb_BLELogicalRelationshipAND) sucBlock:^{
         [[MKHudManager share] hide];
         [self.view showCentralToast:@"Success"];
     } failedBlock:^(NSError * _Nonnull error) {
