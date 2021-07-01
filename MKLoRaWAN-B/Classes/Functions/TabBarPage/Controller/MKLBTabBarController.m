@@ -11,6 +11,8 @@
 #import "MKMacroDefines.h"
 #import "MKBaseNavigationController.h"
 
+#import "MKAlertController.h"
+
 #import "MKLBLoRaController.h"
 #import "MKLBScannerController.h"
 #import "MKLBSettingController.h"
@@ -132,7 +134,7 @@
 
 #pragma mark - private method
 - (void)showAlertWithMsg:(NSString *)msg title:(NSString *)title{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+    MKAlertController *alertController = [MKAlertController alertControllerWithTitle:title
                                                                              message:msg
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     @weakify(self);

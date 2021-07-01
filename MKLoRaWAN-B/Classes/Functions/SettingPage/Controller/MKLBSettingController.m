@@ -20,6 +20,7 @@
 #import "MKHudManager.h"
 #import "MKNormalTextCell.h"
 #import "MKTextButtonCell.h"
+#import "MKAlertController.h"
 
 #import "MKLBInterface+MKLBConfig.h"
 
@@ -46,9 +47,6 @@ MKTextButtonCellDelegate>
 
 @property (nonatomic, strong)UITextField *confirmTextField;
 
-/// 当前present的alert
-@property (nonatomic, strong)UIAlertController *currentAlert;
-
 @property (nonatomic, copy)NSString *passwordAsciiStr;
 
 @property (nonatomic, copy)NSString *confirmAsciiStr;
@@ -59,7 +57,6 @@ MKTextButtonCellDelegate>
 
 - (void)dealloc {
     NSLog(@"MKLBSettingController销毁");
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -73,10 +70,6 @@ MKTextButtonCellDelegate>
     [super viewDidLoad];
     [self loadSubViews];
     [self loadSectionDatas];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(dismissAlert)
-                                                 name:@"mk_lb_settingPageNeedDismissAlert"
-                                               object:nil];
 }
 
 #pragma mark - super method
@@ -175,22 +168,15 @@ MKTextButtonCellDelegate>
     }
 }
 
-#pragma mark - note
-- (void)dismissAlert {
-    if (self.currentAlert && (self.presentedViewController == self.currentAlert)) {
-        [self.currentAlert dismissViewControllerAnimated:NO completion:nil];
-    }
-}
-
 #pragma mark - 设置密码
 - (void)configPassword{
     @weakify(self);
-    self.currentAlert = nil;
     NSString *msg = @"Note:The password should be 8 characters.";
-    self.currentAlert = [UIAlertController alertControllerWithTitle:@"Change Password"
-                                                            message:msg
-                                                     preferredStyle:UIAlertControllerStyleAlert];
-    [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+    MKAlertController *alertView = [MKAlertController alertControllerWithTitle:@"Change Password"
+                                                                       message:msg
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+    alertView.notificationName = @"mk_lb_settingPageNeedDismissAlert";
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         @strongify(self);
         self.passwordTextField = nil;
         self.passwordTextField = textField;
@@ -200,7 +186,7 @@ MKTextButtonCellDelegate>
                                    action:@selector(passwordTextFieldValueChanged:)
                          forControlEvents:UIControlEventEditingChanged];
     }];
-    [self.currentAlert addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+    [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         @strongify(self);
         self.confirmTextField = nil;
         self.confirmTextField = textField;
@@ -211,14 +197,14 @@ MKTextButtonCellDelegate>
                         forControlEvents:UIControlEventEditingChanged];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [self.currentAlert addAction:cancelAction];
+    [alertView addAction:cancelAction];
     UIAlertAction *moreAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         @strongify(self);
         [self setPasswordToDevice];
     }];
-    [self.currentAlert addAction:moreAction];
+    [alertView addAction:moreAction];
     
-    [self presentViewController:self.currentAlert animated:YES completion:nil];
+    [self presentViewController:alertView animated:YES completion:nil];
 }
 
 - (void)passwordTextFieldValueChanged:(UITextField *)textField{
