@@ -175,7 +175,7 @@ MKTextButtonCellDelegate>
     MKAlertController *alertView = [MKAlertController alertControllerWithTitle:@"Change Password"
                                                                        message:msg
                                                                 preferredStyle:UIAlertControllerStyleAlert];
-    alertView.notificationName = @"mk_lb_settingPageNeedDismissAlert";
+    alertView.notificationName = @"mk_lb_needDismissAlert";
     [alertView addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         @strongify(self);
         self.passwordTextField = nil;

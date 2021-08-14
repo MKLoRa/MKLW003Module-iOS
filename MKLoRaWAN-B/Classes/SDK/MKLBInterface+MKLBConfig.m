@@ -37,14 +37,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)interval];
-    if (value.length == 1) {
-        value = [@"000" stringByAppendingString:value];
-    }else if (value.length == 2) {
-        value = [@"00" stringByAppendingString:value];
-    }else if (value.length == 3) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:interval byteLen:2];
     NSString *commandString = [@"ed010202" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigDeviceInfoReportIntervalOperation
                           data:commandString
@@ -106,10 +99,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)sensitivity];
-    if (value.length == 1) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:sensitivity byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"ed010602%@%@",isOn ? @"01" : @"00",value];
     [self configDataWithTaskID:mk_lb_taskConfigTriggerSensitivityOperation
                           data:commandString
@@ -124,14 +114,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)interval];
-    if (value.length == 1) {
-        value = [@"000" stringByAppendingString:value];
-    }else if (value.length == 2) {
-        value = [@"00" stringByAppendingString:value];
-    }else if (value.length == 3) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:interval byteLen:2];
     NSString *commandString = [@"ed010702" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigBeaconReportIntervalOperation
                           data:commandString
@@ -142,10 +125,7 @@
 + (void)lb_configFilterRepeatingDataType:(mk_lb_filterRepeatingDataType)dataType
                                 sucBlock:(void (^)(void))sucBlock
                              failedBlock:(void (^)(NSError *error))failedBlock {
-    NSString *type = [NSString stringWithFormat:@"%ld",(long)dataType];
-    if (type.length == 1) {
-        type = [@"0" stringByAppendingString:type];
-    }
+    NSString *type = [MKBLEBaseSDKAdopter fetchHexValue:dataType byteLen:1];
     NSString *commandString = [@"ed010901" stringByAppendingString:type];
     [self configDataWithTaskID:mk_lb_taskConfigFilterRepeatingDataTypeOperation
                           data:commandString
@@ -216,14 +196,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)duration];
-    if (value.length == 1) {
-        value = [@"000" stringByAppendingString:value];
-    }else if (value.length == 2) {
-        value = [@"00" stringByAppendingString:value];
-    }else if (value.length == 3) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:duration byteLen:2];
     NSString *commandString = [@"ed011002" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigMacOverLimitDurationOperation
                           data:commandString
@@ -238,10 +211,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)quantities];
-    if (value.length == 1) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:quantities byteLen:1];
     NSString *commandString = [@"ed011101" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigMacOverLimitQuantitiesOperation
                           data:commandString
@@ -398,14 +368,8 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *lowValue = [NSString stringWithFormat:@"%1lx",(unsigned long)chlValue];
-    if (lowValue.length == 1) {
-        lowValue = [@"0" stringByAppendingString:lowValue];
-    }
-    NSString *highValue = [NSString stringWithFormat:@"%1lx",(unsigned long)chhValue];
-    if (highValue.length == 1) {
-        highValue = [@"0" stringByAppendingString:highValue];
-    }
+    NSString *lowValue = [MKBLEBaseSDKAdopter fetchHexValue:chlValue byteLen:1];
+    NSString *highValue = [MKBLEBaseSDKAdopter fetchHexValue:chhValue byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"%@%@%@",@"ed012c02",lowValue,highValue];
     [self configDataWithTaskID:mk_lb_taskConfigCHValueOperation
                           data:commandString
@@ -420,10 +384,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)drValue];
-    if (value.length == 1) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:drValue byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"%@%@",@"ed012d01",value];
     [self configDataWithTaskID:mk_lb_taskConfigDRValueOperation
                           data:commandString
@@ -500,14 +461,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)interval];
-    if (value.length == 1) {
-        value = [@"000" stringByAppendingString:value];
-    }else if (value.length == 2) {
-        value = [@"00" stringByAppendingString:value];
-    }else if (value.length == 3) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:interval byteLen:2];
     NSString *commandString = [NSString stringWithFormat:@"%@%@",@"ed013302",value];
     [self configDataWithTaskID:mk_lb_taskConfigLinkCheckIntervalOperation
                           data:commandString
@@ -546,10 +500,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)interval];
-    if (value.length == 1) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:interval byteLen:1];
     NSString *commandString = [@"ed013601" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigTimeSyncIntervalOperation
                           data:commandString
@@ -572,10 +523,7 @@
         int asciiCode = [deviceName characterAtIndex:i];
         tempString = [tempString stringByAppendingString:[NSString stringWithFormat:@"%1lx",(unsigned long)asciiCode]];
     }
-    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)deviceName.length];
-    if (lenString.length == 1) {
-        lenString = [@"0" stringByAppendingString:lenString];
-    }
+    NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:deviceName.length byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"ed0150%@%@",lenString,tempString];
     [self configDataWithTaskID:mk_lb_taskConfigDeviceNameOperation
                           data:commandString
@@ -583,10 +531,6 @@
                    failedBlock:failedBlock];
 }
 
-/// Configure Bluetooth broadcast interval.
-/// @param interval 1 ~ 100,unit:100ms
-/// @param sucBlock Success callback
-/// @param failedBlock Failure callback
 + (void)lb_configDeviceBroadcastInterval:(NSInteger)interval
                                 sucBlock:(void (^)(void))sucBlock
                              failedBlock:(void (^)(NSError *error))failedBlock {
@@ -594,10 +538,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)interval];
-    if (value.length == 1) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:interval byteLen:1];
     NSString *commandString = [@"ed015101" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskConfigDeviceBroadcastIntervalOperation
                           data:commandString
@@ -622,10 +563,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *windowValue = [NSString stringWithFormat:@"%1lx",(unsigned long)scanWindow];
-    if (windowValue.length == 1) {
-        windowValue = [@"0" stringByAppendingString:windowValue];
-    }
+    NSString *windowValue = [MKBLEBaseSDKAdopter fetchHexValue:scanWindow byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"%@%@",@"ed015301",windowValue];
     [self configDataWithTaskID:mk_lb_taskConfigScanParamsOperation
                           data:commandString
@@ -688,10 +626,7 @@
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterADeviceNameOperation : mk_lb_taskConfigBLEFilterBDeviceNameOperation);
     
-    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)(deviceName.length + 1)];
-    if (lenString.length == 1) {
-        lenString = [@"0" stringByAppendingString:lenString];
-    }
+    NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:(deviceName.length + 1) byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@",@"ed01",typeString,lenString,rulesString,tempString];
     [self configDataWithTaskID:taskID
                           data:commandString
@@ -724,10 +659,7 @@
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMacOperation : mk_lb_taskConfigBLEFilterBMacOperation);
     
-    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((mac.length / 2) + 1)];
-    if (lenString.length == 1) {
-        lenString = [@"0" stringByAppendingString:lenString];
-    }
+    NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:((mac.length / 2) + 1) byteLen:1];
     NSString *commandString = [NSString stringWithFormat:@"%@%@%@%@%@",@"ed01",typeString,lenString,rulesString,mac];
     [self configDataWithTaskID:taskID
                           data:commandString
@@ -755,22 +687,8 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *minString = [NSString stringWithFormat:@"%1lx",(unsigned long)majorMin];
-    if (minString.length == 1) {
-        minString = [@"000" stringByAppendingString:minString];
-    }else if (minString.length == 2) {
-        minString = [@"00" stringByAppendingString:minString];
-    }else if (minString.length == 3) {
-        minString = [@"0" stringByAppendingString:minString];
-    }
-    NSString *maxString = [NSString stringWithFormat:@"%1lx",(unsigned long)majorMax];
-    if (maxString.length == 1) {
-        maxString = [@"000" stringByAppendingString:maxString];
-    }else if (maxString.length == 2) {
-        maxString = [@"00" stringByAppendingString:maxString];
-    }else if (maxString.length == 3) {
-        maxString = [@"0" stringByAppendingString:maxString];
-    }
+    NSString *minString = [MKBLEBaseSDKAdopter fetchHexValue:majorMin byteLen:2];
+    NSString *maxString = [MKBLEBaseSDKAdopter fetchHexValue:majorMax byteLen:2];
     NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"64" : @"6c");
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMajorOperation : mk_lb_taskConfigBLEFilterBMajorOperation);
@@ -802,22 +720,8 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *minString = [NSString stringWithFormat:@"%1lx",(unsigned long)minorMin];
-    if (minString.length == 1) {
-        minString = [@"000" stringByAppendingString:minString];
-    }else if (minString.length == 2) {
-        minString = [@"00" stringByAppendingString:minString];
-    }else if (minString.length == 3) {
-        minString = [@"0" stringByAppendingString:minString];
-    }
-    NSString *maxString = [NSString stringWithFormat:@"%1lx",(unsigned long)minorMax];
-    if (maxString.length == 1) {
-        maxString = [@"000" stringByAppendingString:maxString];
-    }else if (maxString.length == 2) {
-        maxString = [@"00" stringByAppendingString:maxString];
-    }else if (maxString.length == 3) {
-        maxString = [@"0" stringByAppendingString:maxString];
-    }
+    NSString *minString = [MKBLEBaseSDKAdopter fetchHexValue:minorMin byteLen:2];
+    NSString *maxString = [MKBLEBaseSDKAdopter fetchHexValue:minorMax byteLen:2];
     NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"65" : @"6d");
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAMinorOperation : mk_lb_taskConfigBLEFilterBMinorOperation);
@@ -854,25 +758,13 @@
             [self operationParamsErrorBlock:failedBlock];
             return;
         }
-        NSString *minIndex = [NSString stringWithFormat:@"%1lx",(unsigned long)protocol.minIndex];
-        if (minIndex.length == 1) {
-            minIndex = [@"0" stringByAppendingString:minIndex];
-        }
-        NSString *maxIndex = [NSString stringWithFormat:@"%1lx",(unsigned long)protocol.maxIndex];
-        if (maxIndex.length == 1) {
-            maxIndex = [@"0" stringByAppendingString:maxIndex];
-        }
-        NSString *lenString = [NSString stringWithFormat:@"%1lx",(unsigned long)(protocol.rawData.length / 2 + 3)];
-        if (lenString.length == 1) {
-            lenString = [@"0" stringByAppendingString:lenString];
-        }
+        NSString *minIndex = [MKBLEBaseSDKAdopter fetchHexValue:protocol.minIndex byteLen:1];
+        NSString *maxIndex = [MKBLEBaseSDKAdopter fetchHexValue:protocol.maxIndex byteLen:1];
+        NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:(protocol.rawData.length / 2 + 3) byteLen:1];
         NSString *conditionString = [NSString stringWithFormat:@"%@%@%@%@%@",lenString,protocol.dataType,minIndex,maxIndex,protocol.rawData];
         contentData = [contentData stringByAppendingString:conditionString];
     }
-    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((contentData.length / 2) + 1)];
-    if (lenString.length == 1) {
-        lenString = [@"0" stringByAppendingString:lenString];
-    }
+    NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:((contentData.length / 2) + 1) byteLen:1];
     NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"66" : @"6e");
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterARawDataOperation : mk_lb_taskConfigBLEFilterBRawDataOperation);
@@ -902,10 +794,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *lenString = [NSString stringWithFormat:@"%1lx",(long)((uuid.length / 2) + 1)];
-    if (lenString.length == 1) {
-        lenString = [@"0" stringByAppendingString:lenString];
-    }
+    NSString *lenString = [MKBLEBaseSDKAdopter fetchHexValue:((uuid.length / 2) + 1) byteLen:1];
     NSString *typeString = (type == mk_lb_filterRulesClassAType ? @"67" : @"6f");
     NSString *rulesString = (rules == mk_lb_filterRules_forward ? @"01" : @"02");
     mk_lb_taskOperationID taskID = (type == mk_lb_filterRulesClassAType ? mk_lb_taskConfigBLEFilterAUUIDOperation : mk_lb_taskConfigBLEFilterBUUIDOperation);
@@ -943,14 +832,7 @@
         [self operationParamsErrorBlock:failedBlock];
         return;
     }
-    NSString *value = [NSString stringWithFormat:@"%1lx",(unsigned long)days];
-    if (value.length == 1) {
-        value = [@"000" stringByAppendingString:value];
-    }else if (value.length == 2) {
-        value = [@"00" stringByAppendingString:value];
-    }else if (value.length == 3) {
-        value = [@"0" stringByAppendingString:value];
-    }
+    NSString *value = [MKBLEBaseSDKAdopter fetchHexValue:days byteLen:2];
     NSString *commandString = [@"ed01a002" stringByAppendingString:value];
     [self configDataWithTaskID:mk_lb_taskReadNumberOfDaysStoredDataOperation
                           data:commandString

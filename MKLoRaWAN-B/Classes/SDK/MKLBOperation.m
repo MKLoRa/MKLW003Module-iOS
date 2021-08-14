@@ -114,13 +114,14 @@
     //当2s内没有接收到新的数据的时候，也认为是接受超时
     dispatch_source_set_timer(self.receiveTimer, dispatch_walltime(NULL, 0), 0.1 * NSEC_PER_SEC, 0);
     dispatch_source_set_event_handler(self.receiveTimer, ^{
-        if (weakSelf.timeout || weakSelf.receiveTimerCount >= 50) {
+        __strong typeof(self) sself = weakSelf;
+        if (sself.timeout || sself.receiveTimerCount >= 50) {
             //接受数据超时
-            weakSelf.receiveTimerCount = 0;
-            [weakSelf communicationTimeout];
+            sself.receiveTimerCount = 0;
+            [sself communicationTimeout];
             return ;
         }
-        weakSelf.receiveTimerCount ++;
+        sself.receiveTimerCount ++;
     });
     if (self.isCancelled) {
         return;

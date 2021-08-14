@@ -27,6 +27,18 @@ NSString *const mk_lb_deviceDisconnectTypeNotification = @"mk_lb_deviceDisconnec
 static MKLBCentralManager *manager = nil;
 static dispatch_once_t onceToken;
 
+@interface NSObject (MKLBCentralManager)
+
+@end
+
+@implementation NSObject (MKLBCentralManager)
+
++ (void)load{
+    [MKLBCentralManager shared];
+}
+
+@end
+
 @interface MKLBCentralManager ()
 
 @property (nonatomic, copy)NSString *password;
@@ -74,6 +86,7 @@ static dispatch_once_t onceToken;
                                 advertisementData:(NSDictionary<NSString *,id> *)advertisementData
                                              RSSI:(NSNumber *)RSSI {
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        NSLog(@"%@",advertisementData);
         NSDictionary *dataModel = [self parseModelWithRssi:RSSI advDic:advertisementData peripheral:peripheral];
         if (!dataModel) {
             return ;
