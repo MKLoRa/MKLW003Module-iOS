@@ -33,9 +33,6 @@ extern NSString *const mk_lb_peripheralConnectStateChangedNotification;
 //Notification of changes in the status of the Bluetooth Center.
 extern NSString *const mk_lb_centralManagerStateChangedNotification;
 
-//Notification of receive scanner tracked data.
-extern NSString *const mk_lb_receiveStorageDataNotification;
-
 /*
  After connecting the device, if no password is entered within one minute, it returns 0x01. After successful password change, it returns 0x02, the device has no data communication for two consecutive minutes, it returns 0x03, and the shutdown protocol is sent to make the device shut down and return 0x04.
  */
@@ -58,9 +55,17 @@ extern NSString *const mk_lb_deviceDisconnectTypeNotification;
 
 @end
 
+@protocol mk_lb_storageDataDelegate <NSObject>
+
+- (void)mk_lb_receiveStorageData:(NSString *)content;
+
+@end
+
 @interface MKLBCentralManager : NSObject<MKBLEBaseCentralManagerProtocol>
 
 @property (nonatomic, weak)id <mk_lb_centralManagerScanDelegate>delegate;
+
+@property (nonatomic, weak)id <mk_lb_storageDataDelegate>dataDelegate;
 
 /// Current connection status
 @property (nonatomic, assign, readonly)mk_lb_centralConnectStatus connectStatus;

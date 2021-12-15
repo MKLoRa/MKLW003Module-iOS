@@ -47,7 +47,6 @@
 #import "MKLBSettingDataModel.h"
 #import "MKLBTriggerSensitivityView.h"
 #import "MKLBSynDataController.h"
-#import "MKLBSynDataParser.h"
 #import "MKLBSynDataCell.h"
 #import "MKLBSynTableHeaderView.h"
 #import "MKLBTabBarController.h"
