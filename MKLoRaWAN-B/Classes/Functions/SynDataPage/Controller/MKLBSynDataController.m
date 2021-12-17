@@ -33,7 +33,7 @@
 #import "MKLBSynTableHeaderView.h"
 #import "MKLBSynDataCell.h"
 
-static NSTimeInterval const parseDataInterval = 0.5;
+static NSTimeInterval const parseDataInterval = 0.1;
 static NSTimeInterval const dataTimerInterval = 30.f;
 
 static NSString *synIconAnimationKey = @"synIconAnimationKey";
@@ -472,14 +472,14 @@ mk_lb_storageDataDelegate>
 
 - (void)parseContentDatas {
     if (self.contentList.count == 0) {
-        if (self.parseTimer) {
-            dispatch_cancel(self.parseTimer);
-        }
         NSInteger number = self.dataList.count;
-        if (ValidStr(self.totalSum) && [self.totalSum integerValue] != number) {
-            number = [self.totalSum integerValue];
-            self.headerView.countLabel.text = [NSString stringWithFormat:@"Count: %ld",(long)number];
+        if (ValidStr(self.totalSum) && [self.totalSum integerValue] == number) {
+            //解析完成
+            if (self.parseTimer) {
+                dispatch_cancel(self.parseTimer);
+            }
         }
+        self.headerView.countLabel.text = [NSString stringWithFormat:@"Count: %ld",(long)number];
         return;
     }
     self.backCount = 0;
