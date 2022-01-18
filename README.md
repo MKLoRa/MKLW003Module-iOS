@@ -20,7 +20,7 @@ in this stage, `MKLBCentralManager ` will scan and analyze the advertisement dat
 
 ## Connection Stage
 
-Developer needs to enter the connection password and call `connectPeripheral:password:sucBlock:failedBlock`to connect.
+Developer needs to enter the connection password and call `connectPeripheral:password:sucBlock:failedBlock:`to connect.
 
 
 # Get Started
@@ -36,7 +36,7 @@ CocoaPods
 
 SDK-LB is available through CocoaPods.To install it, simply add the following line to your Podfile, and then import <MKLoRaWAN-B/MKLBSDK.h>:
 
-**pod 'MKLoRaWAN-B/SDK-LB'**
+**pod 'MKLoRaWAN-B/SDK'**
 
 
 * <font color=#FF0000 face="黑体">!!!on iOS 10 and above, Apple add authority control of bluetooth, you need add the string to “info.plist” file of your project: Privacy - Bluetooth Peripheral Usage Description - “your description”. as the screenshot below.</font>
@@ -118,29 +118,18 @@ When the device is connected, the developer can monitor the scan data of the dev
 ```
 
 
-*  2.Register for <font color=#FF0000 face="黑体"> `mk_lb_receiveStorageDataNotification` </font> notifications.
+*  2.Set the delegate and complete the related delegate methods.
 
 ```
 
-[[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(receiveTrackerDatas:)
-                                                 name:mk_lb_receiveStorageDataNotification
-                                               object:nil];
-                                               
+[MKLBCentralManager shared].dataDelegate = self;
+
 ```
 
 
 ```
-#pragma mark - Notification
-- (void)receiveTrackerDatas:(NSNotification *)note {
-    NSDictionary *dic = note.userInfo;
-    if (!ValidDict(dic)) {
-        return;
-    }
-    NSString *content = dic[@"content"];
-    if (!ValidStr(content)) {
-        return;
-    }
+#pragma mark - mk_lb_storageDataDelegate
+- (void)mk_lb_receiveStorageData:(NSString *)content {
     NSInteger number = [MKBLEBaseSDKAdopter getDecimalWithHex:content range:NSMakeRange(8, 2)];
     if (number == 0) {
         //The last piece of data, you can get the total number of pieces of data stored.
@@ -251,5 +240,7 @@ Register for <font color=#FF0000 face="黑体"> `mk_lb_deviceDisconnectTypeNotif
 
 
 # Change log
+
+* 20210316 fix parser method;
 
 * 20210316 first version;
