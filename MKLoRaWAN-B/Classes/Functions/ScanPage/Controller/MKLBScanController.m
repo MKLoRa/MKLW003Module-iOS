@@ -23,6 +23,8 @@
 #import "MKCustomUIAdopter.h"
 #import "MKAlertController.h"
 
+#import "MKLBDatabaseManager.h"
+
 #import "MKLBSDK.h"
 
 #import "CTMediator+MKLBAdd.h"
