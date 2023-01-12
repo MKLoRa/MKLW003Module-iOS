@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'MKLoRaWAN-B'
-  s.version          = '1.1.0'
+  s.version          = '1.1.1'
   s.summary          = 'MOKO LW003.'
 
 # This description is used to generate tags and improve search results.
