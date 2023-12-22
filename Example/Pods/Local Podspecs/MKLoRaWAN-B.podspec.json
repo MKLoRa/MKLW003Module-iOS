@@ -1,6 +1,6 @@
 {
   "name": "MKLoRaWAN-B",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "summary": "MOKO LW003.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/MKLoRa/MKLW003Module-iOS",
@@ -13,10 +13,10 @@
   },
   "source": {
     "git": "https://github.com/MKLoRa/MKLW003Module-iOS.git",
-    "tag": "1.1.1"
+    "tag": "1.1.2"
   },
   "platforms": {
-    "ios": "12.0"
+    "ios": "14.0"
   },
   "resource_bundles": {
     "MKLoRaWAN-B": [
@@ -24,15 +24,6 @@
     ]
   },
   "subspecs": [
-    {
-      "name": "ApplicationModule",
-      "source_files": "MKLoRaWAN-B/Classes/ApplicationModule/**",
-      "dependencies": {
-        "MKBaseModuleLibrary": [
-
-        ]
-      }
-    },
     {
       "name": "CTMediator",
       "source_files": "MKLoRaWAN-B/Classes/CTMediator/**",
@@ -115,7 +106,7 @@
 
         ],
         "iOSDFULibrary": [
-
+          "4.13.0"
         ]
       },
       "subspecs": [
